@@ -22,14 +22,20 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex items-center space-x-3">
-                    <div class="bg-emerald-800 p-2 rounded-lg">
-                        <i data-lucide="building-2" class="w-6 h-6 text-emerald-200"></i>
+                    <!-- Kontainer Logo -->
+                    <div class="bg-emerald-800 p-2 rounded-lg flex-shrink-0">
+                        <img src="logo_masjid_baitul_quddus.jpeg" 
+                             alt="Logo Masjid Baitul Quddus" 
+                             class="w-10 h-10 object-contain">
                     </div>
+                    
+                    <!-- Kontainer Teks -->
                     <div>
                         <h1 class="font-bold text-lg leading-tight">Masjid Baitul Quddus</h1>
                         <p class="text-xs text-emerald-200">Cungking, Banyuwangi</p>
                     </div>
                 </div>
+
                 <nav class="hidden md:flex space-x-4 text-sm font-medium">
                     <button onclick="switchTab('dashboard')" class="nav-btn px-3 py-2 rounded-md hover:bg-emerald-600 transition" id="nav-dashboard">Beranda</button>
                     <button onclick="switchTab('laporan')" class="nav-btn px-3 py-2 rounded-md hover:bg-emerald-600 transition" id="nav-laporan">Laporan Keuangan</button>
