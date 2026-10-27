@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display TV Pro - Masjid Baitul Quddus Cungking</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        emeraldBrand: '#065f46',
+                        amberBrand: '#f59e0b'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .animate-marquee {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 35s linear infinite;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-white overflow-hidden font-sans h-screen flex flex-col justify-between transition-colors duration-500">
+
+    <!-- Header Masjid & Waktu -->
+    <header class="bg-emerald-800 dark:bg-emerald-950 px-8 py-4 flex justify-between items-center border-b-4 border-amber-400 shadow-xl">
+        <div class="flex items-center space-x-4">
+            <div class="bg-amber-400 text-slate-950 p-3 rounded-xl font-black text-2xl shadow-inner">MQ</div>
+            <div>
+                <h1 class="text-3xl font-extrabold tracking-wider text-amber-300">MASJID BAITUL QUDDUS</h1>
+                <p class="text-emerald-100 text-sm font-medium">Cungking, Kelurahan Penataban, Kec. Giri, Banyuwangi</p>
+            </div>
+        </div>
+        <div class="text-right flex items-center gap-6">
+            <div>
+                <div id="clock" class="text-4xl font-mono font-black text-white tracking-widest drop-shadow">00:00:00</div>
+                <div id="date" class="text-emerald-200 text-xs font-semibold mt-0.5">Memuat Tanggal...</div>
+            </div>
+            <!-- Indikator Tema -->
+            <button onclick="toggleThemeManually()" class="bg-slate-800/60 dark:bg-slate-800 p-2.5 rounded-full text-amber-400 border border-slate-700" title="Ubah Tema Terang/Gelap">
+                <span id="themeIcon" class="text-xl">🌙</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 p-6 grid grid-cols-12 gap-6 overflow-hidden">
+        
+        <!-- Kolom Kiri: Keuangan & Mutasi (4 Kolom) -->
+        <div class="col-span-4 flex flex-col gap-4 justify-between">
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-lg">
+                <div class="flex items-center justify-between mb-1">
+                    <span class="text-xs font-bold tracking-wider text-slate-500 dark:text-slate-400">TOTAL SALDO KAS</span>
+                    <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                </div>
+                <h2 id="saldoTotal" class="text-3xl font-black text-emerald-600 dark:text-amber-400 tracking-tight">Rp 0</h2>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow">
+                    <span class="text-[11px] font-bold text-slate-500 dark:text-slate-400 block mb-1">PEMASUKAN BULAN INI</span>
+                    <h3 id="pemasukan" class="text-lg font-bold text-emerald-600 dark:text-emerald-400">Rp 0</h3>
+                </div>
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow">
+                    <span class="text-[11px] font-bold text-slate-500 dark:text-slate-400 block mb-1">PENGELUARAN BULAN INI</span>
+                    <h3 id="pengeluaran" class="text-lg font-bold text-rose-600 dark:text-rose-400">Rp 0</h3>
+                </div>
+            </div>
+
+            <!-- Mutasi Kas Terbaru -->
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-lg flex-1 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-sm font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider border-b border-slate-200 dark:border-slate-800 pb-2 mb-3">Mutasi Kas Terbaru</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <tbody id="txTable" class="divide-y divide-slate-100 dark:divide-slate-800/60">
+                                <!-- Data dimuat otomatis via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="text-[10px] text-slate-400 text-right pt-2 border-t border-slate-100 dark:border-slate-800/40">Sinkronisasi Realtime Google Sheets</div>
+            </div>
+        </div>
+
+        <!-- Kolom Kanan: Jadwal Sholat, Countdown & Petugas (8 Kolom) -->
+        <div class="col-span-8 flex flex-col gap-6">
+            
+            <!-- Banner Countdown & Petugas Hari Ini -->
+            <div class="bg-gradient-to-r from-emerald-900 via-emerald-800 to-slate-900 border-2 border-amber-400/50 rounded-2xl p-5 shadow-xl flex items-center justify-between text-white">
+                <div>
+                    <span class="text-xs uppercase tracking-widest font-bold text-amber-300 block mb-1">Menuju Sholat Berikutnya</span>
+                    <h3 id="nextPrayerName" class="text-3xl font-black">Memuat...</h3>
+                </div>
+                <div class="bg-black/30 px-6 py-2 rounded-xl border border-white/10 text-center">
+                    <span class="text-[10px] text-slate-300 block uppercase tracking-wider">Petugas Hari Ini</span>
+                    <span id="petugasInfo" class="text-sm font-bold text-amber-300">Imam: Kiai H. Abdullah | Muadzin: Ust. Fulan</span>
+                </div>
+                <div class="text-right">
+                    <span class="text-xs text-slate-300 block mb-1">Sisa Waktu Mundur</span>
+                    <div id="countdownTimer" class="text-3xl font-mono font-black text-amber-400 tracking-wider">00:00:00</div>
+                </div>
+            </div>
+
+            <!-- Panel Jadwal Sholat 5 Waktu + Syuruq (Banyuwangi) -->
+            <div class="grid grid-cols-6 gap-3 flex-1">
+                <div id="card-Subuh" class="prayer-card bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between items-center text-center shadow transition-all duration-300">
+                    <span class="text-xs font-bold text-slate-500 dark:text-slate-400 tracking-wider">SUBUH</span>
+                    <span id="time-Subuh" class="text-2xl font-black font-mono my-auto">--:--</span>
+                    <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full">Wajib</span>
+                </div>
+                <div id="card-Syuruq" class="prayer-card bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between items-center text-center shadow transition-all duration-300">
+                    <span class="text-xs font-bold text-slate-500 dark:text-slate-400 tracking-wider">SYURUQ</span>
+                    <span id="time-Syuruq" class="text-2xl font-black font-mono my-auto">--:--</span>
+                    <span class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-full">Terbit</span>
+                </div>
+                <div id="card-Dzuhur" class="prayer-card bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between items-center text-center shadow transition-all duration-300">
+                    <span class="text-xs font-bold text-slate-500 dark:text-slate-400 tracking-wider">DZUHUR</span>
+                    <span id="time-Dzuhur" class="text-2xl font-black font-mono my-auto">--:--</span>
+                    <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full">Wajib</span>
+                </div>
+                <div id="card-Ashar" class="prayer-card bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between items-center text-center shadow transition-all duration-300">
+                    <span class="text-xs font-bold text-slate-500 dark:text-slate-400 tracking-wider">ASHAR</span>
+                    <span id="time-Ashar" class="text-2xl font-black font-mono my-auto">--:--</span>
+                    <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full">Wajib</span>
+                </div>
+                <div id="card-Maghrib" class="prayer-card bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between items-center text-center shadow transition-all duration-300">
+                    <span class="text-xs font-bold text-slate-500 dark:text-slate-400 tracking-wider">MAGHRIB</span>
+                    <span id="time-Maghrib" class="text-2xl font-black font-mono my-auto">--:--</span>
+                    <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full">Wajib</span>
+                </div>
+                <div id="card-Isya" class="prayer-card bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between items-center text-center shadow transition-all duration-300">
+                    <span class="text-xs font-bold text-slate-500 dark:text-slate-400 tracking-wider">ISYA</span>
+                    <span id="time-Isya" class="text-2xl font-black font-mono my-auto">--:--</span>
+                    <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full">Wajib</span>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer: Running Text Pengumuman -->
+    <footer class="bg-amber-400 text-slate-950 px-6 py-3 text-xl font-bold overflow-hidden shadow-inner flex items-center">
+        <div class="bg-slate-950 text-amber-400 px-3 py-1 rounded text-xs uppercase tracking-wider mr-4 shrink-0">Pengumuman</div>
+        <div class="overflow-hidden whitespace-nowrap">
+            <div id="runningText" class="animate-marquee">
+                Selamat Datang Di Masjid Baitul Quddus Cungking — Mohon Menonaktifkan Atau Mengheningkan Nada Dering Telepon Genggam Selama Berada Di Dalam Area Masjid.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const GOOGLE_SCRIPT_URL = 'PASTE_URL_WEB_APP_GOOGLE_APPS_SCRIPT_DISINI';
+        const LAT = -8.2192;
+        const LNG = 114.3691;
+        let prayerTimesCache = {};
+
+        // Data Petugas Harian (Contoh Berdasarkan Hari dalam Seminggu 0=Minggu, 1=Senin, dst)
+        const daftarPetugas = [
+            { imam: "Kiai H. Abdullah", muadzin: "Ust. Fulan (Minggu)" },
+            { imam: "Ust. M. Sholeh", muadzin: "Bpk. Rahmat (Senin)" },
+            { imam: "Dr. H. Ahmad", muadzin: "Ust. Zaky (Selasa)" },
+            { imam: "Ust. H. Syaifullah", muadzin: "Bpk. Hasan (Rabu)" },
+            { imam: "Kiai M. Qosim", muadzin: "Ust. Farhan (Kamis)" },
+            { imam: "Ust. H. Ridwan", muadzin: "Bpk. Anwar (Jumat)" },
+            { imam: "Kiai H. Abdullah", muadzin: "Ust. Bilal (Sabtu)" }
+        ];
+
+        // Otomatisasi Tema Gelap/Terang Berdasarkan Jam (Jam 06.00 - 17.30 Terang, Lainnya Gelap)
+        function checkAutoTheme() {
+            const hour = new Date().getHours();
+            const htmlEl = document.documentElement;
+            const iconEl = document.getElementById('themeIcon');
+            
+            if (hour >= 6 && hour < 18) {
+                htmlEl.classList.remove('dark');
+                iconEl.innerText = '☀️';
+            } else {
+                htmlEl.classList.add('dark');
+                iconEl.innerText = '🌙';
+            }
+        }
+
+        function toggleThemeManually() {
+            const htmlEl = document.documentElement;
+            const iconEl = document.getElementById('themeIcon');
+            htmlEl.classList.toggle('dark');
+            iconEl.innerText = htmlEl.classList.contains('dark') ? '🌙' : '☀️';
+        }
+
+        checkAutoTheme();
+        setInterval(checkAutoTheme, 60000);
+
+        // Jam & Tanggal Realtime
+        function updateClockAndDate() {
+            const now = new Date();
+            document.getElementById('clock').innerText = now.toLocaleTimeString('id-ID');
+            
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const masehi = now.toLocaleDateString('id-ID', options);
+
+            try {
+                const hijriFormatter = new Intl.DateTimeFormat('id-ID-u-ca-islamic', { day: 'numeric', month: 'long', year: 'numeric' });
+                document.getElementById('date').innerText = masehi + ' / ' + hijriFormatter.format(now) + ' H';
+            } catch(e) {
+                document.getElementById('date').innerText = masehi;
+            }
+
+            // Set Petugas Berdasarkan Hari
+            const dayIndex = now.getDay();
+            const petugasHariIni = daftarPetugas[dayIndex];
+            document.getElementById('petugasInfo').innerText = `Imam: ${petugasHariIni.imam} | Muadzin: ${petugasHariIni.muadzin}`;
+        }
+        setInterval(updateClockAndDate, 1000);
+        updateClockAndDate();
+
+        // Fetch Jadwal Sholat Aladhan API
+        async function fetchPrayerTimes() {
+            try {
+                const today = new Date();
+                const dd = String(today.getDate()).padStart(2, '0');
+                const mm = String(today.getMonth() + 1).padStart(2, '0');
+                const yyyy = today.getFullYear();
+                
+                const url = `https://api.aladhan.com/v1/timings/${dd}-${mm}-${yyyy}?latitude=${LAT}&longitude=${LNG}&method=20`;
+                const res = await fetch(url);
+                const json = await res.json();
+                
+                if(json.code === 200) {
+                    const timings = json.data.timings;
+                    prayerTimesCache = {
+                        Subuh: timings.Fajr,
+                        Syuruq: timings.Sunrise,
+                        Dzuhur: timings.Dhuhr,
+                        Ashar: timings.Asr,
+                        Maghrib: timings.Maghrib,
+                        Isya: timings.Isha
+                    };
+
+                    for (const [key, val] of Object.entries(prayerTimesCache)) {
+                        const el = document.getElementById(`time-${key}`);
+                        if(el) el.innerText = val;
+                    }
+                }
+            } catch (err) {
+                console.error("Gagal memuat jadwal sholat:", err);
+            }
+        }
+        fetchPrayerTimes();
+
+        // Countdown & Highlight Sholat
+        function updateCountdown() {
+            if (!prayerTimesCache.Subuh) return;
+            
+            const now = new Date();
+            const currentTimeStr = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
+            
+            const prayers = [
+                { name: 'Subuh', time: prayerTimesCache.Subuh + ':00' },
+                { name: 'Syuruq', time: prayerTimesCache.Syuruq + ':00' },
+                { name: 'Dzuhur', time: prayerTimesCache.Dzuhur + ':00' },
+                { name: 'Ashar', time: prayerTimesCache.Ashar + ':00' },
+                { name: 'Maghrib', time: prayerTimesCache.Maghrib + ':00' },
+                { name: 'Isya', time: prayerTimesCache.Isya + ':00' }
+            ];
+
+            let nextPrayer = prayers[0];
+            for (let p of prayers) {
+                if (p.time > currentTimeStr) {
+                    nextPrayer = p;
+                    break;
+                }
+            }
+
+            document.getElementById('nextPrayerName').innerText = nextPrayer.name;
+
+            document.querySelectorAll('.prayer-card').forEach(card => {
+                card.classList.remove('border-amber-400', 'bg-emerald-50', 'dark:bg-emerald-950/40', 'ring-2', 'ring-amber-400');
+            });
+            const activeCard = document.getElementById(`card-${nextPrayer.name}`);
+            if(activeCard) {
+                activeCard.classList.add('border-amber-400', 'bg-emerald-50', 'dark:bg-emerald-950/40', 'ring-2', 'ring-amber-400');
+            }
+        }
+        setInterval(updateCountdown, 1000);
+
+        // Sinkronisasi Data Google Sheets
+        async function loadSheetData() {
+            if (GOOGLE_SCRIPT_URL.includes('PASTE_URL')) return;
+            try {
+                const res = await fetch(GOOGLE_SCRIPT_URL);
+                const data = await res.json();
+
+                document.getElementById('saldoTotal').innerText = 'Rp ' + Number(data.saldoTotal || 0).toLocaleString('id-ID');
+                document.getElementById('pemasukan').innerText = 'Rp ' + Number(data.pemasukan || 0).toLocaleString('id-ID');
+                document.getElementById('pengeluaran').innerText = 'Rp ' + Number(data.pengeluaran || 0).toLocaleString('id-ID');
+                
+                if(data.pengumuman) {
+                    document.getElementById('runningText').innerText = data.pengumuman;
+                }
+
+                const tbody = document.getElementById('txTable');
+                tbody.innerHTML = '';
+                if(data.riwayat && data.riwayat.length > 0) {
+                    data.riwayat.slice(-4).forEach(item => {
+                        const color = item.jenis === 'Pemasukan' ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400';
+                        tbody.innerHTML += `
+                            <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                                <td class="py-2 pr-2 truncate max-w-[150px]">${item.keterangan}</td>
+                                <td class="py-2 text-right font-mono font-semibold ${color}">Rp ${Number(item.jumlah).toLocaleString('id-ID')}</td>
+                            </tr>
+                        `;
+                    });
+                }
+            } catch (err) {
+                console.error("Gagal sinkronisasi Google Sheets:", err);
+            }
+        }
+        loadSheetData();
+        setInterval(loadSheetData, 30000);
+    </script>
+</body>
+</html>
