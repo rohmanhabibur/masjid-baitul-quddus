@@ -44,7 +44,7 @@
     <header class="bg-gradient-to-r from-emerald-900 via-emerald-800 dark:from-emerald-950 dark:via-slate-900 dark:to-emerald-950 px-6 py-2.5 border-b-2 border-amber-500/50 flex justify-between items-center shadow-xl text-white">
         <div class="flex items-center gap-3">
             <div class="w-12 h-12 rounded-xl overflow-hidden border-2 border-amber-400 shrink-0 shadow">
-                <img src="https://images.unsplash.com/photo-1564769625405-daf604ef5cb7?w=150" alt="Masjid Baitul Quddus" class="w-full h-full object-cover">
+                <img src="logo_masjid_baitul_quddus.jpeg" alt="Logo Masjid Baitul Quddus" class="w-full h-full object-cover">
             </div>
             <div>
                 <h1 class="text-xl font-extrabold tracking-wide text-amber-300">MASJID BAITUL QUDDUS</h1>
@@ -253,39 +253,85 @@
         ];
 
         // LOGIKA CAROUSEL PAMFLET VS QRIS BERGANTI OTOMATIS
-        let currentSlide = 1;
-        function startCarousel() {
-            setInterval(() => {
-                const slide1 = document.getElementById('slide-1');
-                const slide2 = document.getElementById('slide-2');
-                const dot1 = document.getElementById('dot-1');
-                const dot2 = document.getElementById('dot-2');
-                const headerTitle = document.getElementById('carousel-header-title');
+        let dynamicSlides = [];
+        let currentSlideIndex = 0;
+        let carouselInterval = null;
 
-                if (currentSlide === 1) {
-                    // Pindah ke Slide 2 (QRIS)
-                    slide1.classList.remove('opacity-100');
-                    slide1.classList.add('opacity-0', 'pointer-events-none');
-                    slide2.classList.remove('opacity-0', 'pointer-events-none');
-                    slide2.classList.add('opacity-100');
-                    dot1.className = 'w-2 h-2 rounded-full bg-slate-400 dark:bg-slate-700 inline-block transition-all';
-                    dot2.className = 'w-2 h-2 rounded-full bg-amber-500 inline-block transition-all';
-                    headerTitle.innerText = 'QRIS Donasi & Infaq Digital';
-                    currentSlide = 2;
-                } else {
-                    // Pindah ke Slide 1 (Agenda Google Sheets)
-                    slide2.classList.remove('opacity-100');
-                    slide2.classList.add('opacity-0', 'pointer-events-none');
-                    slide1.classList.remove('opacity-0', 'pointer-events-none');
-                    slide1.classList.add('opacity-100');
-                    dot2.className = 'w-2 h-2 rounded-full bg-slate-400 dark:bg-slate-700 inline-block transition-all';
-                    dot1.className = 'w-2 h-2 rounded-full bg-amber-500 inline-block transition-all';
-                    headerTitle.innerText = 'Pamflet & Agenda Kegiatan';
-                    currentSlide = 1;
-                }
+        // Fungsi Menjalankan Carousel Dinamis
+        function startDynamicCarousel() {
+            if (carouselInterval) clearInterval(carouselInterval);
+            
+            carouselInterval = setInterval(() => {
+                if (dynamicSlides.length === 0) return;
+
+                currentSlideIndex = (currentSlideIndex + 1) % dynamicSlides.length;
+                const slideData = dynamicSlides[currentSlideIndex];
+
+                document.getElementById('pamfletImage').src = slideData.gambar;
+                document.getElementById('pamfletTitle').innerText = slideData.judul + (slideData.waktu ? ' — ' + slideData.waktu : '');
+                document.getElementById('carousel-header-title').innerText = slideData.judul;
+
+                // Update indikator titik aktif
+                document.getElementById('dot-1').className = currentSlideIndex === 0 ? 'w-2 h-2 rounded-full bg-amber-500 inline-block transition-all' : 'w-2 h-2 rounded-full bg-slate-400 dark:bg-slate-700 inline-block transition-all';
+                document.getElementById('dot-2').className = currentSlideIndex === 1 ? 'w-2 h-2 rounded-full bg-amber-500 inline-block transition-all' : 'w-2 h-2 rounded-full bg-slate-400 dark:bg-slate-700 inline-block transition-all';
+
             }, 6000); // Berganti setiap 6 detik
         }
 
+        // Sinkronisasi Data Real-Time dari Google Sheets
+        async function loadSheetData() {
+            try {
+                const res = await fetch(GOOGLE_SCRIPT_URL);
+                const data = await res.json();
+
+                // 1. Update Saldo Kas
+                document.getElementById('saldoTotal').innerText = 'Rp ' + Number(data.saldoTotal || 0).toLocaleString('id-ID');
+
+                // 2. Update Running Text / Pengumuman
+                if (data.pengumuman) {
+                    document.getElementById('runningText').innerText = data.pengumuman;
+                }
+
+                // 3. Update Agenda & QRIS dari Sheet (Dinamis Carousel)
+                if (data.agendaList && data.agendaList.length > 0) {
+                    dynamicSlides = data.agendaList;
+                    // Tampilkan slide pertama saat pertama kali dimuat
+                    document.getElementById('pamfletImage').src = dynamicSlides[0].gambar;
+                    document.getElementById('pamfletTitle').innerText = dynamicSlides[0].judul + (dynamicSlides[0].waktu ? ' — ' + dynamicSlides[0].waktu : '');
+                }
+
+                // 4. Update Tabel Mutasi Kas Terbaru
+                const tbody = document.getElementById('txTable');
+                tbody.innerHTML = '';
+
+                if (data.riwayat && data.riwayat.length > 0) {
+                    data.riwayat.slice(-3).reverse().forEach(item => {
+                        const isMasuk = String(item.jenis).toUpperCase() === 'MASUK';
+                        const amountClass = isMasuk ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400';
+
+                        tbody.innerHTML += `
+                            <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/40">
+                                <td class="py-1.5 px-1 text-slate-500 font-mono text-[10px]">${item.tanggal}</td>
+                                <td class="py-1.5 px-1 font-medium truncate max-w-[120px]">${item.keterangan}</td>
+                                <td class="py-1.5 px-1 text-right font-mono-custom font-bold ${amountClass}">
+                                    ${isMasuk ? '+' : '-'}Rp ${Number(item.jumlah).toLocaleString('id-ID')}
+                                </td>
+                            </tr>
+                        `;
+                    });
+                }
+            } catch (err) {
+                console.error("Gagal mengambil data Sheet:", err);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            loadSheetData();
+            startDynamicCarousel(); // Memulai carousel dinamis berbasis sheet
+            setInterval(loadSheetData, 15000); // Sinkronisasi otomatis tiap 15 detik
+        });
+        
         function checkAutoTheme() {
             const hour = new Date().getHours();
             const htmlEl = document.documentElement;
@@ -338,61 +384,6 @@
         }
         fetchPrayerTimes();
 
-        // Sinkronisasi Data Real-Time dari Google Sheets
-        async function loadSheetData() {
-            try {
-                const res = await fetch(GOOGLE_SCRIPT_URL);
-                const data = await res.json();
-
-                // 1. Update Saldo Kas
-                document.getElementById('saldoTotal').innerText = 'Rp ' + Number(data.saldoTotal || 0).toLocaleString('id-ID');
-
-                // 2. Update Running Text / Pengumuman
-                if (data.pengumuman) {
-                    document.getElementById('runningText').innerText = data.pengumuman;
-                }
-
-                // 3. Update Agenda & Pamflet dari Sheet
-                if (data.agenda) {
-                    if (data.agenda.gambar) {
-                        document.getElementById('pamfletImage').src = data.agenda.gambar;
-                    }
-                    if (data.agenda.judul) {
-                        document.getElementById('pamfletTitle').innerText = data.agenda.judul + (data.agenda.waktu ? ' — ' + data.agenda.waktu : '');
-                    }
-                }
-
-                // 4. Update Tabel Mutasi Kas Terbaru
-                const tbody = document.getElementById('txTable');
-                tbody.innerHTML = '';
-
-                if (data.riwayat && data.riwayat.length > 0) {
-                    data.riwayat.slice(-3).reverse().forEach(item => {
-                        const isMasuk = String(item.jenis).toUpperCase() === 'MASUK';
-                        const amountClass = isMasuk ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400';
-
-                        tbody.innerHTML += `
-                            <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/40">
-                                <td class="py-1.5 px-1 text-slate-500 font-mono text-[10px]">${item.tanggal}</td>
-                                <td class="py-1.5 px-1 font-medium truncate max-w-[120px]">${item.keterangan}</td>
-                                <td class="py-1.5 px-1 text-right font-mono-custom font-bold ${amountClass}">
-                                    ${isMasuk ? '+' : '-'}Rp ${Number(item.jumlah).toLocaleString('id-ID')}
-                                </td>
-                            </tr>
-                        `;
-                    });
-                }
-            } catch (err) {
-                console.error("Gagal mengambil data Sheet:", err);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
-            loadSheetData();
-            startCarousel(); // Menjalankan animasi carousel pamflet vs QRIS
-            setInterval(loadSheetData, 15000); // Sinkronisasi otomatis tiap 15 detik
-        });
     </script>
 </body>
 </html>
