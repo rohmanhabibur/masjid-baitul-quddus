@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Agenda & Pamflet - Masjid Baitul Quddus</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- PROTEKSI SESI ADMIN KETAT -->
+    <script>
+        if (sessionStorage.getItem('isAdminLoggedIn') !== 'true') {
+            alert('Akses Ditolak! Anda harus login terlebih dahulu.');
+            window.location.replace('login.html');
+        }
+    </script>
+
+    <!-- Header Admin -->
+    <header class="bg-slate-900 text-white shadow px-6 py-4 flex justify-between items-center border-b border-slate-800">
+        <div>
+            <h1 class="font-extrabold text-lg text-amber-400">MANAJEMEN AGENDA & PAMFLET MASJID</h1>
+            <p class="text-xs text-slate-400">Masjid Baitul Quddus Cungking, Mojopanggung, Banyuwangi</p>
+        </div>
+        <div class="flex items-center gap-3">
+            <a href="admin.html" class="bg-slate-800 hover:bg-slate-700 text-xs px-3 py-2 rounded-lg transition font-medium">Kembali ke Panel Utama</a>
+            <button onclick="handleLogout()" class="bg-rose-600 hover:bg-rose-700 text-xs font-bold px-3 py-2 rounded-lg transition shadow flex items-center gap-1">
+                <i data-lucide="log-out" class="w-3.5 h-3.5"></i> Logout
+            </button>
+        </div>
+    </header>
+
+    <!-- Content -->
+    <main class="max-w-7xl w-full mx-auto p-6 space-y-6 flex-grow">
+        
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+            <h3 class="text-base font-bold text-slate-800 mb-1 flex items-center gap-2">
+                <i data-lucide="calendar-plus" class="w-5 h-5 text-amber-500"></i> Tambah Agenda & Pamflet Baru
+            </h3>
+            <p class="text-xs text-slate-500 mb-4">Informasi agenda dan tautan gambar pamflet akan langsung diperbarui di layar TV digital.</p>
+
+            <form id="form-agenda" onsubmit="saveAgenda(event)" class="space-y-4 text-sm">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Judul Agenda / Kegiatan</label>
+                    <input type="text" id="ag-judul" placeholder="Contoh: Kajian Akbar & Santunan Yatim" required class="w-full border border-slate-300 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-amber-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Waktu & Tanggal Pelaksanaan</label>
+                    <input type="text" id="ag-waktu" placeholder="Contoh: Ahad Pagi, 05.00 WIB - Selesai" required class="w-full border border-slate-300 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-amber-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Tautan Gambar / Poster (URL Gambar)</label>
+                    <input type="url" id="ag-gambar" placeholder="https://images.unsplash.com/photo-..." required class="w-full border border-slate-300 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-amber-500 font-mono text-xs">
+                </div>
+                <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3 rounded-xl transition shadow flex items-center justify-center gap-2">
+                    <i data-lucide="upload" class="w-4 h-4"></i> Publikasikan Agenda ke Layar TV
+                </button>
+            </form>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 text-xs py-6 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p>&copy; 2026 Masjid Baitul Quddus Cungking, Mojopanggung, Giri, Banyuwangi. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
+
+        function saveAgenda(e) {
+            e.preventDefault();
+            const judul = document.getElementById('ag-judul').value;
+            const waktu = document.getElementById('ag-waktu').value;
+            const gambar = document.getElementById('ag-gambar').value;
+
+            // Simpan ke localStorage agar bisa dibaca oleh tv.html atau index.html
+            const agendaData = { judul, waktu, gambar };
+            localStorage.setItem('masjid_active_agenda', JSON.stringify(agendaData));
+
+            alert('Alhamdulillah, agenda dan pamflet berhasil diperbarui!');
+            document.getElementById('form-agenda').reset();
+        }
+
+        function handleLogout() {
+            if (confirm('Keluar dari sesi administrator?')) {
+                sessionStorage.clear();
+                window.location.replace('login.html');
+            }
+        }
+    </script>
+</body>
+</html>
