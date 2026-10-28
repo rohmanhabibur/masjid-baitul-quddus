@@ -35,12 +35,9 @@
                     <button onclick="switchTab('dashboard')" class="nav-btn px-3 py-2 rounded-md hover:bg-emerald-600 transition" id="nav-dashboard">Beranda</button>
                     <button onclick="switchTab('laporan')" class="nav-btn px-3 py-2 rounded-md hover:bg-emerald-600 transition" id="nav-laporan">Laporan Keuangan</button>
                     <button onclick="switchTab('kegiatan')" class="nav-btn px-3 py-2 rounded-md hover:bg-emerald-600 transition" id="nav-kegiatan">Kegiatan & Agenda</button>
-                    
-                    <!-- Tombol Menuju Halaman Login/Admin Terpisah -->
                     <a href="login.html" class="px-3 py-2 rounded-md hover:bg-emerald-600 transition flex items-center gap-1 bg-emerald-800/80" id="nav-admin">
                         <i data-lucide="shield-check" class="w-4 h-4"></i> Panel Admin
                     </a>
-                    
                     <a href="tv.html" target="_blank" class="px-3 py-2 rounded-md bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold transition flex items-center gap-1">
                         <i data-lucide="tv" class="w-4 h-4"></i> Buka Layar TV
                     </a>
@@ -114,7 +111,7 @@
                                 </tr>
                             </thead>
                             <tbody id="recent-transactions-list" class="divide-y divide-slate-100">
-                                <!-- Populated dynamically -->
+                                <tr><td colspan="3" class="p-4 text-center text-slate-400">Memuat data dari Google Sheets...</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -127,8 +124,8 @@
                         </h3>
                         <ul class="space-y-3 text-sm text-slate-600">
                             <li class="p-3 bg-slate-50 rounded-lg border-l-4 border-emerald-500">
-                                <p class="font-semibold text-slate-800">Kajian Rutin Malam Jumat</p>
-                                <p class="text-xs text-slate-500">Ba'da Maghrib - Pembacaan Yasin & Tahlil bersama Jamaah.</p>
+                                <p class="font-semibold text-slate-800">Kajian Rutin & Kegiatan</p>
+                                <p class="text-xs text-slate-500" id="dash-pengumuman-text">Menyelaraskan informasi masjid secara real-time.</p>
                             </li>
                             <li class="p-3 bg-slate-50 rounded-lg border-l-4 border-amber-500">
                                 <p class="font-semibold text-slate-800">Salurkan Infaq Terbaik</p>
@@ -229,21 +226,35 @@
         </div>
     </footer>
 
-    <!-- JavaScript Application Logic -->
+    <!-- JavaScript Application Logic (Sinkron Google Apps Script) -->
     <script>
-        let transactions = [
-            { id: 1, tanggal: '2026-10-20', jenis: 'MASUK', kategori: 'Infaq Jumat', keterangan: 'Hasil Kotak Infaq Shalat Jumat', jumlah: 4520000 },
-            { id: 2, tanggal: '2026-10-22', jenis: 'KELUAR', kategori: 'Kebersihan', keterangan: 'Pembelian alat kebersihan & karpet', jumlah: 500000 },
-            { id: 3, tanggal: '2026-10-25', jenis: 'MASUK', kategori: 'Donatur', keterangan: 'Infaq Hamba Allah untuk Operasional', jumlah: 2000000 },
-            { id: 4, tanggal: '2026-10-26', jenis: 'KELUAR', kategori: 'Listrik & Air', keterangan: 'Pembayaran Tagihan Bulanan PLN & PDAM', jumlah: 850000 }
-        ];
+        // === TEMPELKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI ===
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby_kvJQEWeShyamhOFZOJ_He8e4BLhhPVBeB364URQqeYb3ttibzDL9mscx4oiSA7zf/exec';
 
+        let transactions = [];
         let myChart = null;
 
         document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
-            renderApp();
+            fetchPublicData();
         });
+
+        async function fetchPublicData() {
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL);
+                const data = await response.json();
+                
+                transactions = data.riwayat || [];
+                
+                if (data.pengumuman) {
+                    document.getElementById('dash-pengumuman-text').innerText = data.pengumuman;
+                }
+
+                renderApp();
+            } catch (error) {
+                console.error("Gagal mengambil data publik:", error);
+            }
+        }
 
         function switchTab(tabName) {
             const tabs = ['dashboard', 'laporan', 'kegiatan'];
@@ -278,17 +289,22 @@
 
             const recentContainer = document.getElementById('recent-transactions-list');
             recentContainer.innerHTML = '';
-            [...transactions].reverse().slice(0, 4).forEach(t => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td class="p-2 text-xs text-slate-500">${t.tanggal}</td>
-                    <td class="p-2 text-slate-700 font-medium">${t.keterangan}</td>
-                    <td class="p-2 text-right font-semibold ${t.jenis === 'MASUK' ? 'text-emerald-600' : 'text-rose-600'}">
-                        ${t.jenis === 'MASUK' ? '+' : '-'} ${formatRupiah(t.jumlah)}
-                    </td>
-                `;
-                recentContainer.appendChild(tr);
-            });
+            
+            if (transactions.length === 0) {
+                recentContainer.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-400">Belum ada data transaksi.</td></tr>`;
+            } else {
+                [...transactions].reverse().slice(0, 4).forEach(t => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td class="p-2 text-xs text-slate-500">${t.tanggal}</td>
+                        <td class="p-2 text-slate-700 font-medium">${t.keterangan}</td>
+                        <td class="p-2 text-right font-semibold ${t.jenis === 'MASUK' ? 'text-emerald-600' : 'text-rose-600'}">
+                            ${t.jenis === 'MASUK' ? '+' : '-'} ${formatRupiah(t.jumlah)}
+                        </td>
+                    `;
+                    recentContainer.appendChild(tr);
+                });
+            }
 
             filterData();
         }
@@ -299,6 +315,11 @@
             fullContainer.innerHTML = '';
 
             const filtered = transactions.filter(t => filterValue === 'ALL' || t.jenis === filterValue);
+
+            if (filtered.length === 0) {
+                fullContainer.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-400">Tidak ada data yang sesuai.</td></tr>`;
+                return;
+            }
 
             filtered.reverse().forEach(t => {
                 const tr = document.createElement('tr');
