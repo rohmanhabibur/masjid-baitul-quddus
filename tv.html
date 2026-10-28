@@ -49,10 +49,8 @@
     <!-- HEADER SECTION -->
     <header class="bg-gradient-to-r from-emerald-900 via-emerald-800 dark:from-emerald-950 dark:via-slate-900 dark:to-emerald-950 px-6 py-2.5 border-b-2 border-amber-500/50 flex justify-between items-center shadow-xl text-white">
         <div class="flex items-center gap-3">
-            <!-- Foto Masjid Thumbnail -->
             <div class="w-12 h-12 rounded-xl overflow-hidden border-2 border-amber-400 shrink-0 shadow">
-                <img src="
-logo_masjid_baitul_quddus.jpeg" alt="Masjid Baitul Quddus" class="w-full h-full object-cover">
+                <img src="https://images.unsplash.com/photo-1564769625405-daf604ef5cb7?w=150" alt="Masjid Baitul Quddus" class="w-full h-full object-cover">
             </div>
             <div>
                 <h1 class="text-xl font-extrabold tracking-wide text-amber-300">MASJID BAITUL QUDDUS</h1>
@@ -62,12 +60,11 @@ logo_masjid_baitul_quddus.jpeg" alt="Masjid Baitul Quddus" class="w-full h-full 
             </div>
         </div>
 
-        <!-- Clock, Dates & Theme Toggle -->
         <div class="flex items-center gap-3">
             <div class="bg-slate-900/80 px-4 py-1.5 rounded-xl border border-slate-800 text-white shadow-inner text-right">
                 <div id="clock" class="text-2xl font-extrabold text-amber-300 font-mono-custom tracking-wider">00:00:00</div>
                 <div class="flex items-center justify-end gap-2 text-[10px]">
-                    <span id="date-gregorian" class="text-slate-300">Selasa, 28 Oktober 2026</span>
+                    <span id="date-gregorian" class="text-slate-300">Rabu, 28 Oktober 2026</span>
                     <span class="text-slate-500">|</span>
                     <span id="date-hijri" class="text-emerald-400 font-medium">-- H</span>
                 </div>
@@ -102,7 +99,6 @@ logo_masjid_baitul_quddus.jpeg" alt="Masjid Baitul Quddus" class="w-full h-full 
                 <p id="time-isya" class="text-base font-extrabold font-mono-custom">--:--</p>
             </div>
             
-            <!-- Countdown Banner Card -->
             <div class="bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl p-2 text-slate-950 flex flex-col justify-center items-center shadow-lg">
                 <p id="next-prayer-label" class="text-[9px] font-bold uppercase tracking-wider text-slate-900">Menuju Sholat</p>
                 <p id="next-prayer-name" class="text-xs font-black uppercase text-slate-950">--</p>
@@ -111,12 +107,11 @@ logo_masjid_baitul_quddus.jpeg" alt="Masjid Baitul Quddus" class="w-full h-full 
         </div>
     </section>
 
-    <!-- MAIN BODY SECTION (3 COLUMNS: LEFT = KEUANGAN & PETUGAS, CENTER = PAMFLET, RIGHT = MAP & REKENING) -->
+    <!-- MAIN BODY SECTION -->
     <main class="flex-1 px-6 py-3 grid grid-cols-12 gap-4 items-stretch overflow-hidden">
         
-        <!-- KOLOM KIRI (4 Kolom): Saldo, Mutasi Kas & Petugas -->
+        <!-- KOLOM KIRI (4 Kolom): Saldo & Mutasi Kas -->
         <div class="col-span-4 flex flex-col gap-3 justify-between">
-            <!-- Saldo Kas -->
             <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-emerald-500/30 rounded-2xl p-3.5 shadow glow-emerald flex items-center justify-between">
                 <div>
                     <span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 tracking-wider uppercase flex items-center gap-1">
@@ -129,7 +124,6 @@ logo_masjid_baitul_quddus.jpeg" alt="Masjid Baitul Quddus" class="w-full h-full 
                 </div>
             </div>
 
-            <!-- Mutasi Kas Ringkas -->
             <div class="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 shadow flex-1 flex flex-col justify-between">
                 <div>
                     <h3 class="text-xs font-bold flex items-center gap-1.5 border-b border-slate-100 dark:border-slate-800 pb-1.5 mb-1.5">
@@ -146,36 +140,6 @@ logo_masjid_baitul_quddus.jpeg" alt="Masjid Baitul Quddus" class="w-full h-full 
                     </div>
                 </div>
             </div>
-
-            <!-- Panel Petugas Sholat & Jumat -->
-            <div class="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 shadow">
-                <h4 class="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase flex items-center gap-1 mb-2">
-                    <i data-lucide="users" class="w-3.5 h-3.5"></i> Petugas Hari Ini
-                </h4>
-                <div class="grid grid-cols-3 gap-2 text-center">
-                    <div class="bg-slate-50 dark:bg-slate-950 p-1.5 rounded-xl border border-slate-100 dark:border-slate-800">
-                        <div class="w-10 h-10 mx-auto rounded-full bg-slate-800 border border-amber-400 overflow-hidden mb-1 shadow">
-                            <img id="fotoImam" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150" alt="Imam" class="w-full h-full object-cover">
-                        </div>
-                        <span class="text-[8px] text-slate-400 uppercase font-bold block">Imam</span>
-                        <span id="namaImam" class="text-[9px] font-bold text-amber-500 dark:text-amber-300 block truncate">Kiai Abdullah</span>
-                    </div>
-                    <div class="bg-slate-50 dark:bg-slate-950 p-1.5 rounded-xl border border-slate-100 dark:border-slate-800">
-                        <div class="w-10 h-10 mx-auto rounded-full bg-slate-800 border border-emerald-400 overflow-hidden mb-1 shadow">
-                            <img id="fotoMuadzin" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150" alt="Muadzin" class="w-full h-full object-cover">
-                        </div>
-                        <span class="text-[8px] text-slate-400 uppercase font-bold block">Muadzin</span>
-                        <span id="namaMuadzin" class="text-[9px] font-bold text-emerald-500 dark:text-emerald-300 block truncate">Ust. Fulan</span>
-                    </div>
-                    <div class="bg-slate-50 dark:bg-slate-950 p-1.5 rounded-xl border border-slate-100 dark:border-slate-800">
-                        <div class="w-10 h-10 mx-auto rounded-full bg-slate-800 border border-sky-400 overflow-hidden mb-1 shadow">
-                            <img id="fotoKhotib" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Khotib" class="w-full h-full object-cover">
-                        </div>
-                        <span class="text-[8px] text-slate-400 uppercase font-bold block">Khotib</span>
-                        <span id="namaKhotib" class="text-[9px] font-bold text-sky-500 dark:text-sky-300 block truncate">Dr. Ahmad</span>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- KOLOM TENGAH (4 Kolom): Slot Posting Pamflet / Brosur Kegiatan -->
@@ -187,22 +151,54 @@ logo_masjid_baitul_quddus.jpeg" alt="Masjid Baitul Quddus" class="w-full h-full 
                     </h3>
                     <span class="text-[9px] bg-amber-100 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 px-2 py-0.5 rounded font-bold">Info Masjid</span>
                 </div>
-                <!-- Kotak Tempat Pamflet / Poster -->
-                <div class="w-full h-[280px] bg-slate-100 dark:bg-slate-950 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-700 overflow-hidden flex flex-col items-center justify-center relative group shadow-inner">
+                <div class="w-full h-[220px] bg-slate-100 dark:bg-slate-950 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-700 overflow-hidden flex flex-col items-center justify-center relative shadow-inner">
                     <img id="pamfletImage" src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=600" alt="Pamflet Kegiatan" class="w-full h-full object-cover">
                     <div class="absolute bottom-0 inset-x-0 bg-slate-950/80 backdrop-blur px-3 py-1.5 text-center">
                         <p id="pamfletTitle" class="text-[11px] font-bold text-amber-300 truncate">Kajian Rutin & Santunan Yatim Piatu</p>
                     </div>
                 </div>
             </div>
-            <div class="text-[10px] text-center text-slate-400 pt-1">
-                Ganti gambar pamflet melalui link URL gambar di skrip.
+
+            <!-- Panel 4 Petugas (Imam, Muadzin, Bilal, Khotib) -->
+            <div class="bg-slate-50 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800 rounded-xl p-2.5 shadow mt-2">
+                <h4 class="text-[9px] font-bold text-amber-600 dark:text-amber-400 uppercase flex items-center gap-1 mb-1.5">
+                    <i data-lucide="users" class="w-3 h-3"></i> Petugas Hari Ini[cite: 3, 4]
+                </h4>
+                <div class="grid grid-cols-4 gap-1.5 text-center">
+                    <div class="bg-white dark:bg-slate-900 p-1 rounded-lg border border-slate-100 dark:border-slate-800">
+                        <div class="w-8 h-8 mx-auto rounded-full bg-slate-800 border border-amber-400 overflow-hidden mb-0.5 shadow">
+                            <img id="fotoImam" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150" alt="Imam" class="w-full h-full object-cover">
+                        </div>
+                        <span class="text-[7px] text-slate-400 uppercase font-bold block">Imam</span>
+                        <span id="namaImam" class="text-[8px] font-bold text-amber-500 dark:text-amber-300 block truncate">Ust. H. Syaifullah</span>
+                    </div>
+                    <div class="bg-white dark:bg-slate-900 p-1 rounded-lg border border-slate-100 dark:border-slate-800">
+                        <div class="w-8 h-8 mx-auto rounded-full bg-slate-800 border border-emerald-400 overflow-hidden mb-0.5 shadow">
+                            <img id="fotoMuadzin" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150" alt="Muadzin" class="w-full h-full object-cover">
+                        </div>
+                        <span class="text-[7px] text-slate-400 uppercase font-bold block">Muadzin</span>
+                        <span id="namaMuadzin" class="text-[8px] font-bold text-emerald-500 dark:text-emerald-300 block truncate">Bpk. Hasan</span>
+                    </div>
+                    <div class="bg-white dark:bg-slate-900 p-1 rounded-lg border border-slate-100 dark:border-slate-800">
+                        <div class="w-8 h-8 mx-auto rounded-full bg-slate-800 border border-blue-400 overflow-hidden mb-0.5 shadow">
+                            <img id="fotoBilal" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Bilal" class="w-full h-full object-cover">
+                        </div>
+                        <span class="text-[7px] text-slate-400 uppercase font-bold block">Bilal</span>
+                        <span id="namaBilal" class="text-[8px] font-bold text-blue-500 dark:text-blue-300 block truncate">Ust. Umar</span>
+                    </div>
+                    <div class="bg-white dark:bg-slate-900 p-1 rounded-lg border border-slate-100 dark:border-slate-800">
+                        <div class="w-8 h-8 mx-auto rounded-full bg-slate-800 border border-sky-400 overflow-hidden mb-0.5 shadow">
+                            <img id="fotoKhotib" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150" alt="Khotib" class="w-full h-full object-cover">
+                        </div>
+                        <span class="text-[7px] text-slate-400 uppercase font-bold block">Khotib</span>
+                        <span id="namaKhotib" class="text-[8px] font-bold text-sky-500 dark:text-sky-300 block truncate">-</span>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- KOLOM KANAN (4 Kolom): Rekening Donasi & Peta Lokasi (Maps) -->
+        <!-- KOLOM KANAN (4 Kolom): Rekening Donasi & Peta Lokasi -->
         <div class="col-span-4 flex flex-col gap-3 justify-between">
-            <!-- Informasi Rekening Donasi -->
             <div class="bg-gradient-to-br from-emerald-900 to-slate-900 border border-emerald-500/40 rounded-2xl p-3.5 shadow text-white">
                 <h4 class="text-xs font-bold text-amber-300 uppercase flex items-center gap-1.5 mb-2 border-b border-white/10 pb-1.5">
                     <i data-lucide="credit-card" class="w-4 h-4"></i> Rekening Donasi & Infaq
@@ -227,16 +223,14 @@ logo_masjid_baitul_quddus.jpeg" alt="Masjid Baitul Quddus" class="w-full h-full 
                 </div>
             </div>
 
-            <!-- Embed Peta Lokasi (Google Maps Preview / Card) -->
             <div class="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 shadow flex-1 flex flex-col justify-between">
                 <h4 class="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase flex items-center gap-1.5 mb-2">
                     <i data-lucide="map" class="w-3.5 h-3.5"></i> Lokasi Masjid
                 </h4>
-                <div class="w-full h-[110px] rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 relative shadow-inner">
-                    <!-- Simulasi Tampilan Peta / Map Card -->
+                <div class="w-full h-[100px] rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 relative shadow-inner">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.430034603332!2d114.3669145!3d-8.2192!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOMKwMTMnM-QuMSJTIDExNDKwMjI0LjgiRQ!5e0!3m2!1sid!2sid!4v1600000000000!5m2!1sid!2sid" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" class="filter dark:invert dark:hue-rotate-180"></iframe>
                 </div>
-                <div class="text-[9px] text-slate-400 text-center mt-1.5">
+                <div class="text-[9px] text-slate-400 text-center mt-1">
                     Cungking, Kel. Mojopanggung, Kec. Giri, Banyuwangi
                 </div>
             </div>
@@ -261,13 +255,13 @@ logo_masjid_baitul_quddus.jpeg" alt="Masjid Baitul Quddus" class="w-full h-full 
         let prayerSchedule = {};
 
         const daftarPetugas = [
-            { imam: "Kiai H. Abdullah", muadzin: "Ust. Fulan", khotib: "Dr. H. Ahmad", fotoImam: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150", fotoMuadzin: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", fotoKhotib: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" },
-            { imam: "Ust. M. Sholeh", muadzin: "Bpk. Rahmat", khotib: "-", fotoImam: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", fotoMuadzin: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", fotoKhotib: "https://via.placeholder.com/150" },
-            { imam: "Dr. H. Ahmad", muadzin: "Ust. Zaky", khotib: "-", fotoImam: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", fotoMuadzin: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150", fotoKhotib: "https://via.placeholder.com/150" },
-            { imam: "Ust. H. Syaifullah", muadzin: "Bpk. Hasan", khotib: "-", fotoImam: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", fotoMuadzin: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", fotoKhotib: "https://via.placeholder.com/150" },
-            { imam: "Kiai M. Qosim", muadzin: "Ust. Farhan", khotib: "-", fotoImam: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", fotoMuadzin: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", fotoKhotib: "https://via.placeholder.com/150" },
-            { imam: "Ust. H. Ridwan", muadzin: "Bpk. Anwar", khotib: "Kiai H. Abdullah", fotoImam: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", fotoMuadzin: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", fotoKhotib: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" },
-            { imam: "Kiai H. Abdullah", muadzin: "Ust. Bilal", khotib: "-", fotoImam: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", fotoMuadzin: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150", fotoKhotib: "https://via.placeholder.com/150" }
+            { imam: "Ust. H. Syaifullah", muadzin: "Bpk. Hasan", bilal: "Ust. Umar", khotib: "-", fotoImam: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150", fotoMuadzin: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", fotoBilal: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", fotoKhotib: "https://via.placeholder.com/150" },
+            { imam: "Ust. M. Sholeh", muadzin: "Bpk. Rahmat", bilal: "Ust. Zaky", khotib: "-", fotoImam: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", fotoMuadzin: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", fotoBilal: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150", fotoKhotib: "https://via.placeholder.com/150" },
+            { imam: "Dr. H. Ahmad", muadzin: "Ust. Zaky", bilal: "Bpk. Rahmat", khotib: "-", fotoImam: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", fotoMuadzin: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150", fotoBilal: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", fotoKhotib: "https://via.placeholder.com/150" },
+            { imam: "Ust. H. Syaifullah", muadzin: "Bpk. Hasan", bilal: "Ust. Farhan", khotib: "-", fotoImam: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150", fotoMuadzin: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", fotoBilal: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", fotoKhotib: "https://via.placeholder.com/150" },
+            { imam: "Kiai M. Qosim", muadzin: "Ust. Farhan", bilal: "Ust. Bilal", khotib: "-", fotoImam: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", fotoMuadzin: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", fotoBilal: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150", fotoKhotib: "https://via.placeholder.com/150" },
+            { imam: "Ust. H. Ridwan", muadzin: "Bpk. Anwar", bilal: "Ust. Umar", khotib: "Kiai H. Abdullah", fotoImam: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", fotoMuadzin: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", fotoBilal: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", fotoKhotib: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" },
+            { imam: "Kiai H. Abdullah", muadzin: "Ust. Bilal", bilal: "Bpk. Hasan", khotib: "-", fotoImam: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", fotoMuadzin: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150", fotoBilal: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", fotoKhotib: "https://via.placeholder.com/150" }
         ];
 
         function checkAutoTheme() {
@@ -305,9 +299,11 @@ logo_masjid_baitul_quddus.jpeg" alt="Masjid Baitul Quddus" class="w-full h-full 
             const p = daftarPetugas[dayIndex];
             document.getElementById('namaImam').innerText = p.imam;
             document.getElementById('namaMuadzin').innerText = p.muadzin;
+            document.getElementById('namaBilal').innerText = p.bilal;
             document.getElementById('namaKhotib').innerText = p.khotib;
             document.getElementById('fotoImam').src = p.fotoImam;
             document.getElementById('fotoMuadzin').src = p.fotoMuadzin;
+            document.getElementById('fotoBilal').src = p.fotoBilal;
             document.getElementById('fotoKhotib').src = p.fotoKhotib;
         }
         setInterval(updateClock, 1000);
@@ -352,6 +348,7 @@ logo_masjid_baitul_quddus.jpeg" alt="Masjid Baitul Quddus" class="w-full h-full 
                 document.getElementById('time-isya').innerText = prayerSchedule.Isya;
             }
         }
+        fetchPrayerTimes();
 
         function updatePrayerCountdown() {
             if (!prayerSchedule.Subuh) return;
@@ -460,10 +457,7 @@ logo_masjid_baitul_quddus.jpeg" alt="Masjid Baitul Quddus" class="w-full h-full 
 
         document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
-            fetchPrayerTimes();
             loadSheetData();
-
-            setInterval(fetchPrayerTimes, 6 * 60 * 60 * 1000);
             setInterval(loadSheetData, 30000);
         });
     </script>
