@@ -290,40 +290,52 @@
 
         // Sinkronisasi Data Real-Time dari Google Sheets
         async function loadSheetData() {
-            try {
-                const res = await fetch(GOOGLE_SCRIPT_URL);
-                const data = await res.json();
+    try {
+        const res = await fetch(GOOGLE_SCRIPT_URL);
+        const data = await res.json();
 
-                document.getElementById('saldoTotal').innerText = 'Rp ' + Number(data.saldoTotal || 0).toLocaleString('id-ID');
+        // 1. Update Saldo Kas
+        document.getElementById('saldoTotal').innerText = 'Rp ' + Number(data.saldoTotal || 0).toLocaleString('id-ID');
 
-                if (data.pengumuman) {
-                    document.getElementById('runningText').innerText = data.pengumuman;
-                }
+        // 2. Update Running Text / Pengumuman
+        if (data.pengumuman) {
+            document.getElementById('runningText').innerText = data.pengumuman;
+        }
 
-                const tbody = document.getElementById('txTable');
-                tbody.innerHTML = '';
-
-                if (data.riwayat && data.riwayat.length > 0) {
-                    data.riwayat.slice(-3).reverse().forEach(item => {
-                        const isMasuk = String(item.jenis).toUpperCase() === 'MASUK';
-                        const amountClass = isMasuk ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400';
-
-                        tbody.innerHTML += `
-                            <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/40">
-                                <td class="py-1.5 px-1 text-slate-500 font-mono text-[10px]">${item.tanggal}</td>
-                                <td class="py-1.5 px-1 font-medium truncate max-w-[120px]">${item.keterangan}</td>
-                                <td class="py-1.5 px-1 text-right font-mono-custom font-bold ${amountClass}">
-                                    ${isMasuk ? '+' : '-'}Rp ${Number(item.jumlah).toLocaleString('id-ID')}
-                                </td>
-                            </tr>
-                        `;
-                    });
-                }
-            } catch (err) {
-                console.error("Gagal mengambil data Sheet:", err);
+        // 3. Update Agenda & Pamflet (BARU)
+        if (data.agenda) {
+            if (data.agenda.gambar) {
+                document.getElementById('pamfletImage').src = data.agenda.gambar;
+            }
+            if (data.agenda.judul) {
+                document.getElementById('pamfletTitle').innerText = data.agenda.judul + (data.agenda.waktu ? ' — ' + data.agenda.waktu : '');
             }
         }
 
+        // 4. Update Tabel Mutasi Kas Terbaru
+        const tbody = document.getElementById('txTable');
+        tbody.innerHTML = '';
+
+        if (data.riwayat && data.riwayat.length > 0) {
+            data.riwayat.slice(-3).reverse().forEach(item => {
+                const isMasuk = String(item.jenis).toUpperCase() === 'MASUK';
+                const amountClass = isMasuk ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400';
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/40">
+                        <td class="py-1.5 px-1 text-slate-500 font-mono text-[10px]">${item.tanggal}</td>
+                        <td class="py-1.5 px-1 font-medium truncate max-w-[120px]">${item.keterangan}</td>
+                        <td class="py-1.5 px-1 text-right font-mono-custom font-bold ${amountClass}">
+                            ${isMasuk ? '+' : '-'}Rp ${Number(item.jumlah).toLocaleString('id-ID')}
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+    } catch (err) {
+        console.error("Gagal mengambil data Sheet:", err);
+    }
+}
         document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
             loadSheetData();
