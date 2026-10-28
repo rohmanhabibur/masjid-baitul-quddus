@@ -13,6 +13,12 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
+        @media print {
+            body * { visibility: hidden; }
+            #printable-report, #printable-report * { visibility: visible; }
+            #printable-report { position: absolute; left: 0; top: 0; width: 100%; }
+            .no-print { display: none !important; }
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
@@ -47,7 +53,7 @@
     </header>
 
     <!-- Main Content Area -->
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
 
         <!-- TAB 1: DASHBOARD -->
         <section id="tab-dashboard" class="space-y-6">
@@ -58,7 +64,7 @@
                         Sistem informasi akuntabel pengelolaan dana umat, laporan kas, jadwal sholat otomatis Banyuwangi, serta manajemen siaran TV digital masjid.
                     </p>
                 </div>
-                <div class="flex gap-2">
+                <div>
                     <a href="tv.html" target="_blank" class="bg-amber-400 hover:bg-amber-500 text-slate-950 font-bold px-4 py-2.5 rounded-xl text-sm shadow flex items-center gap-2 transition">
                         <i data-lucide="monitor-play" class="w-4 h-4"></i> Tampilan TV LCD
                     </a>
@@ -124,8 +130,8 @@
                         </h3>
                         <ul class="space-y-3 text-sm text-slate-600">
                             <li class="p-3 bg-slate-50 rounded-lg border-l-4 border-emerald-500">
-                                <p class="font-semibold text-slate-800">Kajian Rutin & Kegiatan</p>
-                                <p class="text-xs text-slate-500" id="dash-pengumuman-text">Menyelaraskan informasi masjid secara real-time.</p>
+                                <p class="font-semibold text-slate-800">Informasi & Kegiatan</p>
+                                <p class="text-xs text-slate-500" id="dash-pengumuman-text">Memuat pengumuman masjid...</p>
                             </li>
                             <li class="p-3 bg-slate-50 rounded-lg border-l-4 border-amber-500">
                                 <p class="font-semibold text-slate-800">Salurkan Infaq Terbaik</p>
@@ -140,26 +146,28 @@
             </div>
         </section>
 
-        <!-- TAB 2: LAPORAN KEUANGAN -->
+        <!-- TAB 2: LAPORAN KEUANGAN (LENGKAP DENGAN PENCARIAN & FILTER) -->
         <section id="tab-laporan" class="hidden space-y-6">
-            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+            <div id="printable-report" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
                         <h2 class="text-xl font-bold text-slate-800">Laporan Keuangan Kas Masjid</h2>
-                        <p class="text-xs text-slate-500">Transparansi pemasukan dan pengeluaran dana kas umat.</p>
+                        <p class="text-xs text-slate-500">Transparansi pemasukan dan pengeluaran dana kas umat secara real-time.</p>
                     </div>
-                    <button onclick="window.print()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-lg text-sm font-medium flex items-center gap-2">
+                    <button onclick="window.print()" class="no-print bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition">
                         <i data-lucide="printer" class="w-4 h-4"></i> Cetak Laporan
                     </button>
                 </div>
 
-                <div class="mb-8 p-4 bg-slate-50 rounded-xl border border-slate-100">
+                <div class="p-4 bg-slate-50 rounded-xl border border-slate-100">
                     <canvas id="financeChart" class="max-h-60 w-full"></canvas>
                 </div>
 
-                <div class="flex flex-wrap gap-3 mb-4">
-                    <select id="filter-type" onchange="filterData()" class="border border-slate-300 text-sm rounded-lg p-2 bg-white">
-                        <option value="ALL">Semua Jenis (Pemasukan & Pengeluaran)</option>
+                <!-- Kolom Pencarian & Filter Publik -->
+                <div class="flex flex-col sm:flex-row gap-3 no-print">
+                    <input type="text" id="public-search" onkeyup="renderPublicTable()" placeholder="Cari keterangan atau kategori..." class="border border-slate-300 text-sm rounded-lg p-2.5 outline-none focus:ring-2 focus:ring-emerald-500 flex-grow">
+                    <select id="public-filter-type" onchange="renderPublicTable()" class="border border-slate-300 text-sm rounded-lg p-2.5 bg-white outline-none">
+                        <option value="ALL">Semua Jenis Transaksi</option>
                         <option value="MASUK">Pemasukan Saja</option>
                         <option value="KELUAR">Pengeluaran Saja</option>
                     </select>
@@ -168,7 +176,7 @@
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-sm border-collapse">
                         <thead>
-                            <tr class="bg-slate-100 text-slate-700">
+                            <tr class="bg-slate-100 text-slate-700 text-xs">
                                 <th class="p-3 border-b">Tanggal</th>
                                 <th class="p-3 border-b">Jenis</th>
                                 <th class="p-3 border-b">Kategori</th>
@@ -176,8 +184,8 @@
                                 <th class="p-3 border-b text-right">Jumlah</th>
                             </tr>
                         </thead>
-                        <tbody id="full-transactions-list" class="divide-y divide-slate-100">
-                            <!-- Populated dynamically -->
+                        <tbody id="full-transactions-list" class="divide-y divide-slate-100 text-xs">
+                            <tr><td colspan="5" class="p-4 text-center text-slate-400">Memuat data...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -186,9 +194,9 @@
 
         <!-- TAB 3: KEGIATAN & AGENDA -->
         <section id="tab-kegiatan" class="hidden space-y-6">
-            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
-                <h2 class="text-xl font-bold text-slate-800 mb-4">Agenda & Kegiatan Keagamaan</h2>
-                <p class="text-slate-600 text-sm mb-6">Jadwal kegiatan rutin di Masjid Baitul Quddus Cungking, Mojopanggung, Banyuwangi.</p>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 space-y-4">
+                <h2 class="text-xl font-bold text-slate-800">Agenda & Kegiatan Keagamaan</h2>
+                <p class="text-slate-600 text-sm">Jadwal kegiatan rutin dan agenda khusus di Masjid Baitul Quddus Cungking.</p>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="p-4 border border-slate-200 rounded-xl flex gap-4 items-start">
@@ -226,7 +234,7 @@
         </div>
     </footer>
 
-    <!-- JavaScript Application Logic (Sinkron Google Apps Script) -->
+    <!-- JavaScript Application Logic -->
     <script>
         // === TEMPELKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI ===
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby_kvJQEWeShyamhOFZOJ_He8e4BLhhPVBeB364URQqeYb3ttibzDL9mscx4oiSA7zf/exec';
@@ -241,29 +249,34 @@
 
         async function fetchPublicData() {
             try {
-                const response = await fetch(GOOGLE_SCRIPT_URL);
-                const data = await response.json();
-                
-                transactions = data.riwayat || [];
-                
-                if (data.pengumuman) {
-                    document.getElementById('dash-pengumuman-text').innerText = data.pengumuman;
+                if (GOOGLE_SCRIPT_URL.includes('PASTE_URL')) {
+                    // Data simulasi jika URL belum diisi
+                    transactions = [
+                        { id: 1, tanggal: '2026-10-28', jenis: 'MASUK', kategori: 'Infaq Jumat', keterangan: 'Infaq Kotak Amal Jumat', jumlah: 4520000 },
+                        { id: 2, tanggal: '2026-10-27', jenis: 'KELUAR', kategori: 'Operasional', keterangan: 'Pembayaran Listrik & PDAM', jumlah: 850000 }
+                    ];
+                } else {
+                    const response = await fetch(GOOGLE_SCRIPT_URL);
+                    const data = await response.json();
+                    transactions = data.riwayat || [];
+                    if (data.pengumuman) {
+                        document.getElementById('dash-pengumuman-text').innerText = data.pengumuman;
+                    }
                 }
-
-                renderApp();
+                renderDashboard();
             } catch (error) {
-                console.error("Gagal mengambil data publik:", error);
+                console.error("Gagal memuat data:", error);
             }
         }
 
         function switchTab(tabName) {
-            const tabs = ['dashboard', 'laporan', 'kegiatan'];
-            tabs.forEach(t => {
+            ['dashboard', 'laporan', 'kegiatan'].forEach(t => {
                 document.getElementById(`tab-${t}`).classList.add('hidden');
             });
             document.getElementById(`tab-${tabName}`).classList.remove('hidden');
 
             if (tabName === 'laporan') {
+                renderPublicTable();
                 renderChart();
             }
         }
@@ -272,7 +285,7 @@
             return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(number);
         }
 
-        function renderApp() {
+        function renderDashboard() {
             let totalPemasukan = 0;
             let totalPengeluaran = 0;
 
@@ -281,62 +294,64 @@
                 if (t.jenis === 'KELUAR') totalPengeluaran += t.jumlah;
             });
 
-            const totalSaldo = totalPemasukan - totalPengeluaran;
-
-            document.getElementById('dash-total-saldo').innerText = formatRupiah(totalSaldo);
+            document.getElementById('dash-total-saldo').innerText = formatRupiah(totalPemasukan - totalPengeluaran);
             document.getElementById('dash-total-pemasukan').innerText = formatRupiah(totalPemasukan);
             document.getElementById('dash-total-pengeluaran').innerText = formatRupiah(totalPengeluaran);
 
             const recentContainer = document.getElementById('recent-transactions-list');
             recentContainer.innerHTML = '';
-            
+
             if (transactions.length === 0) {
                 recentContainer.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-400">Belum ada data transaksi.</td></tr>`;
             } else {
                 [...transactions].reverse().slice(0, 4).forEach(t => {
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
-                        <td class="p-2 text-xs text-slate-500">${t.tanggal}</td>
+                        <td class="p-2 text-xs text-slate-500 font-mono">${t.tanggal}</td>
                         <td class="p-2 text-slate-700 font-medium">${t.keterangan}</td>
-                        <td class="p-2 text-right font-semibold ${t.jenis === 'MASUK' ? 'text-emerald-600' : 'text-rose-600'}">
+                        <td class="p-2 text-right font-semibold font-mono ${t.jenis === 'MASUK' ? 'text-emerald-600' : 'text-rose-600'}">
                             ${t.jenis === 'MASUK' ? '+' : '-'} ${formatRupiah(t.jumlah)}
                         </td>
                     `;
                     recentContainer.appendChild(tr);
                 });
             }
-
-            filterData();
         }
 
-        function filterData() {
-            const filterValue = document.getElementById('filter-type').value;
-            const fullContainer = document.getElementById('full-transactions-list');
-            fullContainer.innerHTML = '';
+        function renderPublicTable() {
+            const query = document.getElementById('public-search').value.toLowerCase();
+            const filterType = document.getElementById('public-filter-type').value;
+            const container = document.getElementById('full-transactions-list');
+            container.innerHTML = '';
 
-            const filtered = transactions.filter(t => filterValue === 'ALL' || t.jenis === filterValue);
+            let filtered = transactions.filter(t => {
+                const matchQuery = String(t.keterangan).toLowerCase().includes(query) || String(t.kategori).toLowerCase().includes(query);
+                const matchType = filterType === 'ALL' || t.jenis === filterType;
+                return matchQuery && matchType;
+            });
 
             if (filtered.length === 0) {
-                fullContainer.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-400">Tidak ada data yang sesuai.</td></tr>`;
+                container.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-400">Tidak ada data transaksi yang ditemukan.</td></tr>`;
                 return;
             }
 
-            filtered.reverse().forEach(t => {
+            filtered.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal)).forEach(t => {
+                const isMasuk = t.jenis === 'MASUK';
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td class="p-3 text-slate-500">${t.tanggal}</td>
-                    <td class="p-3 font-semibold text-xs">
-                        <span class="px-2.5 py-1 rounded-full ${t.jenis === 'MASUK' ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}">
+                    <td class="p-3 text-slate-500 font-mono">${t.tanggal}</td>
+                    <td class="p-3">
+                        <span class="px-2 py-0.5 rounded-full font-bold text-[10px] ${isMasuk ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}">
                             ${t.jenis}
                         </span>
                     </td>
-                    <td class="p-3 text-slate-600">${t.kategori}</td>
-                    <td class="p-3 text-slate-800">${t.keterangan}</td>
-                    <td class="p-3 text-right font-bold ${t.jenis === 'MASUK' ? 'text-emerald-600' : 'text-rose-600'}">
-                        ${t.jenis === 'MASUK' ? '+' : '-'} ${formatRupiah(t.jumlah)}
+                    <td class="p-3 text-slate-700 font-medium">${t.kategori}</td>
+                    <td class="p-3 text-slate-600">${t.keterangan}</td>
+                    <td class="p-3 text-right font-bold font-mono ${isMasuk ? 'text-emerald-600' : 'text-rose-600'}">
+                        ${isMasuk ? '+' : '-'} ${formatRupiah(t.jumlah)}
                     </td>
                 `;
-                fullContainer.appendChild(tr);
+                container.appendChild(tr);
             });
         }
 
@@ -345,9 +360,7 @@
             let totalMasuk = transactions.filter(t => t.jenis === 'MASUK').reduce((acc, curr) => acc + curr.jumlah, 0);
             let totalKeluar = transactions.filter(t => t.jenis === 'KELUAR').reduce((acc, curr) => acc + curr.jumlah, 0);
 
-            if (myChart) {
-                myChart.destroy();
-            }
+            if (myChart) myChart.destroy();
 
             myChart = new Chart(ctx, {
                 type: 'bar',
@@ -363,9 +376,7 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false }
-                    }
+                    plugins: { legend: { display: false } }
                 }
             });
         }
