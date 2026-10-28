@@ -17,7 +17,6 @@
 
     <!-- PROTEKSI SESI ADMIN KETAT (JavaScript Session Check) -->
     <script>
-        // Memeriksa apakah status login aktif di sessionStorage
         if (sessionStorage.getItem('isAdminLoggedIn') !== 'true') {
             alert('Akses Ditolak! Anda harus login terlebih dahulu melalui halaman login.');
             window.location.replace('login.html');
@@ -31,6 +30,7 @@
             <p class="text-xs text-slate-400">Masjid Baitul Quddus Cungking, Mojopanggung, Banyuwangi</p>
         </div>
         <div class="flex items-center gap-3">
+            <span id="welcome-role" class="text-xs bg-slate-800 px-3 py-1.5 rounded-lg text-emerald-400 font-medium hidden sm:inline-block">Role: Admin</span>
             <a href="index.html" class="bg-slate-800 hover:bg-slate-700 text-xs px-3 py-2 rounded-lg transition font-medium">Lihat Website Utama</a>
             <button onclick="handleLogout()" class="bg-rose-600 hover:bg-rose-700 text-xs font-bold px-3 py-2 rounded-lg transition shadow flex items-center gap-1">
                 <i data-lucide="log-out" class="w-3.5 h-3.5"></i> Logout
@@ -39,76 +39,126 @@
     </header>
 
     <!-- Content Admin -->
-    <main class="max-w-7xl w-full mx-auto p-6 grid grid-cols-1 lg:grid-cols-2 gap-6 flex-grow">
+    <main class="max-w-7xl w-full mx-auto p-6 space-y-6 flex-grow">
         
-        <!-- Form Input Kas -->
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-            <div class="flex justify-between items-center mb-1">
-                <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
-                    <i data-lucide="plus-circle" class="w-5 h-5 text-emerald-600"></i> Catat Transaksi Kas Baru
-                </h3>
-                <span class="text-[10px] bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full font-semibold flex items-center gap-1">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Sesi Aktif
-                </span>
-            </div>
-            <p class="text-xs text-slate-500 mb-4">Pemasukan dan pengeluaran kas akan otomatis merekap saldo masjid secara real-time.</p>
+        <!-- Top Grid: Form Input & Panduan -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            
+            <!-- Form Input Kas -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div class="flex justify-between items-center mb-1">
+                    <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
+                        <i data-lucide="plus-circle" class="w-5 h-5 text-emerald-600"></i> <span id="form-title">Catat Transaksi Kas Baru</span>
+                    </h3>
+                    <span class="text-[10px] bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full font-semibold flex items-center gap-1">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Sesi Aktif
+                    </span>
+                </div>
+                <p class="text-xs text-slate-500 mb-4">Pemasukan dan pengeluaran kas akan otomatis merekap saldo masjid secara real-time.</p>
 
-            <form id="form-admin-tx" onsubmit="saveTransaction(event)" class="space-y-4 text-sm">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Tanggal</label>
-                    <input type="date" id="adm-tanggal" required class="w-full border border-slate-300 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-emerald-500">
+                <form id="form-admin-tx" onsubmit="saveTransaction(event)" class="space-y-4 text-sm">
+                    <input type="hidden" id="edit-index" value="">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Tanggal</label>
+                        <input type="date" id="adm-tanggal" required class="w-full border border-slate-300 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Jenis Transaksi</label>
+                        <select id="adm-jenis" required class="w-full border border-slate-300 rounded-xl p-2.5 outline-none bg-white focus:ring-2 focus:ring-emerald-500">
+                            <option value="MASUK">Pemasukan (+)</option>
+                            <option value="KELUAR">Pengeluaran (-)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Kategori</label>
+                        <input type="text" id="adm-kategori" placeholder="misal: Kotak Infaq Jumat, Listrik, Kebersihan" required class="w-full border border-slate-300 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Keterangan Detail</label>
+                        <textarea id="adm-keterangan" rows="2" placeholder="Uraian transaksi..." required class="w-full border border-slate-300 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-emerald-500"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Jumlah Nominal (Rp)</label>
+                        <input type="number" id="adm-jumlah" placeholder="0" min="1" required class="w-full border border-slate-300 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-emerald-500 font-mono">
+                    </div>
+                    <div class="flex gap-2">
+                        <button type="submit" id="btn-submit" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition shadow flex items-center justify-center gap-2">
+                            <i data-lucide="save" class="w-4 h-4"></i> Simpan Catatan Kas
+                        </button>
+                        <button type="button" id="btn-cancel-edit" onclick="resetForm()" class="hidden bg-slate-200 hover:bg-slate-300 text-slate-700 px-4 py-3 rounded-xl font-bold transition">Batal</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Buku Panduan Pengelola & Panel Tambahan (Rekomendasi Sekretaris/Running Text) -->
+            <div class="space-y-6 flex flex-col justify-between">
+                
+                <!-- Panel Tambahan: Update Running Text (Rekomendasi) -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <h3 class="text-base font-bold text-slate-800 mb-1 flex items-center gap-2">
+                        <i data-lucide="megaphone" class="w-5 h-5 text-amber-500"></i> Kelola Running Text (TV)
+                    </h3>
+                    <p class="text-xs text-slate-500 mb-3">Ubah teks pengumuman yang berjalan di bagian bawah layar TV masjid.</p>
+                    <div class="space-y-3">
+                        <textarea id="input-pengumuman" rows="2" placeholder="Tulis pengumuman baru..." class="w-full border border-slate-300 rounded-xl p-2.5 text-sm outline-none focus:ring-2 focus:ring-amber-500">Selamat Datang di Masjid Baitul Quddus Cungking, Mojopanggung, Banyuwangi — Mari Salurkan Infaq Terbaik Melalui Rekening Resmi Masjid — Mohon Matikan HP Saat Sholat.</textarea>
+                        <button onclick="updateRunningText()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-2 rounded-xl text-sm transition shadow">Perbarui Pengumuman TV</button>
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Jenis Transaksi</label>
-                    <select id="adm-jenis" required class="w-full border border-slate-300 rounded-xl p-2.5 outline-none bg-white focus:ring-2 focus:ring-emerald-500">
-                        <option value="MASUK">Pemasukan (+)</option>
-                        <option value="KELUAR">Pengeluaran (-)</option>
-                    </select>
+
+                <!-- Buku Panduan -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <h3 class="text-base font-bold text-slate-800 mb-2 flex items-center gap-2">
+                        <i data-lucide="book-open" class="w-5 h-5 text-emerald-600"></i> Panduan Singkat Pengelola
+                    </h3>
+                    <ul class="space-y-2 text-xs text-slate-600">
+                        <li class="flex items-start gap-1.5">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                            <span><b>Edit & Hapus:</b> Klik tombol Edit pada tabel di bawah untuk mengubah data, atau Hapus untuk menghapus mutasi kas keliru.</span>
+                        </li>
+                        <li class="flex items-start gap-1.5">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                            <span><b>Filter & Cari:</b> Gunakan kotak pencarian untuk mencari mutasi berdasarkan kategori atau keterangan dengan cepat.</span>
+                        </li>
+                    </ul>
                 </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Kategori</label>
-                    <input type="text" id="adm-kategori" placeholder="misal: Kotak Infaq Jumat, Listrik, Kebersihan" required class="w-full border border-slate-300 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-emerald-500">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Keterangan Detail</label>
-                    <textarea id="adm-keterangan" rows="2" placeholder="Uraian transaksi..." required class="w-full border border-slate-300 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-emerald-500"></textarea>
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Jumlah Nominal (Rp)</label>
-                    <input type="number" id="adm-jumlah" placeholder="0" min="1" required class="w-full border border-slate-300 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-emerald-500 font-mono">
-                </div>
-                <button type="submit" id="btn-submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition shadow flex items-center justify-center gap-2">
-                    <i data-lucide="save" class="w-4 h-4"></i> Simpan Catatan Kas
-                </button>
-            </form>
+
+            </div>
         </div>
 
-        <!-- Buku Panduan Operasional (Built-in Guide) -->
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
-            <div>
-                <h3 class="text-base font-bold text-slate-800 mb-2 flex items-center gap-2">
-                    <i data-lucide="book-open" class="w-5 h-5 text-amber-500"></i> Buku Panduan Pengelola
-                </h3>
-                <p class="text-xs text-slate-500 mb-4">Petunjuk teknis sistem bagi Takmir & Bendahara Masjid.</p>
-
-                <div class="space-y-3 text-xs text-slate-600">
-                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
-                        <h4 class="font-bold text-slate-800 mb-1">1. Pencatatan Keuangan Kas</h4>
-                        <p class="text-slate-500">Gunakan form di samping untuk mencatat uang masuk dan keluar secara teliti agar laporan di halaman utama selalu sinkron.</p>
-                    </div>
-                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
-                        <h4 class="font-bold text-slate-800 mb-1">2. Keamanan Sesi Aktif</h4>
-                        <p class="text-slate-500">Sesi admin tersimpan aman di browser Anda. Selalu klik tombol <b>Logout</b> di pojok kanan atas setelah selesai memperbarui data kas.</p>
-                    </div>
-                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
-                        <h4 class="font-bold text-slate-800 mb-1">3. Integrasi Tampilan TV</h4>
-                        <p class="text-slate-500">Periksa berkala halaman <a href="tv.html" target="_blank" class="text-emerald-600 underline font-semibold">tv.html</a> untuk memastikan informasi siaran TV digital masjid berjalan lancar.</p>
-                    </div>
+        <!-- Section Bawah: Tabel Manajemen Transaksi Kas (Filter, Edit, Hapus) -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h3 class="text-lg font-bold text-slate-800">Manajemen Data Mutasi Kas</h3>
+                    <p class="text-xs text-slate-500">Daftar seluruh catatan pemasukan dan pengeluaran masjid.</p>
+                </div>
+                <!-- Filter & Search Controls -->
+                <div class="flex flex-wrap gap-2 w-full sm:w-auto">
+                    <input type="text" id="search-query" onkeyup="renderManageTable()" placeholder="Cari keterangan/kategori..." class="border border-slate-300 rounded-xl px-3 py-2 text-xs outline-none focus:ring-2 focus:ring-emerald-500 flex-grow sm:w-64">
+                    <select id="filter-jenis-trx" onchange="renderManageTable()" class="border border-slate-300 rounded-xl px-3 py-2 text-xs outline-none bg-white">
+                        <option value="ALL">Semua Jenis</option>
+                        <option value="MASUK">Pemasukan</option>
+                        <option value="KELUAR">Pengeluaran</option>
+                    </select>
                 </div>
             </div>
 
-            <div class="mt-4 pt-4 border-t border-slate-100 text-center text-xs text-slate-400">
-                Masjid Baitul Quddus Cungking, Mojopanggung, Banyuwangi
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm border-collapse">
+                    <thead>
+                        <tr class="bg-slate-50 text-slate-600 border-b text-xs">
+                            <th class="p-3">Tanggal</th>
+                            <th class="p-3">Jenis</th>
+                            <th class="p-3">Kategori</th>
+                            <th class="p-3">Keterangan</th>
+                            <th class="p-3 text-right">Jumlah</th>
+                            <th class="p-3 text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="manage-table-body" class="divide-y divide-slate-100 text-xs">
+                        <!-- Render via JavaScript -->
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -116,30 +166,78 @@
 
     <!-- Footer -->
     <footer class="bg-slate-900 text-slate-400 text-xs py-6 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+        <div class="max-w-7xl mx-auto px-4 text-center">
             <p>&copy; 2026 Masjid Baitul Quddus Cungking, Mojopanggung, Giri, Banyuwangi. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- Script Kontrol Sesi & Aksi Admin -->
+    <!-- Script Logika & Manajemen Data -->
     <script>
+        // Simulasi Database Kas Lokal (bisa disinkronkan dengan array/LocalStorage/Google Sheets)
+        let transactions = JSON.parse(localStorage.getItem('masjid_transactions')) || [
+            { id: 1, tanggal: '2026-10-20', jenis: 'MASUK', kategori: 'Infaq Jumat', keterangan: 'Hasil Kotak Infaq Shalat Jumat', jumlah: 4520000 },
+            { id: 2, tanggal: '2026-10-22', jenis: 'KELUAR', kategori: 'Kebersihan', keterangan: 'Pembelian alat kebersihan & karpet', jumlah: 500000 },
+            { id: 3, tanggal: '2026-10-25', jenis: 'MASUK', kategori: 'Donatur', keterangan: 'Infaq Hamba Allah untuk Operasional', jumlah: 2000000 },
+            { id: 4, tanggal: '2026-10-26', jenis: 'KELUAR', kategori: 'Listrik & Air', keterangan: 'Pembayaran Tagihan Bulanan PLN & PDAM', jumlah: 850000 }
+        ];
+
         document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
             document.getElementById('adm-tanggal').valueAsDate = new Date();
+            renderManageTable();
         });
 
-        // Fungsi Logout yang Menghapus Sesi dan Mengarah ke Halaman Login
-        function handleLogout() {
-            if (confirm('Apakah Anda yakin ingin keluar dari sesi administrator?')) {
-                sessionStorage.removeItem('isAdminLoggedIn');
-                window.location.replace('login.html');
-            }
+        function formatRupiah(number) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(number);
         }
 
-        // Fungsi Simulasi/Penyimpanan Transaksi
+        // Render Tabel Manajemen Kas Lengkap dengan Aksi Edit & Hapus
+        function renderManageTable() {
+            const query = document.getElementById('search-query').value.toLowerCase();
+            const filterJenis = document.getElementById('filter-jenis-trx').value;
+            const tbody = document.getElementById('manage-table-body');
+            tbody.innerHTML = '';
+
+            let filtered = transactions.filter(t => {
+                const matchQuery = t.keterangan.toLowerCase().includes(query) || t.kategori.toLowerCase().includes(query);
+                const matchJenis = filterJenis === 'ALL' || t.jenis === filterJenis;
+                return matchQuery && matchJenis;
+            });
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-slate-400">Tidak ada data transaksi yang ditemukan.</td></tr>`;
+                return;
+            }
+
+            filtered.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal)).forEach((t, index) => {
+                const isMasuk = t.jenis === 'MASUK';
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 transition";
+                tr.innerHTML = `
+                    <td class="p-3 text-slate-500 font-mono">${t.tanggal}</td>
+                    <td class="p-3">
+                        <span class="px-2 py-0.5 rounded-full font-bold text-[10px] ${isMasuk ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}">
+                            ${t.jenis}
+                        </span>
+                    </td>
+                    <td class="p-3 font-medium text-slate-700">${t.kategori}</td>
+                    <td class="p-3 text-slate-600">${t.keterangan}</td>
+                    <td class="p-3 text-right font-mono font-bold ${isMasuk ? 'text-emerald-600' : 'text-rose-600'}">
+                        ${isMasuk ? '+' : '-'} ${formatRupiah(t.jumlah)}
+                    </td>
+                    <td class="p-3 text-center space-x-1">
+                        <button onclick="editTransaction(${t.id})" class="bg-amber-100 hover:bg-amber-200 text-amber-800 px-2.5 py-1 rounded-lg font-medium transition" title="Edit Data">Edit</button>
+                        <button onclick="deleteTransaction(${t.id})" class="bg-rose-100 hover:bg-rose-200 text-rose-700 px-2.5 py-1 rounded-lg font-medium transition" title="Hapus Data">Hapus</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Simpan atau Perbarui Transaksi (Tambah / Edit)
         function saveTransaction(e) {
             e.preventDefault();
-            
+            const editId = document.getElementById('edit-index').value;
             const tanggal = document.getElementById('adm-tanggal').value;
             const jenis = document.getElementById('adm-jenis').value;
             const kategori = document.getElementById('adm-kategori').value;
@@ -151,11 +249,82 @@
                 return;
             }
 
-            // Di sini Anda bisa menyambungkan fungsi pengiriman data ke Google Apps Script (GAS) jika diperlukan
-            alert('Alhamdulillah, catatan transaksi kas berhasil disimpan!');
-            
+            if (editId) {
+                // Proses Update
+                const idx = transactions.findIndex(t => t.id == editId);
+                if (idx !== -1) {
+                    transactions[idx] = { id: Number(editId), tanggal, jenis, kategori, keterangan, jumlah };
+                    alert('Data transaksi kas berhasil diperbarui!');
+                }
+            } else {
+                // Proses Tambah Baru
+                const newTx = { id: Date.now(), tanggal, jenis, kategori, keterangan, jumlah };
+                transactions.push(newTx);
+                alert('Alhamdulillah, catatan transaksi kas baru berhasil disimpan!');
+            }
+
+            localStorage.setItem('masjid_transactions', JSON.stringify(transactions));
+            resetForm();
+            renderManageTable();
+        }
+
+        // Muat Data ke Form untuk Diedit
+        function editTransaction(id) {
+            const t = transactions.find(item => item.id == id);
+            if (!t) return;
+
+            document.getElementById('edit-index').value = t.id;
+            document.getElementById('adm-tanggal').value = t.tanggal;
+            document.getElementById('adm-jenis').value = t.jenis;
+            document.getElementById('adm-kategori').value = t.kategori;
+            document.getElementById('adm-keterangan').value = t.keterangan;
+            document.getElementById('adm-jumlah').value = t.jumlah;
+
+            document.getElementById('form-title').innerText = 'Edit Transaksi Kas';
+            document.getElementById('btn-submit').innerHTML = `<i data-lucide="check" class="w-4 h-4"></i> Perbarui Data Kas`;
+            document.getElementById('btn-cancel-edit').classList.remove('hidden');
+            lucide.createIcons();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Hapus Transaksi
+        function deleteTransaction(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus catatan transaksi ini?')) {
+                transactions = transactions.filter(t => t.id != id);
+                localStorage.setItem('masjid_transactions', JSON.stringify(transactions));
+                renderManageTable();
+                alert('Transaksi berhasil dihapus.');
+            }
+        }
+
+        // Reset Form ke Mode Tambah Baru
+        function resetForm() {
             document.getElementById('form-admin-tx').reset();
+            document.getElementById('edit-index').value = '';
             document.getElementById('adm-tanggal').valueAsDate = new Date();
+            document.getElementById('form-title').innerText = 'Catat Transaksi Kas Baru';
+            document.getElementById('btn-submit').innerHTML = `<i data-lucide="save" class="w-4 h-4"></i> Simpan Catatan Kas`;
+            document.getElementById('btn-cancel-edit').classList.add('hidden');
+            lucide.createIcons();
+        }
+
+        // Fungsi Update Running Text TV (Rekomendasi Panel Sekretaris)
+        function updateRunningText() {
+            const text = document.getElementById('input-pengumuman').value.trim();
+            if (!text) {
+                alert('Teks pengumuman tidak boleh kosong!');
+                return;
+            }
+            localStorage.setItem('masjid_running_text', text);
+            alert('Running text untuk layar TV berhasil diperbarui!');
+        }
+
+        // Fungsi Logout
+        function handleLogout() {
+            if (confirm('Apakah Anda yakin ingin keluar dari sesi administrator?')) {
+                sessionStorage.removeItem('isAdminLoggedIn');
+                window.location.replace('login.html');
+            }
         }
     </script>
 </body>
