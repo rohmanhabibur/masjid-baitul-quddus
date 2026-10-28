@@ -24,12 +24,8 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;800&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
-        .font-mono-custom {
-            font-family: 'JetBrains Mono', monospace;
-        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-mono-custom { font-family: 'JetBrains Mono', monospace; }
         @keyframes marquee {
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
@@ -39,9 +35,7 @@
             white-space: nowrap;
             animation: marquee 35s linear infinite;
         }
-        .glow-emerald {
-            box-shadow: 0 0 25px rgba(16, 185, 129, 0.2);
-        }
+        .glow-emerald { box-shadow: 0 0 25px rgba(16, 185, 129, 0.2); }
     </style>
 </head>
 <body class="bg-slate-100 dark:bg-[#050b14] text-slate-800 dark:text-slate-100 overflow-hidden h-screen flex flex-col justify-between select-none transition-colors duration-500">
@@ -64,12 +58,12 @@
             <div class="bg-slate-900/80 px-4 py-1.5 rounded-xl border border-slate-800 text-white shadow-inner text-right">
                 <div id="clock" class="text-2xl font-extrabold text-amber-300 font-mono-custom tracking-wider">00:00:00</div>
                 <div class="flex items-center justify-end gap-2 text-[10px]">
-                    <span id="date-gregorian" class="text-slate-300">Rabu, 28 Oktober 2026</span>
+                    <span id="date-gregorian" class="text-slate-300">-</span>
                     <span class="text-slate-500">|</span>
                     <span id="date-hijri" class="text-emerald-400 font-medium">-- H</span>
                 </div>
             </div>
-            <button onclick="toggleThemeManually()" class="bg-slate-800/80 p-2.5 rounded-xl text-amber-400 border border-slate-700 shadow hover:bg-slate-700 transition" title="Ubah Tema Terang/Gelap">
+            <button onclick="toggleThemeManually()" class="bg-slate-800/80 p-2.5 rounded-xl text-amber-400 border border-slate-700 shadow hover:bg-slate-700 transition" title="Ubah Tema">
                 <span id="themeIcon" class="text-base">🌙</span>
             </button>
         </div>
@@ -98,7 +92,6 @@
                 <p class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase">Isya</p>
                 <p id="time-isya" class="text-base font-extrabold font-mono-custom">--:--</p>
             </div>
-            
             <div class="bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl p-2 text-slate-950 flex flex-col justify-center items-center shadow-lg">
                 <p id="next-prayer-label" class="text-[9px] font-bold uppercase tracking-wider text-slate-900">Menuju Sholat</p>
                 <p id="next-prayer-name" class="text-xs font-black uppercase text-slate-950">--</p>
@@ -110,7 +103,7 @@
     <!-- MAIN BODY SECTION -->
     <main class="flex-1 px-6 py-3 grid grid-cols-12 gap-4 items-stretch overflow-hidden">
         
-        <!-- KOLOM KIRI (4 Kolom): Saldo & Mutasi Kas -->
+        <!-- KOLOM KIRI: Saldo & Mutasi Kas -->
         <div class="col-span-4 flex flex-col gap-3 justify-between">
             <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-emerald-500/30 rounded-2xl p-3.5 shadow glow-emerald flex items-center justify-between">
                 <div>
@@ -132,9 +125,7 @@
                     <div class="overflow-hidden">
                         <table class="w-full text-left border-collapse">
                             <tbody id="txTable" class="divide-y divide-slate-100 dark:divide-slate-800/60 text-[11px]">
-                                <tr>
-                                    <td class="py-3 text-center text-slate-400">Memuat data...</td>
-                                </tr>
+                                <tr><td class="py-3 text-center text-slate-400">Memuat mutasi...</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -142,62 +133,50 @@
             </div>
         </div>
 
-        <!-- KOLOM TENGAH (4 Kolom): Slot Posting Pamflet / Brosur Kegiatan -->
+        <!-- KOLOM TENGAH: Pamflet & Petugas -->
         <div class="col-span-4 bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-3.5 flex flex-col justify-between shadow">
             <div>
                 <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2 mb-2">
                     <h3 class="text-xs font-bold flex items-center gap-1.5 text-amber-500">
                         <i data-lucide="image" class="w-4 h-4"></i> Pamflet & Agenda Kegiatan
                     </h3>
-                    <span class="text-[9px] bg-amber-100 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 px-2 py-0.5 rounded font-bold">Info Masjid</span>
+                    <span class="text-[9px] bg-amber-100 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 px-2 py-0.5 rounded font-bold">Info</span>
                 </div>
                 <div class="w-full h-[220px] bg-slate-100 dark:bg-slate-950 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-700 overflow-hidden flex flex-col items-center justify-center relative shadow-inner">
-                    <img id="pamfletImage" src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=600" alt="Pamflet Kegiatan" class="w-full h-full object-cover">
+                    <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=600" alt="Pamflet" class="w-full h-full object-cover">
                     <div class="absolute bottom-0 inset-x-0 bg-slate-950/80 backdrop-blur px-3 py-1.5 text-center">
-                        <p id="pamfletTitle" class="text-[11px] font-bold text-amber-300 truncate">Kajian Rutin & Santunan Yatim Piatu</p>
+                        <p class="text-[11px] font-bold text-amber-300 truncate">Kajian Rutin & Santunan Yatim Piatu</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Panel 4 Petugas (Imam, Muadzin, Bilal, Khotib) -->
+            <!-- Panel Petugas -->
             <div class="bg-slate-50 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800 rounded-xl p-2.5 shadow mt-2">
                 <h4 class="text-[9px] font-bold text-amber-600 dark:text-amber-400 uppercase flex items-center gap-1 mb-1.5">
-                    <i data-lucide="users" class="w-3 h-3"></i> Petugas Hari Ini[cite: 3, 4]
+                    <i data-lucide="users" class="w-3 h-3"></i> Petugas Hari Ini
                 </h4>
                 <div class="grid grid-cols-4 gap-1.5 text-center">
                     <div class="bg-white dark:bg-slate-900 p-1 rounded-lg border border-slate-100 dark:border-slate-800">
-                        <div class="w-8 h-8 mx-auto rounded-full bg-slate-800 border border-amber-400 overflow-hidden mb-0.5 shadow">
-                            <img id="fotoImam" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150" alt="Imam" class="w-full h-full object-cover">
-                        </div>
                         <span class="text-[7px] text-slate-400 uppercase font-bold block">Imam</span>
-                        <span id="namaImam" class="text-[8px] font-bold text-amber-500 dark:text-amber-300 block truncate">Ust. H. Syaifullah</span>
+                        <span id="namaImam" class="text-[8px] font-bold text-amber-500 block truncate">Ust. H. Syaifullah</span>
                     </div>
                     <div class="bg-white dark:bg-slate-900 p-1 rounded-lg border border-slate-100 dark:border-slate-800">
-                        <div class="w-8 h-8 mx-auto rounded-full bg-slate-800 border border-emerald-400 overflow-hidden mb-0.5 shadow">
-                            <img id="fotoMuadzin" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150" alt="Muadzin" class="w-full h-full object-cover">
-                        </div>
                         <span class="text-[7px] text-slate-400 uppercase font-bold block">Muadzin</span>
-                        <span id="namaMuadzin" class="text-[8px] font-bold text-emerald-500 dark:text-emerald-300 block truncate">Bpk. Hasan</span>
+                        <span id="namaMuadzin" class="text-[8px] font-bold text-emerald-500 block truncate">Bpk. Hasan</span>
                     </div>
                     <div class="bg-white dark:bg-slate-900 p-1 rounded-lg border border-slate-100 dark:border-slate-800">
-                        <div class="w-8 h-8 mx-auto rounded-full bg-slate-800 border border-blue-400 overflow-hidden mb-0.5 shadow">
-                            <img id="fotoBilal" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Bilal" class="w-full h-full object-cover">
-                        </div>
                         <span class="text-[7px] text-slate-400 uppercase font-bold block">Bilal</span>
-                        <span id="namaBilal" class="text-[8px] font-bold text-blue-500 dark:text-blue-300 block truncate">Ust. Umar</span>
+                        <span id="namaBilal" class="text-[8px] font-bold text-blue-500 block truncate">Ust. Umar</span>
                     </div>
                     <div class="bg-white dark:bg-slate-900 p-1 rounded-lg border border-slate-100 dark:border-slate-800">
-                        <div class="w-8 h-8 mx-auto rounded-full bg-slate-800 border border-sky-400 overflow-hidden mb-0.5 shadow">
-                            <img id="fotoKhotib" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150" alt="Khotib" class="w-full h-full object-cover">
-                        </div>
                         <span class="text-[7px] text-slate-400 uppercase font-bold block">Khotib</span>
-                        <span id="namaKhotib" class="text-[8px] font-bold text-sky-500 dark:text-sky-300 block truncate">-</span>
+                        <span id="namaKhotib" class="text-[8px] font-bold text-sky-500 block truncate">-</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- KOLOM KANAN (4 Kolom): Rekening Donasi & Peta Lokasi -->
+        <!-- KOLOM KANAN: Rekening & Lokasi -->
         <div class="col-span-4 flex flex-col gap-3 justify-between">
             <div class="bg-gradient-to-br from-emerald-900 to-slate-900 border border-emerald-500/40 rounded-2xl p-3.5 shadow text-white">
                 <h4 class="text-xs font-bold text-amber-300 uppercase flex items-center gap-1.5 mb-2 border-b border-white/10 pb-1.5">
@@ -209,14 +188,6 @@
                             <span class="text-[10px] text-emerald-300 block font-semibold">Bank Syariah Indonesia (BSI)</span>
                             <span class="font-mono font-bold text-amber-400 text-sm">7123-4567-89</span>
                             <span class="text-[9px] text-slate-300 block">a.n. Masjid Baitul Quddus</span>
-                        </div>
-                        <i data-lucide="landmark" class="w-6 h-6 text-emerald-400 opacity-60"></i>
-                    </div>
-                    <div class="bg-black/30 p-2 rounded-xl border border-white/10 flex justify-between items-center">
-                        <div>
-                            <span class="text-[10px] text-emerald-300 block font-semibold">Bank Rakyat Indonesia (BRI)</span>
-                            <span class="font-mono font-bold text-amber-400 text-sm">0341-0100-5678-50</span>
-                            <span class="text-[9px] text-slate-300 block">a.n. Kas Takmir Masjid</span>
                         </div>
                         <i data-lucide="landmark" class="w-6 h-6 text-emerald-400 opacity-60"></i>
                     </div>
@@ -242,33 +213,33 @@
         <span class="bg-slate-950 text-amber-400 text-[11px] uppercase px-2.5 py-1 rounded shrink-0 font-extrabold tracking-wider">PENGUMUMAN</span>
         <div class="overflow-hidden w-full">
             <div id="runningText" class="animate-marquee font-medium">
-                Selamat Datang di Masjid Baitul Quddus Cungking, Mojopanggung, Banyuwangi — Mari Salurkan Infaq Terbaik Melalui Rekening Resmi Masjid — Mohon Matikan HP Saat Sholat.
+                Memuat pengumuman...
             </div>
         </div>
     </footer>
 
-    <!-- LOGIC SCRIPT -->
+    <!-- SCRIPT LOGIKA -->
     <script>
-        const GOOGLE_SCRIPT_URL = 'PASTE_URL_WEB_APP_GOOGLE_APPS_SCRIPT_DISINI';
+        // === TEMPELKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI ===
+        const GOOGLE_SCRIPT_URL = 'PASTE_URL_WEB_APP_ANDA_DISINI_BERAKHIRAN_EXEC';
         const BANYUWANGI_LAT = -8.2192;
         const BANYUWANGI_LNG = 114.3691;
         let prayerSchedule = {};
 
         const daftarPetugas = [
-            { imam: "Ust. H. Syaifullah", muadzin: "Bpk. Hasan", bilal: "Ust. Umar", khotib: "-", fotoImam: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150", fotoMuadzin: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", fotoBilal: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", fotoKhotib: "https://via.placeholder.com/150" },
-            { imam: "Ust. M. Sholeh", muadzin: "Bpk. Rahmat", bilal: "Ust. Zaky", khotib: "-", fotoImam: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", fotoMuadzin: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", fotoBilal: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150", fotoKhotib: "https://via.placeholder.com/150" },
-            { imam: "Dr. H. Ahmad", muadzin: "Ust. Zaky", bilal: "Bpk. Rahmat", khotib: "-", fotoImam: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", fotoMuadzin: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150", fotoBilal: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", fotoKhotib: "https://via.placeholder.com/150" },
-            { imam: "Ust. H. Syaifullah", muadzin: "Bpk. Hasan", bilal: "Ust. Farhan", khotib: "-", fotoImam: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150", fotoMuadzin: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", fotoBilal: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", fotoKhotib: "https://via.placeholder.com/150" },
-            { imam: "Kiai M. Qosim", muadzin: "Ust. Farhan", bilal: "Ust. Bilal", khotib: "-", fotoImam: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", fotoMuadzin: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", fotoBilal: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150", fotoKhotib: "https://via.placeholder.com/150" },
-            { imam: "Ust. H. Ridwan", muadzin: "Bpk. Anwar", bilal: "Ust. Umar", khotib: "Kiai H. Abdullah", fotoImam: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", fotoMuadzin: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", fotoBilal: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", fotoKhotib: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" },
-            { imam: "Kiai H. Abdullah", muadzin: "Ust. Bilal", bilal: "Bpk. Hasan", khotib: "-", fotoImam: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", fotoMuadzin: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150", fotoBilal: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", fotoKhotib: "https://via.placeholder.com/150" }
+            { imam: "Ust. H. Syaifullah", muadzin: "Bpk. Hasan", bilal: "Ust. Umar", khotib: "-" },
+            { imam: "Ust. M. Sholeh", muadzin: "Bpk. Rahmat", bilal: "Ust. Zaky", khotib: "-" },
+            { imam: "Dr. H. Ahmad", muadzin: "Ust. Zaky", bilal: "Bpk. Rahmat", khotib: "-" },
+            { imam: "Ust. H. Syaifullah", muadzin: "Bpk. Hasan", bilal: "Ust. Farhan", khotib: "-" },
+            { imam: "Kiai M. Qosim", muadzin: "Ust. Farhan", bilal: "Ust. Bilal", khotib: "-" },
+            { imam: "Ust. H. Ridwan", muadzin: "Bpk. Anwar", bilal: "Ust. Umar", khotib: "Kiai H. Abdullah" },
+            { imam: "Kiai H. Abdullah", muadzin: "Ust. Bilal", bilal: "Bpk. Hasan", khotib: "-" }
         ];
 
         function checkAutoTheme() {
             const hour = new Date().getHours();
             const htmlEl = document.documentElement;
             const iconEl = document.getElementById('themeIcon');
-            
             if (hour >= 6 && hour < 18) {
                 htmlEl.classList.remove('dark');
                 iconEl.innerText = '☀️';
@@ -277,23 +248,12 @@
                 iconEl.innerText = '🌙';
             }
         }
-
-        function toggleThemeManually() {
-            const htmlEl = document.documentElement;
-            const iconEl = document.getElementById('themeIcon');
-            htmlEl.classList.toggle('dark');
-            iconEl.innerText = htmlEl.classList.contains('dark') ? '🌙' : '☀️';
-        }
-
         checkAutoTheme();
-        setInterval(checkAutoTheme, 60000);
 
         function updateClock() {
             const now = new Date();
             document.getElementById('clock').innerText = now.toLocaleTimeString('id-ID', { hour12: false });
-
-            const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('date-gregorian').innerText = now.toLocaleDateString('id-ID', optionsDate);
+            document.getElementById('date-gregorian').innerText = now.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
             const dayIndex = now.getDay();
             const p = daftarPetugas[dayIndex];
@@ -301,10 +261,6 @@
             document.getElementById('namaMuadzin').innerText = p.muadzin;
             document.getElementById('namaBilal').innerText = p.bilal;
             document.getElementById('namaKhotib').innerText = p.khotib;
-            document.getElementById('fotoImam').src = p.fotoImam;
-            document.getElementById('fotoMuadzin').src = p.fotoMuadzin;
-            document.getElementById('fotoBilal').src = p.fotoBilal;
-            document.getElementById('fotoKhotib').src = p.fotoKhotib;
         }
         setInterval(updateClock, 1000);
         updateClock();
@@ -312,23 +268,11 @@
         async function fetchPrayerTimes() {
             try {
                 const date = new Date();
-                const year = date.getFullYear();
-                const month = date.getMonth() + 1;
-                const day = date.getDate();
-
-                const response = await fetch(`https://api.aladhan.com/v1/timings/${day}-${month}-${year}?latitude=${BANYUWANGI_LAT}&longitude=${BANYUWANGI_LNG}&method=20`);
-                const json = await response.json();
-
+                const res = await fetch(`https://api.aladhan.com/v1/timings/${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}?latitude=${BANYUWANGI_LAT}&longitude=${BANYUWANGI_LNG}&method=20`);
+                const json = await res.json();
                 if (json.code === 200) {
-                    const timings = json.data.timings;
-                    prayerSchedule = {
-                        Subuh: timings.Fajr,
-                        Dzuhur: timings.Dhuhr,
-                        Ashar: timings.Asr,
-                        Maghrib: timings.Maghrib,
-                        Isya: timings.Isha
-                    };
-
+                    const t = json.data.timings;
+                    prayerSchedule = { Subuh: t.Fajr, Dzuhur: t.Dhuhr, Ashar: t.Asr, Maghrib: t.Maghrib, Isya: t.Isha };
                     document.getElementById('time-subuh').innerText = prayerSchedule.Subuh;
                     document.getElementById('time-dzuhur').innerText = prayerSchedule.Dzuhur;
                     document.getElementById('time-ashar').innerText = prayerSchedule.Ashar;
@@ -339,126 +283,51 @@
                     document.getElementById('date-hijri').innerText = `${hijri.day} ${hijri.month.id || hijri.month.en} ${hijri.year} H`;
                 }
             } catch (err) {
-                console.error("Gagal memuat jadwal sholat:", err);
-                prayerSchedule = { Subuh: "04:05", Dzuhur: "11:25", Ashar: "14:40", Maghrib: "17:35", Isya: "18:45" };
-                document.getElementById('time-subuh').innerText = prayerSchedule.Subuh;
-                document.getElementById('time-dzuhur').innerText = prayerSchedule.Dzuhur;
-                document.getElementById('time-ashar').innerText = prayerSchedule.Ashar;
-                document.getElementById('time-maghrib').innerText = prayerSchedule.Maghrib;
-                document.getElementById('time-isya').innerText = prayerSchedule.Isya;
+                console.error("Jadwal sholat offline:", err);
             }
         }
         fetchPrayerTimes();
 
-        function updatePrayerCountdown() {
-            if (!prayerSchedule.Subuh) return;
-
-            const now = new Date();
-            const currentMinutes = now.getHours() * 60 + now.getMinutes();
-            const currentSeconds = now.getSeconds();
-
-            const prayerList = [
-                { name: 'Subuh', key: 'subuh', time: prayerSchedule.Subuh },
-                { name: 'Dzuhur', key: 'dzuhur', time: prayerSchedule.Dzuhur },
-                { name: 'Ashar', key: 'ashar', time: prayerSchedule.Ashar },
-                { name: 'Maghrib', key: 'maghrib', time: prayerSchedule.Maghrib },
-                { name: 'Isya', key: 'isya', time: prayerSchedule.Isya }
-            ];
-
-            let nextPrayer = null;
-
-            for (let p of prayerList) {
-                const [h, m] = p.time.split(':').map(Number);
-                const pMinutes = h * 60 + m;
-                if (pMinutes > currentMinutes) {
-                    nextPrayer = { ...p, targetMinutes: pMinutes };
-                    break;
-                }
-            }
-
-            if (!nextPrayer) {
-                const [h, m] = prayerSchedule.Subuh.split(':').map(Number);
-                nextPrayer = { ...prayerList[0], targetMinutes: (24 * 60) + (h * 60 + m) };
-            }
-
-            prayerList.forEach(p => {
-                const card = document.getElementById(`card-${p.key}`);
-                if (p.name === nextPrayer.name) {
-                    card.className = "prayer-card bg-emerald-900/90 text-white border-2 border-emerald-400 rounded-xl p-2 text-center transition-all glow-emerald scale-105";
-                } else {
-                    card.className = "prayer-card bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl p-2 text-center transition-all opacity-70";
-                }
-            });
-
-            const diffMinutes = nextPrayer.targetMinutes - currentMinutes - 1;
-            const diffSeconds = 60 - currentSeconds;
-
-            const hoursLeft = String(Math.floor(diffMinutes / 60)).padStart(2, '0');
-            const minsLeft = String(diffMinutes % 60).padStart(2, '0');
-            const secsLeft = String(diffSeconds % 60).padStart(2, '0');
-
-            document.getElementById('next-prayer-name').innerText = nextPrayer.name;
-            document.getElementById('countdown-timer').innerText = `-${hoursLeft}:${minsLeft}:${secsLeft}`;
-        }
-        setInterval(updatePrayerCountdown, 1000);
-
+        // Sinkronisasi Data Real-Time dari Google Sheets
         async function loadSheetData() {
             try {
-                if (GOOGLE_SCRIPT_URL === 'PASTE_URL_WEB_APP_GOOGLE_APPS_SCRIPT_DISINI') {
-                    renderData({
-                        saldoTotal: 15450000,
-                        pemasukan: 18200000,
-                        pengeluaran: 2750000,
-                        pengumuman: "Kajian Subuh Bersama Ustadz Ahmad Setiap Ahad Pertama | Salurkan Infaq Terbaik ke Rekening Resmi Masjid Baitul Quddus Cungking Mojopanggung",
-                        riwayat: [
-                            { tanggal: "2026-10-28", keterangan: "Infaq Shalat Jumat", jenis: "Pemasukan", jumlah: 4520000 },
-                            { tanggal: "2026-10-27", keterangan: "Honorarium Khotib Jumat", jenis: "Pengeluaran", jumlah: 500000 },
-                            { tanggal: "2026-10-25", keterangan: "Tagihan Listrik & Wifi", jenis: "Pengeluaran", jumlah: 850000 }
-                        ]
-                    });
-                    return;
-                }
-
                 const res = await fetch(GOOGLE_SCRIPT_URL);
                 const data = await res.json();
-                renderData(data);
+
+                document.getElementById('saldoTotal').innerText = 'Rp ' + Number(data.saldoTotal || 0).toLocaleString('id-ID');
+
+                if (data.pengumuman) {
+                    document.getElementById('runningText').innerText = data.pengumuman;
+                }
+
+                const tbody = document.getElementById('txTable');
+                tbody.innerHTML = '';
+
+                if (data.riwayat && data.riwayat.length > 0) {
+                    data.riwayat.slice(-3).reverse().forEach(item => {
+                        const isMasuk = String(item.jenis).toUpperCase() === 'MASUK';
+                        const amountClass = isMasuk ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400';
+
+                        tbody.innerHTML += `
+                            <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/40">
+                                <td class="py-1.5 px-1 text-slate-500 font-mono text-[10px]">${item.tanggal}</td>
+                                <td class="py-1.5 px-1 font-medium truncate max-w-[120px]">${item.keterangan}</td>
+                                <td class="py-1.5 px-1 text-right font-mono-custom font-bold ${amountClass}">
+                                    ${isMasuk ? '+' : '-'}Rp ${Number(item.jumlah).toLocaleString('id-ID')}
+                                </td>
+                            </tr>
+                        `;
+                    });
+                }
             } catch (err) {
-                console.error("Gagal sinkronisasi Google Sheets API:", err);
-            }
-        }
-
-        function renderData(data) {
-            document.getElementById('saldoTotal').innerText = 'Rp ' + Number(data.saldoTotal || 0).toLocaleString('id-ID');
-
-            if (data.pengumuman) {
-                document.getElementById('runningText').innerText = data.pengumuman;
-            }
-
-            const tbody = document.getElementById('txTable');
-            tbody.innerHTML = '';
-
-            if (data.riwayat && data.riwayat.length > 0) {
-                data.riwayat.slice(-3).forEach(item => {
-                    const isMasuk = item.jenis.toUpperCase() === 'PEMASUKAN' || item.jenis.toUpperCase() === 'MASUK';
-                    const amountClass = isMasuk ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400';
-
-                    tbody.innerHTML += `
-                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/40">
-                            <td class="py-1.5 px-1 text-slate-500 font-mono text-[10px]">${item.tanggal}</td>
-                            <td class="py-1.5 px-1 font-medium truncate max-w-[120px]">${item.keterangan}</td>
-                            <td class="py-1.5 px-1 text-right font-mono-custom font-bold ${amountClass}">
-                                ${isMasuk ? '+' : '-'}Rp ${Number(item.jumlah).toLocaleString('id-ID')}
-                            </td>
-                        </tr>
-                    `;
-                });
+                console.error("Gagal mengambil data Sheet:", err);
             }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
             loadSheetData();
-            setInterval(loadSheetData, 30000);
+            setInterval(loadSheetData, 15000); // Sinkronisasi otomatis tiap 15 detik
         });
     </script>
 </body>
