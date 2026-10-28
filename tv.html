@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Display Digital Signage - Masjid Baitul Quddus Cungking</title>
+    <title>Display TV - Masjid Baitul Quddus Cungking</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -37,175 +37,207 @@
         .animate-marquee {
             display: inline-block;
             white-space: nowrap;
-            animation: marquee 30s linear infinite;
+            animation: marquee 35s linear infinite;
         }
         .glow-emerald {
             box-shadow: 0 0 25px rgba(16, 185, 129, 0.2);
-        }
-        .glow-gold {
-            box-shadow: 0 0 25px rgba(245, 158, 11, 0.25);
         }
     </style>
 </head>
 <body class="bg-slate-100 dark:bg-[#050b14] text-slate-800 dark:text-slate-100 overflow-hidden h-screen flex flex-col justify-between select-none transition-colors duration-500">
 
     <!-- HEADER SECTION -->
-    <header class="bg-gradient-to-r from-emerald-900 via-emerald-800 dark:from-emerald-950 dark:via-slate-900 dark:to-emerald-950 px-8 py-3 border-b-2 border-amber-500/50 flex justify-between items-center shadow-xl text-white">
-        <div class="flex items-center gap-4">
-            <div class="bg-emerald-600/20 border border-emerald-500/30 p-2.5 rounded-2xl text-emerald-300">
-                <i data-lucide="building-2" class="w-8 h-8"></i>
+    <header class="bg-gradient-to-r from-emerald-900 via-emerald-800 dark:from-emerald-950 dark:via-slate-900 dark:to-emerald-950 px-6 py-2.5 border-b-2 border-amber-500/50 flex justify-between items-center shadow-xl text-white">
+        <div class="flex items-center gap-3">
+            <!-- Foto Masjid Thumbnail -->
+            <div class="w-12 h-12 rounded-xl overflow-hidden border-2 border-amber-400 shrink-0 shadow">
+                <img src="https://images.unsplash.com/photo-1564769625405-daf604ef5cb7?w=150" alt="Masjid Baitul Quddus" class="w-full h-full object-cover">
             </div>
             <div>
-                <h1 class="text-2xl font-extrabold tracking-wide text-amber-300">MASJID BAITUL QUDDUS</h1>
-                <p class="text-emerald-100/90 text-xs font-medium flex items-center gap-2">
+                <h1 class="text-xl font-extrabold tracking-wide text-amber-300">MASJID BAITUL QUDDUS</h1>
+                <p class="text-emerald-100/90 text-[11px] font-medium flex items-center gap-1.5">
                     <i data-lucide="map-pin" class="w-3.5 h-3.5 text-amber-400"></i> Cungking, Kelurahan Mojopanggung, Kec. Giri, Kab. Banyuwangi
                 </p>
             </div>
         </div>
 
         <!-- Clock, Dates & Theme Toggle -->
-        <div class="flex items-center gap-4">
-            <div class="bg-slate-900/80 dark:bg-slate-900/80 px-6 py-2 rounded-2xl border border-slate-800 text-white shadow-inner">
-                <div class="text-right">
-                    <div id="clock" class="text-3xl font-extrabold text-amber-300 font-mono-custom tracking-wider">00:00:00</div>
-                    <div id="date-gregorian" class="text-[11px] font-semibold text-slate-300">Selasa, 28 Oktober 2026</div>
-                    <div id="date-hijri" class="text-[10px] text-emerald-400 font-medium">-- Jumadil Awal 1448 H</div>
+        <div class="flex items-center gap-3">
+            <div class="bg-slate-900/80 px-4 py-1.5 rounded-xl border border-slate-800 text-white shadow-inner text-right">
+                <div id="clock" class="text-2xl font-extrabold text-amber-300 font-mono-custom tracking-wider">00:00:00</div>
+                <div class="flex items-center justify-end gap-2 text-[10px]">
+                    <span id="date-gregorian" class="text-slate-300">Selasa, 28 Oktober 2026</span>
+                    <span class="text-slate-500">|</span>
+                    <span id="date-hijri" class="text-emerald-400 font-medium">-- H</span>
                 </div>
             </div>
-            <button onclick="toggleThemeManually()" class="bg-slate-800/80 p-3 rounded-2xl text-amber-400 border border-slate-700 shadow hover:bg-slate-700 transition" title="Ubah Tema Terang/Gelap">
-                <span id="themeIcon" class="text-xl">🌙</span>
+            <button onclick="toggleThemeManually()" class="bg-slate-800/80 p-2.5 rounded-xl text-amber-400 border border-slate-700 shadow hover:bg-slate-700 transition" title="Ubah Tema Terang/Gelap">
+                <span id="themeIcon" class="text-base">🌙</span>
             </button>
         </div>
     </header>
 
     <!-- PRAYER TIMES BAR -->
-    <section class="px-8 py-2.5 bg-white/80 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-800/80 backdrop-blur">
-        <div class="grid grid-cols-6 gap-3" id="prayer-grid">
-            <div id="card-subuh" class="prayer-card bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl p-2.5 text-center transition-all">
-                <p class="text-[11px] text-slate-500 dark:text-slate-400 font-semibold uppercase">Subuh</p>
-                <p id="time-subuh" class="text-lg font-extrabold font-mono-custom mt-0.5">--:--</p>
+    <section class="px-6 py-2 bg-white/80 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-800/80 backdrop-blur">
+        <div class="grid grid-cols-6 gap-2.5" id="prayer-grid">
+            <div id="card-subuh" class="prayer-card bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl p-2 text-center transition-all">
+                <p class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase">Subuh</p>
+                <p id="time-subuh" class="text-base font-extrabold font-mono-custom">--:--</p>
             </div>
-            <div id="card-dzuhur" class="prayer-card bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl p-2.5 text-center transition-all">
-                <p class="text-[11px] text-slate-500 dark:text-slate-400 font-semibold uppercase">Dzuhur</p>
-                <p id="time-dzuhur" class="text-lg font-extrabold font-mono-custom mt-0.5">--:--</p>
+            <div id="card-dzuhur" class="prayer-card bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl p-2 text-center transition-all">
+                <p class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase">Dzuhur</p>
+                <p id="time-dzuhur" class="text-base font-extrabold font-mono-custom">--:--</p>
             </div>
-            <div id="card-ashar" class="prayer-card bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl p-2.5 text-center transition-all">
-                <p class="text-[11px] text-slate-500 dark:text-slate-400 font-semibold uppercase">Ashar</p>
-                <p id="time-ashar" class="text-lg font-extrabold font-mono-custom mt-0.5">--:--</p>
+            <div id="card-ashar" class="prayer-card bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl p-2 text-center transition-all">
+                <p class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase">Ashar</p>
+                <p id="time-ashar" class="text-base font-extrabold font-mono-custom">--:--</p>
             </div>
-            <div id="card-maghrib" class="prayer-card bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl p-2.5 text-center transition-all">
-                <p class="text-[11px] text-slate-500 dark:text-slate-400 font-semibold uppercase">Maghrib</p>
-                <p id="time-maghrib" class="text-lg font-extrabold font-mono-custom mt-0.5">--:--</p>
+            <div id="card-maghrib" class="prayer-card bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl p-2 text-center transition-all">
+                <p class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase">Maghrib</p>
+                <p id="time-maghrib" class="text-base font-extrabold font-mono-custom">--:--</p>
             </div>
-            <div id="card-isya" class="prayer-card bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl p-2.5 text-center transition-all">
-                <p class="text-[11px] text-slate-500 dark:text-slate-400 font-semibold uppercase">Isya</p>
-                <p id="time-isya" class="text-lg font-extrabold font-mono-custom mt-0.5">--:--</p>
+            <div id="card-isya" class="prayer-card bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl p-2 text-center transition-all">
+                <p class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase">Isya</p>
+                <p id="time-isya" class="text-base font-extrabold font-mono-custom">--:--</p>
             </div>
             
             <!-- Countdown Banner Card -->
-            <div class="bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl p-2.5 text-slate-950 flex flex-col justify-center items-center shadow-lg">
+            <div class="bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl p-2 text-slate-950 flex flex-col justify-center items-center shadow-lg">
                 <p id="next-prayer-label" class="text-[9px] font-bold uppercase tracking-wider text-slate-900">Menuju Sholat</p>
                 <p id="next-prayer-name" class="text-xs font-black uppercase text-slate-950">--</p>
-                <p id="countdown-timer" class="text-sm font-extrabold font-mono-custom mt-0.5 text-slate-950">-00:00:00</p>
+                <p id="countdown-timer" class="text-sm font-extrabold font-mono-custom text-slate-950">-00:00:00</p>
             </div>
         </div>
     </section>
 
-    <!-- MAIN BODY SECTION (2 COLUMNS) -->
-    <main class="flex-1 px-8 py-4 grid grid-cols-12 gap-6 items-stretch overflow-hidden">
+    <!-- MAIN BODY SECTION (3 COLUMNS: LEFT = KEUANGAN & PETUGAS, CENTER = PAMFLET, RIGHT = MAP & REKENING) -->
+    <main class="flex-1 px-6 py-3 grid grid-cols-12 gap-4 items-stretch overflow-hidden">
         
-        <!-- LEFT COLUMN: Financial Summaries & Petugas -->
-        <div class="col-span-5 flex flex-col gap-3 justify-between">
+        <!-- KOLOM KIRI (4 Kolom): Saldo, Mutasi Kas & Petugas -->
+        <div class="col-span-4 flex flex-col gap-3 justify-between">
             <!-- Saldo Kas -->
-            <div class="bg-white dark:bg-gradient-to-br dark:from-slate-900 dark:via-slate-900 dark:to-emerald-950/40 border border-slate-200 dark:border-emerald-500/30 rounded-2xl p-4 shadow glow-emerald flex items-center justify-between">
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-emerald-500/30 rounded-2xl p-3.5 shadow glow-emerald flex items-center justify-between">
                 <div>
-                    <span class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 tracking-wider uppercase flex items-center gap-1.5">
-                        <i data-lucide="wallet" class="w-4 h-4"></i> Total Saldo Kas Masjid
+                    <span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 tracking-wider uppercase flex items-center gap-1">
+                        <i data-lucide="wallet" class="w-3.5 h-3.5"></i> Total Saldo Kas
                     </span>
-                    <h2 id="saldoTotal" class="text-2xl font-extrabold font-mono-custom mt-1 text-slate-900 dark:text-white">Rp 0</h2>
+                    <h2 id="saldoTotal" class="text-xl font-extrabold font-mono-custom mt-0.5 text-slate-900 dark:text-white">Rp 0</h2>
+                </div>
+                <div class="text-right">
+                    <span class="text-[9px] text-emerald-500 bg-emerald-100 dark:bg-emerald-950 px-2 py-0.5 rounded font-bold">Realtime</span>
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-3">
-                <div class="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-xl p-3 shadow">
-                    <span class="text-[10px] font-semibold text-slate-500 dark:text-slate-400 uppercase flex items-center gap-1">
-                        <i data-lucide="arrow-down-left" class="w-3.5 h-3.5 text-emerald-500"></i> Pemasukan
-                    </span>
-                    <h3 id="pemasukan" class="text-lg font-bold text-emerald-600 dark:text-emerald-400 font-mono-custom mt-0.5">Rp 0</h3>
-                </div>
-                <div class="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-xl p-3 shadow">
-                    <span class="text-[10px] font-semibold text-slate-500 dark:text-slate-400 uppercase flex items-center gap-1">
-                        <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 text-rose-500"></i> Pengeluaran
-                    </span>
-                    <h3 id="pengeluaran" class="text-lg font-bold text-rose-600 dark:text-rose-400 font-mono-custom mt-0.5">Rp 0</h3>
+            <!-- Mutasi Kas Ringkas -->
+            <div class="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 shadow flex-1 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-xs font-bold flex items-center gap-1.5 border-b border-slate-100 dark:border-slate-800 pb-1.5 mb-1.5">
+                        <i data-lucide="history" class="w-3.5 h-3.5 text-amber-500"></i> Mutasi Kas Terbaru
+                    </h3>
+                    <div class="overflow-hidden">
+                        <table class="w-full text-left border-collapse">
+                            <tbody id="txTable" class="divide-y divide-slate-100 dark:divide-slate-800/60 text-[11px]">
+                                <tr>
+                                    <td class="py-3 text-center text-slate-400">Memuat data...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
-            <!-- Panel Petugas Hari Ini (Imam, Muadzin/Bilal, Khotib) -->
-            <div class="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-3.5 shadow">
-                <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2 mb-2">
-                    <h4 class="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase flex items-center gap-1.5">
-                        <i data-lucide="users" class="w-4 h-4"></i> Petugas Sholat & Jumat Hari Ini
-                    </h4>
-                </div>
+            <!-- Panel Petugas Sholat & Jumat -->
+            <div class="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 shadow">
+                <h4 class="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase flex items-center gap-1 mb-2">
+                    <i data-lucide="users" class="w-3.5 h-3.5"></i> Petugas Hari Ini
+                </h4>
                 <div class="grid grid-cols-3 gap-2 text-center">
-                    <div class="bg-slate-50 dark:bg-slate-950 p-2 rounded-xl border border-slate-100 dark:border-slate-800">
-                        <div class="w-12 h-12 mx-auto rounded-full bg-slate-800 border border-amber-400 overflow-hidden mb-1 shadow">
+                    <div class="bg-slate-50 dark:bg-slate-950 p-1.5 rounded-xl border border-slate-100 dark:border-slate-800">
+                        <div class="w-10 h-10 mx-auto rounded-full bg-slate-800 border border-amber-400 overflow-hidden mb-1 shadow">
                             <img id="fotoImam" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150" alt="Imam" class="w-full h-full object-cover">
                         </div>
-                        <span class="text-[9px] text-slate-400 uppercase font-bold block">Imam</span>
-                        <span id="namaImam" class="text-[10px] font-bold text-amber-500 dark:text-amber-300 block truncate">Kiai Abdullah</span>
+                        <span class="text-[8px] text-slate-400 uppercase font-bold block">Imam</span>
+                        <span id="namaImam" class="text-[9px] font-bold text-amber-500 dark:text-amber-300 block truncate">Kiai Abdullah</span>
                     </div>
-                    <div class="bg-slate-50 dark:bg-slate-950 p-2 rounded-xl border border-slate-100 dark:border-slate-800">
-                        <div class="w-12 h-12 mx-auto rounded-full bg-slate-800 border border-emerald-400 overflow-hidden mb-1 shadow">
+                    <div class="bg-slate-50 dark:bg-slate-950 p-1.5 rounded-xl border border-slate-100 dark:border-slate-800">
+                        <div class="w-10 h-10 mx-auto rounded-full bg-slate-800 border border-emerald-400 overflow-hidden mb-1 shadow">
                             <img id="fotoMuadzin" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150" alt="Muadzin" class="w-full h-full object-cover">
                         </div>
-                        <span class="text-[9px] text-slate-400 uppercase font-bold block">Muadzin/Bilal</span>
-                        <span id="namaMuadzin" class="text-[10px] font-bold text-emerald-500 dark:text-emerald-300 block truncate">Ust. Fulan</span>
+                        <span class="text-[8px] text-slate-400 uppercase font-bold block">Muadzin</span>
+                        <span id="namaMuadzin" class="text-[9px] font-bold text-emerald-500 dark:text-emerald-300 block truncate">Ust. Fulan</span>
                     </div>
-                    <div class="bg-slate-50 dark:bg-slate-950 p-2 rounded-xl border border-slate-100 dark:border-slate-800">
-                        <div class="w-12 h-12 mx-auto rounded-full bg-slate-800 border border-sky-400 overflow-hidden mb-1 shadow">
+                    <div class="bg-slate-50 dark:bg-slate-950 p-1.5 rounded-xl border border-slate-100 dark:border-slate-800">
+                        <div class="w-10 h-10 mx-auto rounded-full bg-slate-800 border border-sky-400 overflow-hidden mb-1 shadow">
                             <img id="fotoKhotib" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Khotib" class="w-full h-full object-cover">
                         </div>
-                        <span class="text-[9px] text-slate-400 uppercase font-bold block">Khotib Jumat</span>
-                        <span id="namaKhotib" class="text-[10px] font-bold text-sky-500 dark:text-sky-300 block truncate">Dr. Ahmad</span>
+                        <span class="text-[8px] text-slate-400 uppercase font-bold block">Khotib</span>
+                        <span id="namaKhotib" class="text-[9px] font-bold text-sky-500 dark:text-sky-300 block truncate">Dr. Ahmad</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- RIGHT COLUMN: Transactions Table -->
-        <div class="col-span-7 bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between shadow">
+        <!-- KOLOM TENGAH (4 Kolom): Slot Posting Pamflet / Brosur Kegiatan -->
+        <div class="col-span-4 bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-3.5 flex flex-col justify-between shadow">
             <div>
-                <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-2.5 mb-2.5">
-                    <h3 class="text-sm font-bold flex items-center gap-2">
-                        <i data-lucide="history" class="w-4 h-4 text-amber-500"></i> Mutasi Kas Terbaru
+                <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2 mb-2">
+                    <h3 class="text-xs font-bold flex items-center gap-1.5 text-amber-500">
+                        <i data-lucide="image" class="w-4 h-4"></i> Pamflet & Agenda Kegiatan
                     </h3>
-                    <span class="text-[11px] text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-0.5 rounded-full border border-slate-200 dark:border-slate-700">Realtime Google Sheets</span>
+                    <span class="text-[9px] bg-amber-100 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 px-2 py-0.5 rounded font-bold">Info Masjid</span>
                 </div>
-
-                <div class="overflow-hidden">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="text-slate-400 border-b border-slate-200 dark:border-slate-800 text-[11px] uppercase tracking-wider">
-                                <th class="py-2 px-2">Tanggal</th>
-                                <th class="py-2 px-2">Keterangan</th>
-                                <th class="py-2 px-2">Jenis</th>
-                                <th class="py-2 px-2 text-right">Nominal</th>
-                            </tr>
-                        </thead>
-                        <tbody id="txTable" class="divide-y divide-slate-100 dark:divide-slate-800/60 text-xs">
-                            <tr>
-                                <td colspan="4" class="py-6 text-center text-slate-400">Memuat data mutasi...</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <!-- Kotak Tempat Pamflet / Poster -->
+                <div class="w-full h-[280px] bg-slate-100 dark:bg-slate-950 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-700 overflow-hidden flex flex-col items-center justify-center relative group shadow-inner">
+                    <img id="pamfletImage" src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=600" alt="Pamflet Kegiatan" class="w-full h-full object-cover">
+                    <div class="absolute bottom-0 inset-x-0 bg-slate-950/80 backdrop-blur px-3 py-1.5 text-center">
+                        <p id="pamfletTitle" class="text-[11px] font-bold text-amber-300 truncate">Kajian Rutin & Santunan Yatim Piatu</p>
+                    </div>
                 </div>
             </div>
-            
-            <div class="flex justify-between items-center pt-2 text-[10px] text-slate-400 border-t border-slate-100 dark:border-slate-800/60">
-                <span>Lokasi: Cungking, Mojopanggung, Giri, Banyuwangi</span>
-                <span>Sistem Informasi Masjid Baitul Quddus</span>
+            <div class="text-[10px] text-center text-slate-400 pt-1">
+                Ganti gambar pamflet melalui link URL gambar di skrip.
+            </div>
+        </div>
+
+        <!-- KOLOM KANAN (4 Kolom): Rekening Donasi & Peta Lokasi (Maps) -->
+        <div class="col-span-4 flex flex-col gap-3 justify-between">
+            <!-- Informasi Rekening Donasi -->
+            <div class="bg-gradient-to-br from-emerald-900 to-slate-900 border border-emerald-500/40 rounded-2xl p-3.5 shadow text-white">
+                <h4 class="text-xs font-bold text-amber-300 uppercase flex items-center gap-1.5 mb-2 border-b border-white/10 pb-1.5">
+                    <i data-lucide="credit-card" class="w-4 h-4"></i> Rekening Donasi & Infaq
+                </h4>
+                <div class="space-y-2 text-xs">
+                    <div class="bg-black/30 p-2 rounded-xl border border-white/10 flex justify-between items-center">
+                        <div>
+                            <span class="text-[10px] text-emerald-300 block font-semibold">Bank Syariah Indonesia (BSI)</span>
+                            <span class="font-mono font-bold text-amber-400 text-sm">7123-4567-89</span>
+                            <span class="text-[9px] text-slate-300 block">a.n. Masjid Baitul Quddus</span>
+                        </div>
+                        <i data-lucide="landmark" class="w-6 h-6 text-emerald-400 opacity-60"></i>
+                    </div>
+                    <div class="bg-black/30 p-2 rounded-xl border border-white/10 flex justify-between items-center">
+                        <div>
+                            <span class="text-[10px] text-emerald-300 block font-semibold">Bank Rakyat Indonesia (BRI)</span>
+                            <span class="font-mono font-bold text-amber-400 text-sm">0341-0100-5678-50</span>
+                            <span class="text-[9px] text-slate-300 block">a.n. Kas Takmir Masjid</span>
+                        </div>
+                        <i data-lucide="landmark" class="w-6 h-6 text-emerald-400 opacity-60"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Embed Peta Lokasi (Google Maps Preview / Card) -->
+            <div class="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 shadow flex-1 flex flex-col justify-between">
+                <h4 class="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase flex items-center gap-1.5 mb-2">
+                    <i data-lucide="map" class="w-3.5 h-3.5"></i> Lokasi Masjid
+                </h4>
+                <div class="w-full h-[110px] rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 relative shadow-inner">
+                    <!-- Simulasi Tampilan Peta / Map Card -->
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.430034603332!2d114.3669145!3d-8.2192!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOMKwMTMnM-QuMSJTIDExNDKwMjI0LjgiRQ!5e0!3m2!1sid!2sid!4v1600000000000!5m2!1sid!2sid" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" class="filter dark:invert dark:hue-rotate-180"></iframe>
+                </div>
+                <div class="text-[9px] text-slate-400 text-center mt-1.5">
+                    Cungking, Kel. Mojopanggung, Kec. Giri, Banyuwangi
+                </div>
             </div>
         </div>
     </main>
@@ -215,7 +247,7 @@
         <span class="bg-slate-950 text-amber-400 text-[11px] uppercase px-2.5 py-1 rounded shrink-0 font-extrabold tracking-wider">PENGUMUMAN</span>
         <div class="overflow-hidden w-full">
             <div id="runningText" class="animate-marquee font-medium">
-                Selamat Datang di Masjid Baitul Quddus Cungking, Mojopanggung, Banyuwangi — Mohon menonaktifkan suara HP saat berada di dalam area masjid.
+                Selamat Datang di Masjid Baitul Quddus Cungking, Mojopanggung, Banyuwangi — Mari Salurkan Infaq Terbaik Melalui Rekening Resmi Masjid — Mohon Matikan HP Saat Sholat.
             </div>
         </div>
     </footer>
@@ -231,13 +263,12 @@
             { imam: "Kiai H. Abdullah", muadzin: "Ust. Fulan", khotib: "Dr. H. Ahmad", fotoImam: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150", fotoMuadzin: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", fotoKhotib: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" },
             { imam: "Ust. M. Sholeh", muadzin: "Bpk. Rahmat", khotib: "-", fotoImam: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", fotoMuadzin: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", fotoKhotib: "https://via.placeholder.com/150" },
             { imam: "Dr. H. Ahmad", muadzin: "Ust. Zaky", khotib: "-", fotoImam: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", fotoMuadzin: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150", fotoKhotib: "https://via.placeholder.com/150" },
-            { imam: "Ust. H. Syaifullah", muadzin: "Bpk. Hasan", khotib: "-", fotoImam: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150", fotoMuadzin: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", fotoKhotib: "https://via.placeholder.com/150" },
-            { imam: "Kiai M. Qosim", muadzin: "Ust. Farhan", khotib: "-", fotoImam: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", fotoMuadzin: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150", fotoKhotib: "https://via.placeholder.com/150" },
+            { imam: "Ust. H. Syaifullah", muadzin: "Bpk. Hasan", khotib: "-", fotoImam: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", fotoMuadzin: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", fotoKhotib: "https://via.placeholder.com/150" },
+            { imam: "Kiai M. Qosim", muadzin: "Ust. Farhan", khotib: "-", fotoImam: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", fotoMuadzin: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", fotoKhotib: "https://via.placeholder.com/150" },
             { imam: "Ust. H. Ridwan", muadzin: "Bpk. Anwar", khotib: "Kiai H. Abdullah", fotoImam: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150", fotoMuadzin: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", fotoKhotib: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" },
             { imam: "Kiai H. Abdullah", muadzin: "Ust. Bilal", khotib: "-", fotoImam: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150", fotoMuadzin: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150", fotoKhotib: "https://via.placeholder.com/150" }
         ];
 
-        // Otomatisasi Tema Gelap/Terang Berdasarkan Jam
         function checkAutoTheme() {
             const hour = new Date().getHours();
             const htmlEl = document.documentElement;
@@ -355,9 +386,9 @@
             prayerList.forEach(p => {
                 const card = document.getElementById(`card-${p.key}`);
                 if (p.name === nextPrayer.name) {
-                    card.className = "prayer-card bg-emerald-900/90 text-white border-2 border-emerald-400 rounded-xl p-2.5 text-center transition-all glow-emerald scale-105";
+                    card.className = "prayer-card bg-emerald-900/90 text-white border-2 border-emerald-400 rounded-xl p-2 text-center transition-all glow-emerald scale-105";
                 } else {
-                    card.className = "prayer-card bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl p-2.5 text-center transition-all opacity-70";
+                    card.className = "prayer-card bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl p-2 text-center transition-all opacity-70";
                 }
             });
 
@@ -380,12 +411,11 @@
                         saldoTotal: 15450000,
                         pemasukan: 18200000,
                         pengeluaran: 2750000,
-                        pengumuman: "Kajian Subuh Bersama Ustadz Ahmad Setiap Ahad Pertama | Infaq Kotak Jumat Pekan Ini Rp 4.520.000 | Kebersihan Lingkungan Masjid Diadakan Hari Minggu Pagi Pukul 06.00 WIB",
+                        pengumuman: "Kajian Subuh Bersama Ustadz Ahmad Setiap Ahad Pertama | Salurkan Infaq Terbaik ke Rekening Resmi Masjid Baitul Quddus Cungking Mojopanggung",
                         riwayat: [
                             { tanggal: "2026-10-28", keterangan: "Infaq Shalat Jumat", jenis: "Pemasukan", jumlah: 4520000 },
                             { tanggal: "2026-10-27", keterangan: "Honorarium Khotib Jumat", jenis: "Pengeluaran", jumlah: 500000 },
-                            { tanggal: "2026-10-25", keterangan: "Tagihan Listrik & Wifi", jenis: "Pengeluaran", jumlah: 850000 },
-                            { tanggal: "2026-10-22", keterangan: "Donasi Hamba Allah", jenis: "Pemasukan", jumlah: 2000000 }
+                            { tanggal: "2026-10-25", keterangan: "Tagihan Listrik & Wifi", jenis: "Pengeluaran", jumlah: 850000 }
                         ]
                     });
                     return;
@@ -401,8 +431,6 @@
 
         function renderData(data) {
             document.getElementById('saldoTotal').innerText = 'Rp ' + Number(data.saldoTotal || 0).toLocaleString('id-ID');
-            document.getElementById('pemasukan').innerText = 'Rp ' + Number(data.pemasukan || 0).toLocaleString('id-ID');
-            document.getElementById('pengeluaran').innerText = 'Rp ' + Number(data.pengeluaran || 0).toLocaleString('id-ID');
 
             if (data.pengumuman) {
                 document.getElementById('runningText').innerText = data.pengumuman;
@@ -412,22 +440,16 @@
             tbody.innerHTML = '';
 
             if (data.riwayat && data.riwayat.length > 0) {
-                data.riwayat.slice(-4).forEach(item => {
+                data.riwayat.slice(-3).forEach(item => {
                     const isMasuk = item.jenis.toUpperCase() === 'PEMASUKAN' || item.jenis.toUpperCase() === 'MASUK';
-                    const badgeClass = isMasuk ? 'bg-emerald-100 dark:bg-emerald-950/80 text-emerald-600 dark:text-emerald-400 border-emerald-300 dark:border-emerald-800' : 'bg-rose-100 dark:bg-rose-950/80 text-rose-600 dark:text-rose-400 border-rose-300 dark:border-rose-800';
                     const amountClass = isMasuk ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400';
 
                     tbody.innerHTML += `
                         <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/40">
-                            <td class="py-2 px-2 text-slate-500 font-mono text-[11px]">${item.tanggal}</td>
-                            <td class="py-2 px-2 font-medium">${item.keterangan}</td>
-                            <td class="py-2 px-2">
-                                <span class="text-[10px] px-2 py-0.5 rounded border font-bold uppercase ${badgeClass}">
-                                    ${item.jenis}
-                                </span>
-                            </td>
-                            <td class="py-2 px-2 text-right font-mono-custom font-extrabold ${amountClass}">
-                                ${isMasuk ? '+' : '-'} Rp ${Number(item.jumlah).toLocaleString('id-ID')}
+                            <td class="py-1.5 px-1 text-slate-500 font-mono text-[10px]">${item.tanggal}</td>
+                            <td class="py-1.5 px-1 font-medium truncate max-w-[120px]">${item.keterangan}</td>
+                            <td class="py-1.5 px-1 text-right font-mono-custom font-bold ${amountClass}">
+                                ${isMasuk ? '+' : '-'}Rp ${Number(item.jumlah).toLocaleString('id-ID')}
                             </td>
                         </tr>
                     `;
