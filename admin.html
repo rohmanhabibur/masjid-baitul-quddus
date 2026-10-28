@@ -15,7 +15,7 @@
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col">
 
-    <!-- PROTEKSI SESI ADMIN KETAT (JavaScript Session Check) -->
+    <!-- PROTEKSI SESI ADMIN KETAT -->
     <script>
         if (sessionStorage.getItem('isAdminLoggedIn') !== 'true') {
             alert('Akses Ditolak! Anda harus login terlebih dahulu melalui halaman login.');
@@ -30,7 +30,7 @@
             <p class="text-xs text-slate-400">Masjid Baitul Quddus Cungking, Mojopanggung, Banyuwangi</p>
         </div>
         <div class="flex items-center gap-3">
-            <span id="welcome-role" class="text-xs bg-slate-800 px-3 py-1.5 rounded-lg text-emerald-400 font-medium hidden sm:inline-block">Role: Admin</span>
+            <span id="welcome-role" class="text-xs bg-slate-800 px-3 py-1.5 rounded-lg text-emerald-400 font-medium hidden sm:inline-block">Role: <span id="display-role">Admin</span></span>
             <a href="index.html" class="bg-slate-800 hover:bg-slate-700 text-xs px-3 py-2 rounded-lg transition font-medium">Lihat Website Utama</a>
             <button onclick="handleLogout()" class="bg-rose-600 hover:bg-rose-700 text-xs font-bold px-3 py-2 rounded-lg transition shadow flex items-center gap-1">
                 <i data-lucide="log-out" class="w-3.5 h-3.5"></i> Logout
@@ -51,7 +51,7 @@
                         <i data-lucide="plus-circle" class="w-5 h-5 text-emerald-600"></i> <span id="form-title">Catat Transaksi Kas Baru</span>
                     </h3>
                     <span class="text-[10px] bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full font-semibold flex items-center gap-1">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Sesi Aktif
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Terhubung ke Database
                     </span>
                 </div>
                 <p class="text-xs text-slate-500 mb-4">Pemasukan dan pengeluaran kas akan otomatis merekap saldo masjid secara real-time.</p>
@@ -90,17 +90,17 @@
                 </form>
             </div>
 
-            <!-- Buku Panduan Pengelola & Panel Tambahan (Rekomendasi Sekretaris/Running Text) -->
+            <!-- Panel Sekretaris & Panduan -->
             <div class="space-y-6 flex flex-col justify-between">
                 
-                <!-- Panel Tambahan: Update Running Text (Rekomendasi) -->
+                <!-- Panel Update Running Text (TV) -->
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                     <h3 class="text-base font-bold text-slate-800 mb-1 flex items-center gap-2">
                         <i data-lucide="megaphone" class="w-5 h-5 text-amber-500"></i> Kelola Running Text (TV)
                     </h3>
                     <p class="text-xs text-slate-500 mb-3">Ubah teks pengumuman yang berjalan di bagian bawah layar TV masjid.</p>
                     <div class="space-y-3">
-                        <textarea id="input-pengumuman" rows="2" placeholder="Tulis pengumuman baru..." class="w-full border border-slate-300 rounded-xl p-2.5 text-sm outline-none focus:ring-2 focus:ring-amber-500">Selamat Datang di Masjid Baitul Quddus Cungking, Mojopanggung, Banyuwangi — Mari Salurkan Infaq Terbaik Melalui Rekening Resmi Masjid — Mohon Matikan HP Saat Sholat.</textarea>
+                        <textarea id="input-pengumuman" rows="2" placeholder="Tulis pengumuman baru..." class="w-full border border-slate-300 rounded-xl p-2.5 text-sm outline-none focus:ring-2 focus:ring-amber-500">Selamat Datang di Masjid Baitul Quddus Cungking, Mojopanggung, Banyuwangi</textarea>
                         <button onclick="updateRunningText()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-2 rounded-xl text-sm transition shadow">Perbarui Pengumuman TV</button>
                     </div>
                 </div>
@@ -113,11 +113,11 @@
                     <ul class="space-y-2 text-xs text-slate-600">
                         <li class="flex items-start gap-1.5">
                             <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0"></i>
-                            <span><b>Edit & Hapus:</b> Klik tombol Edit pada tabel di bawah untuk mengubah data, atau Hapus untuk menghapus mutasi kas keliru.</span>
+                            <span><b>Sinkronisasi:</b> Data yang diinput tersimpan langsung ke Google Sheets secara otomatis.</span>
                         </li>
                         <li class="flex items-start gap-1.5">
                             <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0"></i>
-                            <span><b>Filter & Cari:</b> Gunakan kotak pencarian untuk mencari mutasi berdasarkan kategori atau keterangan dengan cepat.</span>
+                            <span><b>Keamanan Sesi:</b> Selalu klik tombol <b>Logout</b> setelah selesai memperbarui data.</span>
                         </li>
                     </ul>
                 </div>
@@ -125,14 +125,13 @@
             </div>
         </div>
 
-        <!-- Section Bawah: Tabel Manajemen Transaksi Kas (Filter, Edit, Hapus) -->
+        <!-- Section Bawah: Tabel Manajemen Transaksi Kas -->
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
                     <h3 class="text-lg font-bold text-slate-800">Manajemen Data Mutasi Kas</h3>
-                    <p class="text-xs text-slate-500">Daftar seluruh catatan pemasukan dan pengeluaran masjid.</p>
+                    <p class="text-xs text-slate-500">Daftar seluruh catatan pemasukan dan pengeluaran masjid dari server.</p>
                 </div>
-                <!-- Filter & Search Controls -->
                 <div class="flex flex-wrap gap-2 w-full sm:w-auto">
                     <input type="text" id="search-query" onkeyup="renderManageTable()" placeholder="Cari keterangan/kategori..." class="border border-slate-300 rounded-xl px-3 py-2 text-xs outline-none focus:ring-2 focus:ring-emerald-500 flex-grow sm:w-64">
                     <select id="filter-jenis-trx" onchange="renderManageTable()" class="border border-slate-300 rounded-xl px-3 py-2 text-xs outline-none bg-white">
@@ -156,7 +155,7 @@
                         </tr>
                     </thead>
                     <tbody id="manage-table-body" class="divide-y divide-slate-100 text-xs">
-                        <!-- Render via JavaScript -->
+                        <tr><td colspan="6" class="p-4 text-center text-slate-400">Memuat data dari Google Sheets...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -171,27 +170,47 @@
         </div>
     </footer>
 
-    <!-- Script Logika & Manajemen Data -->
+    <!-- Script Integrasi Web App Google Apps Script -->
     <script>
-        // Simulasi Database Kas Lokal (bisa disinkronkan dengan array/LocalStorage/Google Sheets)
-        let transactions = JSON.parse(localStorage.getItem('masjid_transactions')) || [
-            { id: 1, tanggal: '2026-10-20', jenis: 'MASUK', kategori: 'Infaq Jumat', keterangan: 'Hasil Kotak Infaq Shalat Jumat', jumlah: 4520000 },
-            { id: 2, tanggal: '2026-10-22', jenis: 'KELUAR', kategori: 'Kebersihan', keterangan: 'Pembelian alat kebersihan & karpet', jumlah: 500000 },
-            { id: 3, tanggal: '2026-10-25', jenis: 'MASUK', kategori: 'Donatur', keterangan: 'Infaq Hamba Allah untuk Operasional', jumlah: 2000000 },
-            { id: 4, tanggal: '2026-10-26', jenis: 'KELUAR', kategori: 'Listrik & Air', keterangan: 'Pembayaran Tagihan Bulanan PLN & PDAM', jumlah: 850000 }
-        ];
+        // === TEMPELKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI ===
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby_kvJQEWeShyamhOFZOJ_He8e4BLhhPVBeB364URQqeYb3ttibzDL9mscx4oiSA7zf/exec';
+
+        let transactions = [];
 
         document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
             document.getElementById('adm-tanggal').valueAsDate = new Date();
-            renderManageTable();
+            
+            // Tampilkan info role dari session
+            const userRole = sessionStorage.getItem('userRole') || 'admin';
+            document.getElementById('display-role').innerText = userRole.toUpperCase();
+
+            fetchDataFromSheets();
         });
 
         function formatRupiah(number) {
             return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(number);
         }
 
-        // Render Tabel Manajemen Kas Lengkap dengan Aksi Edit & Hapus
+        // 1. Ambil Data dari Google Sheets (GET)
+        async function fetchDataFromSheets() {
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL);
+                const data = await response.json();
+                transactions = data.riwayat || [];
+                
+                if (data.pengumuman) {
+                    document.getElementById('input-pengumuman').value = data.pengumuman;
+                }
+                
+                renderManageTable();
+            } catch (error) {
+                console.error("Gagal mengambil data:", error);
+                document.getElementById('manage-table-body').innerHTML = `<tr><td colspan="6" class="p-4 text-center text-rose-500">Gagal memuat data dari server. Periksa URL Web App Anda.</td></tr>`;
+            }
+        }
+
+        // 2. Render Tabel Manajemen Kas
         function renderManageTable() {
             const query = document.getElementById('search-query').value.toLowerCase();
             const filterJenis = document.getElementById('filter-jenis-trx').value;
@@ -199,7 +218,7 @@
             tbody.innerHTML = '';
 
             let filtered = transactions.filter(t => {
-                const matchQuery = t.keterangan.toLowerCase().includes(query) || t.kategori.toLowerCase().includes(query);
+                const matchQuery = String(t.keterangan).toLowerCase().includes(query) || String(t.kategori).toLowerCase().includes(query);
                 const matchJenis = filterJenis === 'ALL' || t.jenis === filterJenis;
                 return matchQuery && matchJenis;
             });
@@ -209,7 +228,7 @@
                 return;
             }
 
-            filtered.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal)).forEach((t, index) => {
+            filtered.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal)).forEach((t) => {
                 const isMasuk = t.jenis === 'MASUK';
                 const tr = document.createElement('tr');
                 tr.className = "hover:bg-slate-50 transition";
@@ -226,103 +245,91 @@
                         ${isMasuk ? '+' : '-'} ${formatRupiah(t.jumlah)}
                     </td>
                     <td class="p-3 text-center space-x-1">
-                        <button onclick="editTransaction(${t.id})" class="bg-amber-100 hover:bg-amber-200 text-amber-800 px-2.5 py-1 rounded-lg font-medium transition" title="Edit Data">Edit</button>
-                        <button onclick="deleteTransaction(${t.id})" class="bg-rose-100 hover:bg-rose-200 text-rose-700 px-2.5 py-1 rounded-lg font-medium transition" title="Hapus Data">Hapus</button>
+                        <button onclick="alert('Fitur edit langsung ke Google Sheets dapat disesuaikan pada backend script.')" class="bg-amber-100 hover:bg-amber-200 text-amber-800 px-2.5 py-1 rounded-lg font-medium transition">Info</button>
                     </td>
                 `;
                 tbody.appendChild(tr);
             });
         }
 
-        // Simpan atau Perbarui Transaksi (Tambah / Edit)
-        function saveTransaction(e) {
+        // 3. Simpan Transaksi Baru ke Google Sheets (POST)
+        async function saveTransaction(e) {
             e.preventDefault();
-            const editId = document.getElementById('edit-index').value;
-            const tanggal = document.getElementById('adm-tanggal').value;
-            const jenis = document.getElementById('adm-jenis').value;
-            const kategori = document.getElementById('adm-kategori').value;
-            const keterangan = document.getElementById('adm-keterangan').value;
-            const jumlah = parseFloat(document.getElementById('adm-jumlah').value);
+            
+            const payload = {
+                action: "add_kas",
+                username: sessionStorage.getItem('username') || 'admin',
+                role: sessionStorage.getItem('userRole') || 'superadmin',
+                id: Date.now(),
+                tanggal: document.getElementById('adm-tanggal').value,
+                jenis: document.getElementById('adm-jenis').value,
+                kategori: document.getElementById('adm-kategori').value,
+                keterangan: document.getElementById('adm-keterangan').value,
+                jumlah: parseFloat(document.getElementById('adm-jumlah').value)
+            };
 
-            if (!tanggal || !jenis || !kategori || !keterangan || isNaN(jumlah) || jumlah <= 0) {
-                alert('Mohon lengkapi seluruh formulir dengan data yang valid!');
-                return;
-            }
+            const btn = document.getElementById('btn-submit');
+            btn.innerText = "Menyimpan ke Server...";
+            btn.disabled = true;
 
-            if (editId) {
-                // Proses Update
-                const idx = transactions.findIndex(t => t.id == editId);
-                if (idx !== -1) {
-                    transactions[idx] = { id: Number(editId), tanggal, jenis, kategori, keterangan, jumlah };
-                    alert('Data transaksi kas berhasil diperbarui!');
-                }
-            } else {
-                // Proses Tambah Baru
-                const newTx = { id: Date.now(), tanggal, jenis, kategori, keterangan, jumlah };
-                transactions.push(newTx);
-                alert('Alhamdulillah, catatan transaksi kas baru berhasil disimpan!');
-            }
+            try {
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', // Diperlukan untuk Google Apps Script Web App
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
 
-            localStorage.setItem('masjid_transactions', JSON.stringify(transactions));
-            resetForm();
-            renderManageTable();
-        }
-
-        // Muat Data ke Form untuk Diedit
-        function editTransaction(id) {
-            const t = transactions.find(item => item.id == id);
-            if (!t) return;
-
-            document.getElementById('edit-index').value = t.id;
-            document.getElementById('adm-tanggal').value = t.tanggal;
-            document.getElementById('adm-jenis').value = t.jenis;
-            document.getElementById('adm-kategori').value = t.kategori;
-            document.getElementById('adm-keterangan').value = t.keterangan;
-            document.getElementById('adm-jumlah').value = t.jumlah;
-
-            document.getElementById('form-title').innerText = 'Edit Transaksi Kas';
-            document.getElementById('btn-submit').innerHTML = `<i data-lucide="check" class="w-4 h-4"></i> Perbarui Data Kas`;
-            document.getElementById('btn-cancel-edit').classList.remove('hidden');
-            lucide.createIcons();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Hapus Transaksi
-        function deleteTransaction(id) {
-            if (confirm('Apakah Anda yakin ingin menghapus catatan transaksi ini?')) {
-                transactions = transactions.filter(t => t.id != id);
-                localStorage.setItem('masjid_transactions', JSON.stringify(transactions));
-                renderManageTable();
-                alert('Transaksi berhasil dihapus.');
+                alert('Alhamdulillah, catatan transaksi kas berhasil disimpan ke Google Sheets!');
+                document.getElementById('form-admin-tx').reset();
+                document.getElementById('adm-tanggal').valueAsDate = new Date();
+                
+                // Ambil ulang data terbaru
+                setTimeout(fetchDataFromSheets, 1500);
+            } catch (error) {
+                console.error("Gagal menyimpan:", error);
+                alert('Terjadi kesalahan saat menyimpan data.');
+            } finally {
+                btn.innerHTML = `<i data-lucide="save" class="w-4 h-4"></i> Simpan Catatan Kas`;
+                btn.disabled = false;
+                lucide.createIcons();
             }
         }
 
-        // Reset Form ke Mode Tambah Baru
-        function resetForm() {
-            document.getElementById('form-admin-tx').reset();
-            document.getElementById('edit-index').value = '';
-            document.getElementById('adm-tanggal').valueAsDate = new Date();
-            document.getElementById('form-title').innerText = 'Catat Transaksi Kas Baru';
-            document.getElementById('btn-submit').innerHTML = `<i data-lucide="save" class="w-4 h-4"></i> Simpan Catatan Kas`;
-            document.getElementById('btn-cancel-edit').classList.add('hidden');
-            lucide.createIcons();
-        }
-
-        // Fungsi Update Running Text TV (Rekomendasi Panel Sekretaris)
-        function updateRunningText() {
+        // 4. Perbarui Running Text TV ke Google Sheets (POST)
+        async function updateRunningText() {
             const text = document.getElementById('input-pengumuman').value.trim();
             if (!text) {
                 alert('Teks pengumuman tidak boleh kosong!');
                 return;
             }
-            localStorage.setItem('masjid_running_text', text);
-            alert('Running text untuk layar TV berhasil diperbarui!');
+
+            const payload = {
+                action: "update_pengumuman",
+                username: sessionStorage.getItem('username') || 'admin',
+                role: sessionStorage.getItem('userRole') || 'superadmin',
+                pengumuman: text
+            };
+
+            try {
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                alert('Running text untuk layar TV berhasil diperbarui di database!');
+            } catch (error) {
+                console.error("Gagal memperbarui:", error);
+                alert('Gagal memperbarui pengumuman.');
+            }
         }
 
-        // Fungsi Logout
+        // 5. Logout
         function handleLogout() {
             if (confirm('Apakah Anda yakin ingin keluar dari sesi administrator?')) {
-                sessionStorage.removeItem('isAdminLoggedIn');
+                sessionStorage.clear();
                 window.location.replace('login.html');
             }
         }
