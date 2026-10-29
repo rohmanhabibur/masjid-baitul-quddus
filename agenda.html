@@ -27,7 +27,7 @@
     <header class="bg-slate-900 text-white shadow px-6 py-4 flex justify-between items-center border-b border-slate-800">
         <div>
             <h1 class="font-extrabold text-lg text-amber-400">MANAJEMEN AGENDA & PAMFLET MASJID</h1>
-            <p class="text-xs text-slate-400">Masjid Baitul Quddus Cungking, Mojopanggung, Banyuwangi</p>
+            <p class="text-xs text-slate-400">Masjid Baitul Quddus Cungking, Mojopanggung, Giri, Banyuwangi</p>
         </div>
         <div class="flex items-center gap-3">
             <a href="admin.html" class="bg-slate-800 hover:bg-slate-700 text-xs px-3 py-2 rounded-lg transition font-medium">Kembali ke Panel Utama</a>
@@ -38,29 +38,51 @@
     </header>
 
     <!-- Content -->
-    <main class="max-w-7xl w-full mx-auto p-6 space-y-6 flex-grow">
+    <main class="max-w-4xl w-full mx-auto p-6 space-y-6 flex-grow">
         
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
             <h3 class="text-base font-bold text-slate-800 mb-1 flex items-center gap-2">
                 <i data-lucide="calendar-plus" class="w-5 h-5 text-amber-500"></i> Tambah Agenda & Pamflet Baru
             </h3>
-            <p class="text-xs text-slate-500 mb-4">Informasi agenda dan tautan gambar pamflet akan langsung diperbarui di layar TV digital.</p>
+            <p class="text-xs text-slate-500 mb-6">Unggah poster kegiatan atau pamflet langsung dari perangkat Anda agar langsung tampil di layar TV digital.</p>
 
-            <form id="form-agenda" onsubmit="saveAgenda(event)" class="space-y-4 text-sm">
+            <form id="form-agenda" onsubmit="saveAgenda(event)" class="space-y-5 text-sm">
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">Judul Agenda / Kegiatan</label>
                     <input type="text" id="ag-judul" placeholder="Contoh: Kajian Akbar & Santunan Yatim" required class="w-full border border-slate-300 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-amber-500">
                 </div>
+                
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">Waktu & Tanggal Pelaksanaan</label>
                     <input type="text" id="ag-waktu" placeholder="Contoh: Ahad Pagi, 05.00 WIB - Selesai" required class="w-full border border-slate-300 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-amber-500">
                 </div>
+
+                <!-- AREA DRAG & DROP / UPLOAD FILE -->
                 <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Tautan Gambar / Poster (URL Gambar)</label>
-                    <input type="url" id="ag-gambar" placeholder="https://images.unsplash.com/photo-..." required class="w-full border border-slate-300 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-amber-500 font-mono text-xs">
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Unggah Berkas Pamflet / Poster</label>
+                    <div id="drop-zone" class="border-2 border-dashed border-slate-300 hover:border-amber-500 rounded-2xl p-6 text-center cursor-pointer transition bg-slate-50 relative flex flex-col items-center justify-center">
+                        <input type="file" id="ag-file" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full" onchange="handleFileSelect(this)">
+                        <div id="upload-placeholder" class="space-y-2">
+                            <div class="w-12 h-12 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mx-auto">
+                                <i data-lucide="upload-cloud" class="w-6 h-6"></i>
+                            </div>
+                            <p class="text-xs font-semibold text-slate-700">Seret & letakkan gambar di sini, atau <span class="text-amber-600 underline">klik untuk memilih file</span></p>
+                            <p class="text-[10px] text-slate-400">Mendukung format JPG, PNG, atau JPEG</p>
+                        </div>
+                        <!-- Preview Gambar Terpilih -->
+                        <div id="preview-container" class="hidden relative w-full h-48 flex items-center justify-center">
+                            <img id="image-preview" src="" alt="Pratinjau Pamflet" class="max-h-full max-w-full object-contain rounded-lg shadow">
+                            <button type="button" onclick="resetFile(event)" class="absolute top-2 right-2 bg-slate-900/80 hover:bg-rose-600 text-white p-1.5 rounded-full transition text-xs shadow" title="Ganti Gambar">
+                                <i data-lucide="x" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Hidden input untuk menampung string base64 gambar -->
+                    <input type="hidden" id="ag-gambar-base64" required>
                 </div>
-                <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3 rounded-xl transition shadow flex items-center justify-center gap-2">
-                    <i data-lucide="upload" class="w-4 h-4"></i> Publikasikan Agenda ke Layar TV
+
+                <button type="submit" id="btn-submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3 rounded-xl transition shadow flex items-center justify-center gap-2">
+                    <i data-lucide="send" class="w-4 h-4"></i> Publikasikan Agenda ke Layar TV
                 </button>
             </form>
         </div>
@@ -69,28 +91,103 @@
 
     <!-- Footer -->
     <footer class="bg-slate-900 text-slate-400 text-xs py-6 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 text-center">
+        <div class="max-w-4xl mx-auto px-4 text-center">
             <p>&copy; 2026 Masjid Baitul Quddus Cungking, Mojopanggung, Giri, Banyuwangi. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby_kvJQEWeShyamhOFZOJ_He8e4BLhhPVBeB364URQqeYb3ttibzDL9mscx4oiSA7zf/exec';
+
         document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
         });
 
-        function saveAgenda(e) {
+        // Handle File Pilih & Konversi ke Base64
+        function handleFileSelect(input) {
+            const file = input.files[0];
+            if (file) {
+                // Validasi ukuran (maksimal ~2MB agar tidak overload di Google Sheets)
+                if (file.size > 2 * 1024 * 1024) {
+                    alert('Ukuran file terlalu besar! Maksimal 2MB.');
+                    input.value = '';
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const base64String = e.target.result;
+                    document.getElementById('ag-gambar-base64').value = base64String;
+                    
+                    // Tampilkan Pratinjau
+                    document.getElementById('image-preview').src = base64String;
+                    document.getElementById('upload-placeholder').classList.add('hidden');
+                    document.getElementById('preview-container').classList.remove('hidden');
+                    lucide.createIcons();
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Reset Pilihan File
+        function resetFile(e) {
+            e.stopPropagation();
+            document.getElementById('ag-file').value = '';
+            document.getElementById('ag-gambar-base64').value = '';
+            document.getElementById('preview-container').classList.add('hidden');
+            document.getElementById('upload-placeholder').classList.remove('hidden');
+        }
+
+        // Kirim Data ke Google Sheets via POST
+        async function saveAgenda(e) {
             e.preventDefault();
-            const judul = document.getElementById('ag-judul').value;
-            const waktu = document.getElementById('ag-waktu').value;
-            const gambar = document.getElementById('ag-gambar').value;
+            const judul = document.getElementById('ag-judul').value.trim();
+            const waktu = document.getElementById('ag-waktu').value.trim();
+            const gambar = document.getElementById('ag-gambar-base64').value;
+            const currentUser = sessionStorage.getItem('adminUsername') || 'admin';
+            const currentRole = sessionStorage.getItem('adminRole') || 'admin';
 
-            // Simpan ke localStorage agar bisa dibaca oleh tv.html atau index.html
-            const agendaData = { judul, waktu, gambar };
-            localStorage.setItem('masjid_active_agenda', JSON.stringify(agendaData));
+            if (!gambar) {
+                alert('Silakan unggah gambar pamflet terlebih dahulu!');
+                return;
+            }
 
-            alert('Alhamdulillah, agenda dan pamflet berhasil diperbarui!');
-            document.getElementById('form-agenda').reset();
+            const btn = document.getElementById('btn-submit');
+            btn.disabled = true;
+            btn.innerText = 'Menyimpan & Mengirim ke Layar TV...';
+
+            const payload = {
+                action: 'update_agenda',
+                judul: judul,
+                waktu: waktu,
+                gambar: gambar,
+                username: currentUser,
+                role: currentRole
+            };
+
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    alert('Alhamdulillah, agenda dan pamflet berhasil diperbarui di layar TV!');
+                    document.getElementById('form-agenda').reset();
+                    resetFile(new Event('click'));
+                } else {
+                    alert('Gagal menyimpan: ' + result.message);
+                }
+            } catch (err) {
+                console.error('Error:', err);
+                alert('Terjadi kesalahan jaringan saat menghubungi server.');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i> Publikasikan Agenda ke Layar TV';
+                lucide.createIcons();
+            }
         }
 
         function handleLogout() {
