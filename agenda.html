@@ -44,7 +44,7 @@
             <h3 class="text-base font-bold text-slate-800 mb-1 flex items-center gap-2">
                 <i data-lucide="calendar-plus" class="w-5 h-5 text-amber-500"></i> Tambah Agenda & Pamflet Baru
             </h3>
-            <p class="text-xs text-slate-500 mb-6">Pilih poster kegiatan dari perangkat Anda. Sistem akan mengunggahnya secara otomatis dan menampilkannya di layar TV.</p>
+            <p class="text-xs text-slate-500 mb-6">Masukkan nama file poster/pamflet yang telah diunggah ke folder sistem masjid.</p>
 
             <form id="form-agenda" onsubmit="saveAgenda(event)" class="space-y-5 text-sm">
                 <div>
@@ -57,28 +57,10 @@
                     <input type="text" id="ag-waktu" placeholder="Contoh: Ahad Pagi, 05.00 WIB - Selesai" required class="w-full border border-slate-300 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-amber-500">
                 </div>
 
-                <!-- AREA UPLOAD FILE -->
                 <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">Unggah Berkas Pamflet / Poster</label>
-                    <div class="border-2 border-dashed border-slate-300 hover:border-amber-500 rounded-2xl p-6 text-center cursor-pointer transition bg-slate-50 relative flex flex-col items-center justify-center">
-                        <input type="file" id="ag-file" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full" onchange="handleFileSelect(this)">
-                        <div id="upload-placeholder" class="space-y-2">
-                            <div class="w-12 h-12 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mx-auto">
-                                <i data-lucide="upload-cloud" class="w-6 h-6"></i>
-                            </div>
-                            <p class="text-xs font-semibold text-slate-700">Klik atau seret file gambar ke sini</p>
-                            <p class="text-[10px] text-slate-400">Format yang didukung: JPG, JPEG, PNG</p>
-                        </div>
-                        <!-- Preview Gambar -->
-                        <div id="preview-container" class="hidden relative w-full h-48 flex items-center justify-center">
-                            <img id="image-preview" src="" alt="Pratinjau Pamflet" class="max-h-full max-w-full object-contain rounded-lg shadow">
-                            <button type="button" onclick="resetFile(event)" class="absolute top-2 right-2 bg-slate-900/80 hover:bg-rose-600 text-white p-1.5 rounded-full transition text-xs shadow">
-                                <i data-lucide="x" class="w-4 h-4"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <!-- Menyimpan URL hasil upload cloud -->
-                    <input type="hidden" id="ag-gambar-url" required>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">Nama File Gambar Pamflet</label>
+                    <input type="text" id="ag-gambar" placeholder="Contoh: pamflet_jumat_301026.jpeg" required class="w-full border border-slate-300 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-amber-500 font-mono text-xs">
+                    <p class="text-[10px] text-slate-400 mt-1">Masukkan nama file gambar secara persis (contoh: <code>pamflet_jumat_301026.jpeg</code>) yang ada di folder web Anda.</p>
                 </div>
 
                 <button type="submit" id="btn-submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3 rounded-xl transition shadow flex items-center justify-center gap-2">
@@ -98,81 +80,18 @@
 
     <script>
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby_kvJQEWeShyamhOFZOJ_He8e4BLhhPVBeB364URQqeYb3ttibzDL9mscx4oiSA7zf/exec';
-        // Menggunakan Free API Key ImgBB publik untuk kemudahan upload
-        const IMGBB_API_KEY = '6d207e02598a4e672703e7c05048259d'; 
 
         document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
         });
 
-        async function handleFileSelect(input) {
-            const file = input.files[0];
-            if (!file) return;
-
-            // Tampilkan preview lokal sementara
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('image-preview').src = e.target.result;
-                document.getElementById('upload-placeholder').classList.add('hidden');
-                document.getElementById('preview-container').classList.remove('hidden');
-                lucide.createIcons();
-            }
-            reader.readAsDataURL(file);
-
-            // Unggah otomatis ke Cloud Image Hosting (ImgBB)
-            const formData = new FormData();
-            formData.append('image', file);
-
-            const btn = document.getElementById('btn-submit');
-            btn.disabled = true;
-            btn.innerText = 'Mengunggah gambar ke Cloud...';
-
-            try {
-                const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
-                    method: 'POST',
-                    body: formData
-                });
-                const result = await response.json();
-
-                if (result.success) {
-                    // Simpan URL gambar asli yang aman untuk TV & Sheets
-                    document.getElementById('ag-gambar-url').value = result.data.url;
-                    btn.disabled = false;
-                    btn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i> Publikasikan Agenda ke Layar TV';
-                    lucide.createIcons();
-                } else {
-                    alert('Gagal mengunggah gambar ke server cloud.');
-                    resetFile(new Event('click'));
-                }
-            } catch (err) {
-                console.error('Upload Error:', err);
-                alert('Terjadi kesalahan jaringan saat mengunggah gambar.');
-                resetFile(new Event('click'));
-                btn.disabled = false;
-                btn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i> Publikasikan Agenda ke Layar TV';
-            }
-        }
-
-        function resetFile(e) {
-            if (e) e.stopPropagation();
-            document.getElementById('ag-file').value = '';
-            document.getElementById('ag-gambar-url').value = '';
-            document.getElementById('preview-container').classList.add('hidden');
-            document.getElementById('upload-placeholder').classList.remove('hidden');
-        }
-
         async function saveAgenda(e) {
             e.preventDefault();
             const judul = document.getElementById('ag-judul').value.trim();
             const waktu = document.getElementById('ag-waktu').value.trim();
-            const gambar = document.getElementById('ag-gambar-url').value;
+            const gambar = document.getElementById('ag-gambar').value.trim();
             const currentUser = sessionStorage.getItem('adminUsername') || 'admin';
             const currentRole = sessionStorage.getItem('adminRole') || 'admin';
-
-            if (!gambar) {
-                alert('Harap tunggu hingga gambar selesai diunggah!');
-                return;
-            }
 
             const btn = document.getElementById('btn-submit');
             btn.disabled = true;
@@ -198,7 +117,6 @@
                 if (result.status === 'success') {
                     alert('Alhamdulillah, agenda dan pamflet berhasil diperbarui di layar TV!');
                     document.getElementById('form-agenda').reset();
-                    resetFile();
                 } else {
                     alert('Gagal menyimpan: ' + result.message);
                 }
