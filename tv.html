@@ -53,7 +53,7 @@
 <body class="bg-slate-100 dark:bg-[#050b14] text-slate-800 dark:text-slate-100 overflow-hidden h-screen flex flex-col justify-between select-none transition-colors duration-500">
 
     <!-- HEADER SECTION -->
-    <header class="bg-gradient-to-r from-emerald-900 via-emerald-800 dark:from-emerald-950 dark:via-slate-900 dark:to-emerald-950 px-6 py-2.5 border-b-2 border-amber-500/50 flex justify-between items-center shadow-xl text-white">
+    <header class="bg-gradient-to-r from-emerald-900 via-emerald-800 dark:from-emerald-950 dark:via-slate-900 dark:to-emerald-950 px-6 py-2.5 border-b-2 border-amber-500/50 flex justify-between items-center shadow-xl text-white shrink-0">
         <div class="flex items-center gap-3">
             <div class="w-12 h-12 rounded-xl overflow-hidden border-2 border-amber-400 shrink-0 shadow bg-white">
                 <img src="logo_masjid_baitul_quddus.jpeg" alt="Masjid Baitul Quddus" class="w-full h-full object-cover">
@@ -79,7 +79,7 @@
     </header>
 
     <!-- PRAYER TIMES BAR -->
-    <section class="px-6 py-2 bg-white/80 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-800/80 backdrop-blur">
+    <section class="px-6 py-2 bg-white/80 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-800/80 backdrop-blur shrink-0">
         <div class="grid grid-cols-6 gap-2.5" id="prayer-grid">
             <div id="box-Subuh" class="prayer-box bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl p-2 text-center transition-all">
                 <p class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase">Subuh</p>
@@ -142,7 +142,7 @@
                     </h3>
                     <div id="txContainer" class="overflow-hidden relative h-[140px]">
                         <div id="txTable" class="divide-y divide-slate-100 dark:divide-slate-800/60 text-[10px]">
-                            <tr><td class="py-2 text-center text-slate-400">Memuat mutasi...</td></tr>
+                            <div><div class="py-2 text-center text-slate-400">Memuat mutasi...</div></div>
                         </div>
                     </div>
                 </div>
@@ -153,16 +153,16 @@
         <div class="col-span-6 flex flex-col gap-2.5 justify-between">
             <div class="grid grid-cols-2 gap-3 h-[245px]">
                 
-                <!-- KOTAK AGENDA / PAMFLET (RESPONSIF PORTRAIT / LANDSCAPE OTOMATIS) -->
+                <!-- KOTAK AGENDA / PAMFLET OTOMATIS PORTRAIT / LANDSCAPE -->
                 <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 flex flex-col justify-between shadow">
                     <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-1 mb-1">
                         <h3 class="text-[11px] font-bold text-amber-500 flex items-center gap-1">
                             <i data-lucide="image" class="w-3.5 h-3.5"></i> Agenda Kegiatan
                         </h3>
                     </div>
-                    <div class="w-full h-[185px] bg-slate-100 dark:bg-slate-950 rounded-xl overflow-hidden relative shadow-inner flex items-center justify-center">
-                        <img id="pamfletImage" src="" alt="Pamflet" onload="adjustImageOrientation(this)" class="w-full h-full object-contain transition-all duration-500">
-                        <div class="absolute bottom-0 inset-x-0 bg-slate-950/80 backdrop-blur px-2 py-1 text-center">
+                    <div class="w-full h-[185px] bg-slate-950 rounded-xl overflow-hidden relative shadow-inner flex items-center justify-center p-1">
+                        <img id="pamfletImage" src="" alt="Pamflet" onload="adjustImageOrientation(this)" class="max-h-full max-w-full object-contain transition-all duration-500 rounded-lg">
+                        <div class="absolute bottom-0 inset-x-0 bg-slate-950/80 backdrop-blur px-2 py-1 text-center z-10">
                             <p id="pamfletTitle" class="text-[10px] font-bold text-amber-300 truncate">Memuat agenda...</p>
                         </div>
                     </div>
@@ -177,7 +177,7 @@
                     </div>
                     <div class="w-full h-[185px] bg-slate-950 rounded-xl overflow-hidden relative flex flex-col items-center justify-center p-2 text-center shadow-inner border border-slate-800">
                         <div class="w-full h-32 flex items-center justify-center bg-white rounded-lg p-1">
-                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=INFAQ_MASJID_BAITUL_QUDDUS" alt="QRIS" class="max-h-full max-w-full object-contain">
+                            <img src="qris_bq.jpeg" alt="QRIS" class="max-h-full max-w-full object-contain">
                         </div>
                         <p class="text-[10px] font-bold text-amber-300 leading-tight mt-1">Satu QRIS untuk Semua</p>
                         <p class="text-[8px] text-slate-400">Masjid Baitul Quddus Cungking</p>
@@ -194,15 +194,15 @@
                     <div class="grid grid-cols-2 gap-1.5 text-center">
                         <div class="bg-slate-50 dark:bg-slate-950 p-1.5 rounded-xl border border-slate-100 dark:border-slate-800">
                             <span class="text-[8px] text-slate-400 uppercase font-bold block">Imam</span>
-                            <span id="namaImam" class="text-[9px] font-bold text-amber-500 block truncate">Ust. H. Syaifullah</span>
+                            <span id="namaImam" class="text-[9px] font-bold text-amber-500 block truncate">-</span>
                         </div>
                         <div class="bg-slate-50 dark:bg-slate-950 p-1.5 rounded-xl border border-slate-100 dark:border-slate-800">
                             <span class="text-[8px] text-slate-400 uppercase font-bold block">Muadzin</span>
-                            <span id="namaMuadzin" class="text-[9px] font-bold text-emerald-500 block truncate">Bpk. Hasan</span>
+                            <span id="namaMuadzin" class="text-[9px] font-bold text-emerald-500 block truncate">-</span>
                         </div>
                         <div class="bg-slate-50 dark:bg-slate-950 p-1.5 rounded-xl border border-slate-100 dark:border-slate-800">
                             <span class="text-[8px] text-slate-400 uppercase font-bold block">Bilal</span>
-                            <span id="namaBilal" class="text-[9px] font-bold text-blue-500 block truncate">Ust. Umar</span>
+                            <span id="namaBilal" class="text-[9px] font-bold text-blue-500 block truncate">-</span>
                         </div>
                         <div class="bg-slate-50 dark:bg-slate-950 p-1.5 rounded-xl border border-slate-100 dark:border-slate-800">
                             <span class="text-[8px] text-slate-400 uppercase font-bold block">Khotib</span>
@@ -240,7 +240,7 @@
             <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 shadow">
                 <p class="text-[10px] font-bold text-slate-400 mb-1">Kawasan Masjid</p>
                 <div class="h-28 rounded-xl overflow-hidden border border-slate-800">
-                    <img src="logo_masjid_baitul_quddus.jpeg" alt="Masjid" class="w-full h-full object-cover">
+                    <img src="masjid_baitul_quddus.jpeg" alt="Masjid" class="w-full h-full object-cover">
                 </div>
             </div>
 
@@ -257,7 +257,7 @@
     </main>
 
     <!-- FOOTER: RUNNING TEXT -->
-    <footer class="bg-amber-400 text-slate-950 px-6 py-2 text-sm font-bold overflow-hidden border-t-2 border-amber-500 flex items-center gap-4 shadow-inner">
+    <footer class="bg-amber-400 text-slate-950 px-6 py-2 text-sm font-bold overflow-hidden border-t-2 border-amber-500 flex items-center gap-4 shadow-inner shrink-0">
         <span class="bg-slate-950 text-amber-400 text-[10px] uppercase px-2.5 py-1 rounded shrink-0 font-extrabold tracking-wider">PENGUMUMAN</span>
         <div class="overflow-hidden w-full">
             <div id="runningText" class="animate-marquee font-medium">
@@ -272,25 +272,16 @@
         const BANYUWANGI_LAT = -8.2192;
         const BANYUWANGI_LNG = 114.3691;
         let prayerSchedule = {};
+        let serverPetugasList = [];
 
-        const daftarPetugas = [
-            { imam: "Ust. H. Syaifullah", muadzin: "Bpk. Hasan", bilal: "Ust. Umar", khotib: "-" },
-            { imam: "Ust. M. Sholeh", muadzin: "Bpk. Rahmat", bilal: "Ust. Zaky", khotib: "-" },
-            { imam: "Dr. H. Ahmad", muadzin: "Ust. Zaky", bilal: "Bpk. Rahmat", khotib: "-" },
-            { imam: "Ust. H. Syaifullah", muadzin: "Bpk. Hasan", bilal: "Ust. Farhan", khotib: "-" },
-            { imam: "Kiai M. Qosim", muadzin: "Ust. Farhan", bilal: "Ust. Bilal", khotib: "-" },
-            { imam: "Ust. H. Ridwan", muadzin: "Bpk. Anwar", bilal: "Ust. Umar", khotib: "Kiai H. Abdullah" },
-            { imam: "Kiai H. Abdullah", muadzin: "Ust. Bilal", bilal: "Bpk. Hasan", khotib: "-" }
-        ];
-
-        // Fungsi Otomatis Sesuaikan Tampilan Gambar Portrait/Landscape
+        // Fungsi Otomatis Penyesuaian Orientasi Gambar Pamflet
         function adjustImageOrientation(imgElement) {
             if (imgElement.naturalHeight > imgElement.naturalWidth) {
-                // Gambar Portrait (Tegak)
-                imgElement.className = "max-h-full w-auto object-contain transition-all duration-500 rounded-lg shadow";
+                // Portrait (Tegak) -> Pas kan tingginya secara penuh
+                imgElement.className = "max-h-full w-auto object-contain transition-all duration-500 rounded-lg shadow-md";
             } else {
-                // Gambar Landscape (Mendatar)
-                imgElement.className = "w-full h-full object-cover transition-all duration-500 rounded-lg";
+                // Landscape (Mendatar) -> Pas kan lebarnya secara penuh
+                imgElement.className = "w-full max-h-full object-contain transition-all duration-500 rounded-lg shadow-md";
             }
         }
 
@@ -299,18 +290,20 @@
             document.getElementById('clock').innerText = now.toLocaleTimeString('id-ID', { hour12: false });
             document.getElementById('date-gregorian').innerText = now.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
-            const dayIndex = now.getDay();
-            const p = daftarPetugas[dayIndex];
-            document.getElementById('namaImam').innerText = p.imam;
-            document.getElementById('namaMuadzin').innerText = p.muadzin;
-            document.getElementById('namaBilal').innerText = p.bilal;
-            document.getElementById('namaKhotib').innerText = p.khotib;
+            const dayIndex = now.getDay(); // 0 = Minggu, 1 = Senin, dst.
 
-            // Logika Hitung Mundur "Menuju Sholat"
+            if (serverPetugasList && serverPetugasList.length > 0) {
+                const petugasHariIni = serverPetugasList.find(p => Number(p.hari) === dayIndex) || serverPetugasList[0];
+                
+                document.getElementById('namaImam').innerText = petugasHariIni.imam || '-';
+                document.getElementById('namaMuadzin').innerText = petugasHariIni.muadzin || '-';
+                document.getElementById('namaBilal').innerText = petugasHariIni.bilal || '-';
+                document.getElementById('namaKhotib').innerText = petugasHariIni.khotib || '-';
+            }
+
             updateCountdown(now);
         }
         setInterval(updateClock, 1000);
-        updateClock();
 
         async function fetchPrayerTimes() {
             try {
@@ -366,7 +359,6 @@
                 }
             }
 
-            // Jika sudah lewat Isya, target sholat berikutnya adalah Subuh hari esok
             let targetDate = new Date(now);
             const [nHour, nMin] = nextPrayer.time.split(':').map(Number);
             targetDate.setHours(nHour, nMin, 0, 0);
@@ -384,7 +376,6 @@
                 document.getElementById('next-prayer-name').innerText = nextPrayer.name;
                 document.getElementById('countdown-timer').innerText = `-${hours}:${minutes}:${seconds}`;
 
-                // Berikan efek highlight pada kotak sholat yang sedang dituju
                 document.querySelectorAll('.prayer-box').forEach(el => el.classList.remove('border-amber-500', 'bg-amber-500/10'));
                 const activeBox = document.getElementById(`box-${nextPrayer.name}`);
                 if (activeBox) {
@@ -405,9 +396,15 @@
                 }
 
                 if (data.agendaList && data.agendaList.length > 0) {
+                    const agenda = data.agendaList[0];
                     const imgEl = document.getElementById('pamfletImage');
-                    imgEl.src = data.agendaList[0].gambar;
-                    document.getElementById('pamfletTitle').innerText = data.agendaList[0].judul + (data.agendaList[0].waktu ? ' — ' + data.agendaList[0].waktu : '');
+                    imgEl.src = agenda.gambar;
+                    document.getElementById('pamfletTitle').innerText = agenda.judul + (agenda.waktu ? ' — ' + agenda.waktu : '');
+                }
+
+                if (data.petugas && data.petugas.length > 0) {
+                    serverPetugasList = data.petugas;
+                    updateClock();
                 }
 
                 const txTable = document.getElementById('txTable');
