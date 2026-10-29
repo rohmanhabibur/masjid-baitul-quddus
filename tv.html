@@ -109,23 +109,23 @@
         </div>
     </section>
 
-    <!-- MAIN BODY SECTION (FULL HEIGHT FLEXIBLE LAYOUT) -->
+    <!-- MAIN BODY SECTION -->
     <main class="flex-1 px-6 py-2.5 grid grid-cols-12 gap-3 items-stretch overflow-hidden">
         
-        <!-- KOLOM KIRI: Keuangan & Mutasi (3 Kolom) -->
+        <!-- KOLOM KIRI: Saldo, Mutasi Kas, & Jadwal Kajian (3 Kolom) -->
         <div class="col-span-3 flex flex-col gap-2.5 justify-between">
-            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-emerald-500/30 rounded-2xl p-3 shadow glow-emerald shrink-0">
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-emerald-500/30 rounded-2xl p-2.5 shadow glow-emerald shrink-0">
                 <span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 tracking-wider uppercase flex items-center gap-1">
                     <i data-lucide="wallet" class="w-3.5 h-3.5"></i> Total Saldo Kas
                 </span>
-                <h2 id="saldoTotal" class="text-xl font-extrabold font-mono-custom mt-0.5 text-slate-900 dark:text-white">Rp 0</h2>
+                <h2 id="saldoTotal" class="text-lg font-extrabold font-mono-custom mt-0.5 text-slate-900 dark:text-white">Rp 0</h2>
             </div>
 
-            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 shadow shrink-0">
-                <p class="text-[10px] font-bold text-slate-500 mb-1 flex items-center gap-1">
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2 shadow shrink-0">
+                <p class="text-[9px] font-bold text-slate-500 mb-1 flex items-center gap-1">
                     <i data-lucide="trending-up" class="w-3 h-3 text-emerald-500"></i> Grafik Mutasi Kas
                 </p>
-                <div class="h-16 flex items-end gap-1 px-1 bg-slate-50 dark:bg-slate-950 rounded-xl pt-2">
+                <div class="h-14 flex items-end gap-1 px-1 bg-slate-50 dark:bg-slate-950 rounded-xl pt-2">
                     <div class="w-1/6 bg-emerald-500 h-[40%] rounded-t"></div>
                     <div class="w-1/6 bg-rose-500 h-[25%] rounded-t"></div>
                     <div class="w-1/6 bg-emerald-500 h-[70%] rounded-t"></div>
@@ -135,100 +135,70 @@
                 </div>
             </div>
 
-            <div class="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 shadow flex-1 flex flex-col justify-between overflow-hidden">
+            <div class="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 shadow flex-1 flex flex-col justify-between overflow-hidden">
                 <div>
-                    <h3 class="text-xs font-bold flex items-center gap-1.5 border-b border-slate-100 dark:border-slate-800 pb-1.5 mb-1.5">
+                    <h3 class="text-xs font-bold flex items-center gap-1.5 border-b border-slate-100 dark:border-slate-800 pb-1 mb-1">
                         <i data-lucide="history" class="w-3.5 h-3.5 text-amber-500"></i> Mutasi Kas Terbaru
                     </h3>
-                    <div id="txContainer" class="overflow-hidden relative flex-1">
+                    <div id="txContainer" class="overflow-hidden relative max-h-[120px]">
                         <div id="txTable" class="divide-y divide-slate-100 dark:divide-slate-800/60 text-[10px]">
                             <div><div class="py-2 text-center text-slate-400">Memuat mutasi...</div></div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- JADWAL KAJIAN DI PINDAHKAN KE BAWAH MUTASI KAS -->
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 shadow shrink-0">
+                <h4 class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase flex items-center gap-1 mb-1">
+                    <i data-lucide="calendar-check" class="w-3.5 h-3.5"></i> Jadwal Kajian Subuh
+                </h4>
+                <div class="bg-slate-50 dark:bg-slate-950 p-2 rounded-xl border border-slate-100 dark:border-slate-800 text-[10px] space-y-0.5">
+                    <p class="font-bold text-amber-300 truncate">Kajian Ba'da Subuh</p>
+                    <p class="text-slate-300">Bersama: <span class="text-white font-medium">Ustadz Ghifary Waldi</span></p>
+                    <p class="text-[9px] text-slate-400">Setiap Ahad Pagi (Pekan Pertama)</p>
+                </div>
+            </div>
         </div>
 
-        <!-- KOLOM TENGAH: Pamflet & QRIS (Atas) + Petugas & Kajian (Bawah) Mengisi Penuh Ruang -->
-        <div class="col-span-6 flex flex-col gap-2.5 justify-between">
+        <!-- KOLOM TENGAH: Pamflet & QRIS (Mendapatkan Porsi Penuh yang Sangat Luas) -->
+        <div class="col-span-6 grid grid-cols-2 gap-3 items-stretch">
             
-            <!-- PAMFLET & QRIS (Mengambil proporsi tinggi yang optimal & seimbang) -->
-            <div class="grid grid-cols-2 gap-3 h-[58%]">
-                
-                <!-- Agenda / Pamflet -->
-                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 flex flex-col justify-between shadow">
-                    <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-1 mb-1 shrink-0">
-                        <h3 class="text-[11px] font-bold text-amber-500 flex items-center gap-1">
-                            <i data-lucide="image" class="w-3.5 h-3.5"></i> Agenda Kegiatan
-                        </h3>
-                    </div>
-                    <div class="w-full flex-1 bg-slate-950 rounded-xl overflow-hidden relative shadow-inner flex items-center justify-center p-1">
-                        <img id="pamfletImage" src="" alt="Pamflet" onload="adjustImageOrientation(this)" class="max-h-full max-w-full object-contain transition-all duration-500 rounded-lg">
-                        <div class="absolute bottom-0 inset-x-0 bg-slate-950/80 backdrop-blur px-2 py-1 text-center z-10">
-                            <p id="pamfletTitle" class="text-[10px] font-bold text-amber-300 truncate">Memuat agenda...</p>
-                        </div>
-                    </div>
+            <!-- Agenda / Pamflet Super Besar -->
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 flex flex-col justify-between shadow">
+                <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-1 mb-1 shrink-0">
+                    <h3 class="text-[11px] font-bold text-amber-500 flex items-center gap-1">
+                        <i data-lucide="image" class="w-3.5 h-3.5"></i> Agenda Kegiatan
+                    </h3>
                 </div>
-
-                <!-- QRIS Donasi -->
-                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 flex flex-col justify-between shadow">
-                    <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-1 mb-1 shrink-0">
-                        <h3 class="text-[11px] font-bold text-emerald-500 flex items-center gap-1">
-                            <i data-lucide="qr-code" class="w-3.5 h-3.5"></i> QRIS Donasi Digital
-                        </h3>
-                    </div>
-                    <div class="w-full flex-1 bg-slate-950 rounded-xl overflow-hidden relative flex flex-col items-center justify-center p-2 text-center shadow-inner border border-slate-800">
-                        <div class="w-full flex-1 flex items-center justify-center bg-white rounded-lg p-1 overflow-hidden">
-                            <img src="qris_bq.jpeg" alt="QRIS" class="max-h-full max-w-full object-contain">
-                        </div>
-                        <p class="text-[10px] font-bold text-amber-300 leading-tight mt-1 shrink-0">Satu QRIS Untuk Semua</p>
-                        <p class="text-[8px] text-slate-400 shrink-0">Masjid Baitul Quddus Cungking</p>
+                <div class="w-full flex-1 bg-slate-950 rounded-xl overflow-hidden relative shadow-inner flex items-center justify-center p-1">
+                    <img id="pamfletImage" src="" alt="Pamflet" onload="adjustImageOrientation(this)" class="max-h-full max-w-full object-contain transition-all duration-500 rounded-lg">
+                    <div class="absolute bottom-0 inset-x-0 bg-slate-950/80 backdrop-blur px-2 py-1 text-center z-10">
+                        <p id="pamfletTitle" class="text-[10px] font-bold text-amber-300 truncate">Memuat agenda...</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Panel Petugas Sholat & Jadwal Kajian (Mengisi sisa ruang bawah dengan sempurna) -->
-            <div class="grid grid-cols-2 gap-3 h-[40%]">
-                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 shadow flex flex-col justify-between">
-                    <h4 class="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase flex items-center gap-1 mb-1 shrink-0">
-                        <i data-lucide="users" class="w-3.5 h-3.5"></i> Petugas Hari Ini
-                    </h4>
-                    <div class="grid grid-cols-2 gap-2 text-center flex-1 items-center">
-                        <div class="bg-slate-50 dark:bg-slate-950 p-2 rounded-xl border border-slate-100 dark:border-slate-800 h-full flex flex-col justify-center">
-                            <span class="text-[8px] text-slate-400 uppercase font-bold block">Imam</span>
-                            <span id="namaImam" class="text-[10px] font-bold text-amber-500 block truncate mt-0.5">-</span>
-                        </div>
-                        <div class="bg-slate-50 dark:bg-slate-950 p-2 rounded-xl border border-slate-100 dark:border-slate-800 h-full flex flex-col justify-center">
-                            <span class="text-[8px] text-slate-400 uppercase font-bold block">Muadzin</span>
-                            <span id="namaMuadzin" class="text-[10px] font-bold text-emerald-500 block truncate mt-0.5">-</span>
-                        </div>
-                        <div class="bg-slate-50 dark:bg-slate-950 p-2 rounded-xl border border-slate-100 dark:border-slate-800 h-full flex flex-col justify-center">
-                            <span class="text-[8px] text-slate-400 uppercase font-bold block">Bilal</span>
-                            <span id="namaBilal" class="text-[10px] font-bold text-blue-500 block truncate mt-0.5">-</span>
-                        </div>
-                        <div class="bg-slate-50 dark:bg-slate-950 p-2 rounded-xl border border-slate-100 dark:border-slate-800 h-full flex flex-col justify-center">
-                            <span class="text-[8px] text-slate-400 uppercase font-bold block">Khotib</span>
-                            <span id="namaKhotib" class="text-[10px] font-bold text-sky-500 block truncate mt-0.5">-</span>
-                        </div>
-                    </div>
+            <!-- QRIS Donasi Super Besar -->
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 flex flex-col justify-between shadow">
+                <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-1 mb-1 shrink-0">
+                    <h3 class="text-[11px] font-bold text-emerald-500 flex items-center gap-1">
+                        <i data-lucide="qr-code" class="w-3.5 h-3.5"></i> QRIS Donasi Digital
+                    </h3>
                 </div>
-
-                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 shadow flex flex-col justify-between">
-                    <h4 class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase flex items-center gap-1 mb-1 shrink-0">
-                        <i data-lucide="calendar-check" class="w-3.5 h-3.5"></i> Jadwal Kajian Subuh
-                    </h4>
-                    <div class="bg-slate-50 dark:bg-slate-950 p-3 rounded-xl border border-slate-100 dark:border-slate-800 text-[11px] flex-1 flex flex-col justify-center space-y-1">
-                        <p class="font-bold text-amber-300 truncate">Kajian Ba'da Subuh</p>
-                        <p class="text-[10px] text-slate-300">Bersama: <span class="text-white font-medium">Ustadz Ghifary Waldi</span></p>
-                        <p class="text-[9px] text-slate-400">Setiap Ahad Pagi (Pekan Pertama)</p>
+                <div class="w-full flex-1 bg-slate-950 rounded-xl overflow-hidden relative flex flex-col items-center justify-center p-2 text-center shadow-inner border border-slate-800">
+                    <div class="w-full flex-1 flex items-center justify-center bg-white rounded-lg p-1 overflow-hidden">
+                        <img src="qris_bq.jpeg" alt="QRIS" class="max-h-full max-w-full object-contain">
                     </div>
+                    <p class="text-[10px] font-bold text-amber-300 leading-tight mt-1 shrink-0">Satu QRIS Untuk Semua</p>
+                    <p class="text-[8px] text-slate-400 shrink-0">Masjid Baitul Quddus Cungking</p>
                 </div>
             </div>
         </div>
 
-        <!-- KOLOM KANAN: Rekening, Foto Masjid, Peta (3 Kolom) -->
+        <!-- KOLOM KANAN: Rekening, Petugas, Foto Masjid, Peta (3 Kolom) -->
         <div class="col-span-3 flex flex-col gap-2.5 justify-between">
-            <div class="bg-gradient-to-br from-emerald-900 to-slate-900 border border-emerald-500/40 rounded-2xl p-3 shadow text-white shrink-0">
+            <div class="bg-gradient-to-br from-emerald-900 to-slate-900 border border-emerald-500/40 rounded-2xl p-2.5 shadow text-white shrink-0">
                 <h4 class="text-xs font-bold text-amber-300 uppercase flex items-center gap-1.5 mb-1.5 border-b border-white/10 pb-1">
                     <i data-lucide="credit-card" class="w-3.5 h-3.5"></i> Rekening Donasi
                 </h4>
@@ -239,9 +209,34 @@
                 </div>
             </div>
 
+            <!-- Panel Petugas Dipindah ke Kolom Kanan -->
             <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 shadow shrink-0">
+                <h4 class="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase flex items-center gap-1 mb-1.5">
+                    <i data-lucide="users" class="w-3.5 h-3.5"></i> Petugas Hari Ini
+                </h4>
+                <div class="grid grid-cols-2 gap-1.5 text-center">
+                    <div class="bg-slate-50 dark:bg-slate-950 p-1.5 rounded-xl border border-slate-100 dark:border-slate-800">
+                        <span class="text-[8px] text-slate-400 uppercase font-bold block">Imam</span>
+                        <span id="namaImam" class="text-[9px] font-bold text-amber-500 block truncate">-</span>
+                    </div>
+                    <div class="bg-slate-50 dark:bg-slate-950 p-1.5 rounded-xl border border-slate-100 dark:border-slate-800">
+                        <span class="text-[8px] text-slate-400 uppercase font-bold block">Muadzin</span>
+                        <span id="namaMuadzin" class="text-[9px] font-bold text-emerald-500 block truncate">-</span>
+                    </div>
+                    <div class="bg-slate-50 dark:bg-slate-950 p-1.5 rounded-xl border border-slate-100 dark:border-slate-800">
+                        <span class="text-[8px] text-slate-400 uppercase font-bold block">Bilal</span>
+                        <span id="namaBilal" class="text-[9px] font-bold text-blue-500 block truncate">-</span>
+                    </div>
+                    <div class="bg-slate-50 dark:bg-slate-950 p-1.5 rounded-xl border border-slate-100 dark:border-slate-800">
+                        <span class="text-[8px] text-slate-400 uppercase font-bold block">Khotib</span>
+                        <span id="namaKhotib" class="text-[9px] font-bold text-sky-500 block truncate">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2 shadow shrink-0">
                 <p class="text-[10px] font-bold text-slate-400 mb-1">Kawasan Masjid</p>
-                <div class="h-24 rounded-xl overflow-hidden border border-slate-800">
+                <div class="h-20 rounded-xl overflow-hidden border border-slate-800">
                     <img src="masjid_baitul_quddus.jpeg" alt="Masjid" class="w-full h-full object-cover">
                 </div>
             </div>
@@ -250,7 +245,7 @@
                 <h4 class="text-[10px] font-bold text-amber-500 uppercase flex items-center gap-1 mb-1 shrink-0">
                     <i data-lucide="map" class="w-3 h-3"></i> Lokasi Masjid
                 </h4>
-                <div class="w-full flex-1 rounded-xl overflow-hidden border border-slate-800 relative shadow-inner min-h-[60px]">
+                <div class="w-full flex-1 rounded-xl overflow-hidden border border-slate-800 relative shadow-inner min-h-[50px]">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.430034603332!2d114.3669145!3d-8.2192!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOMKwMTMnM-QuMSJTIDExNDKwMjI0LjgiRQ!5e0!3m2!1sid!2sid!4v1600000000000!5m2!1sid!2sid" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" class="filter dark:invert dark:hue-rotate-180"></iframe>
                 </div>
                 <p class="text-[8px] text-slate-400 text-center mt-1 shrink-0">Cungking, Mojopanggung, Banyuwangi</p>
