@@ -109,10 +109,10 @@
         </div>
     </section>
 
-    <!-- MAIN BODY SECTION (Grid Diperlebar di Bagian Tengah) -->
+    <!-- MAIN BODY SECTION (LAYOUT BARU YANG LEBIH LAPANG & SEIMBANG) -->
     <main class="flex-1 px-6 py-3 grid grid-cols-12 gap-3 items-stretch overflow-hidden">
         
-        <!-- KOLOM KIRI (2.5 Kolom) -->
+        <!-- KOLOM KIRI: Keuangan & Mutasi (3 Kolom) -->
         <div class="col-span-3 flex flex-col gap-2.5 justify-between">
             <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-emerald-500/30 rounded-2xl p-3 shadow glow-emerald">
                 <span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 tracking-wider uppercase flex items-center gap-1">
@@ -140,7 +140,7 @@
                     <h3 class="text-xs font-bold flex items-center gap-1.5 border-b border-slate-100 dark:border-slate-800 pb-1.5 mb-1.5">
                         <i data-lucide="history" class="w-3.5 h-3.5 text-amber-500"></i> Mutasi Kas Terbaru
                     </h3>
-                    <div id="txContainer" class="overflow-hidden relative h-[140px]">
+                    <div id="txContainer" class="overflow-hidden relative h-[155px]">
                         <div id="txTable" class="divide-y divide-slate-100 dark:divide-slate-800/60 text-[10px]">
                             <div><div class="py-2 text-center text-slate-400">Memuat mutasi...</div></div>
                         </div>
@@ -149,43 +149,44 @@
             </div>
         </div>
 
-        <!-- KOLOM TENGAH (Diperbesar menjadi 6 Kolom dengan Ruang Pamflet & QRIS Lebih Luas) -->
+        <!-- KOLOM TENGAH: Pamflet & QRIS (Lebih Luas) + Petugas & Kajian (6 Kolom) -->
         <div class="col-span-6 flex flex-col gap-2.5 justify-between">
-            <div class="grid grid-cols-2 gap-3 h-[330px]">
+            <!-- Kotak Utama Pamflet & QRIS Diperbesar & Proporsional -->
+            <div class="grid grid-cols-2 gap-3 h-[255px]">
                 
-                <!-- KOTAK AGENDA / PAMFLET DIPERBESAR -->
+                <!-- AGENDA / PAMFLET -->
                 <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 flex flex-col justify-between shadow">
                     <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-1 mb-1">
                         <h3 class="text-[11px] font-bold text-amber-500 flex items-center gap-1">
                             <i data-lucide="image" class="w-3.5 h-3.5"></i> Agenda Kegiatan
                         </h3>
                     </div>
-                    <div class="w-full h-[270px] bg-slate-950 rounded-xl overflow-hidden relative shadow-inner flex items-center justify-center p-1">
+                    <div class="w-full h-[200px] bg-slate-950 rounded-xl overflow-hidden relative shadow-inner flex items-center justify-center p-1">
                         <img id="pamfletImage" src="" alt="Pamflet" onload="adjustImageOrientation(this)" class="max-h-full max-w-full object-contain transition-all duration-500 rounded-lg">
-                        <div class="absolute bottom-0 inset-x-0 bg-slate-950/80 backdrop-blur px-2 py-1.5 text-center z-10">
+                        <div class="absolute bottom-0 inset-x-0 bg-slate-950/80 backdrop-blur px-2 py-1 text-center z-10">
                             <p id="pamfletTitle" class="text-[10px] font-bold text-amber-300 truncate">Memuat agenda...</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- KOTAK QRIS DONASI DIPERBESAR -->
+                <!-- QRIS DONASI -->
                 <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 flex flex-col justify-between shadow">
                     <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-1 mb-1">
                         <h3 class="text-[11px] font-bold text-emerald-500 flex items-center gap-1">
                             <i data-lucide="qr-code" class="w-3.5 h-3.5"></i> QRIS Donasi Digital
                         </h3>
                     </div>
-                    <div class="w-full h-[270px] bg-slate-950 rounded-xl overflow-hidden relative flex flex-col items-center justify-center p-2 text-center shadow-inner border border-slate-800">
-                        <div class="w-full h-[200px] flex items-center justify-center bg-white rounded-lg p-1">
+                    <div class="w-full h-[200px] bg-slate-950 rounded-xl overflow-hidden relative flex flex-col items-center justify-center p-2 text-center shadow-inner border border-slate-800">
+                        <div class="w-full h-[145px] flex items-center justify-center bg-white rounded-lg p-1">
                             <img src="qris_bq.jpeg" alt="QRIS" class="max-h-full max-w-full object-contain">
                         </div>
-                        <p class="text-[10px] font-bold text-amber-300 leading-tight mt-1.5">Satu QRIS untuk Semua</p>
+                        <p class="text-[10px] font-bold text-amber-300 leading-tight mt-1">Satu QRIS untuk Semua</p>
                         <p class="text-[8px] text-slate-400">Masjid Baitul Quddus Cungking</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Panel Petugas & Jadwal Kajian -->
+            <!-- Panel Petugas Sholat & Jadwal Kajian -->
             <div class="grid grid-cols-2 gap-3 flex-1">
                 <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 shadow flex flex-col justify-between">
                     <h4 class="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase flex items-center gap-1 mb-1.5">
@@ -224,7 +225,7 @@
             </div>
         </div>
 
-        <!-- KOLOM KANAN (3 Kolom) -->
+        <!-- KOLOM KANAN: Rekening, Foto Masjid, Peta (3 Kolom) -->
         <div class="col-span-3 flex flex-col gap-2.5 justify-between">
             <div class="bg-gradient-to-br from-emerald-900 to-slate-900 border border-emerald-500/40 rounded-2xl p-3 shadow text-white">
                 <h4 class="text-xs font-bold text-amber-300 uppercase flex items-center gap-1.5 mb-2 border-b border-white/10 pb-1">
@@ -239,7 +240,7 @@
 
             <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 shadow">
                 <p class="text-[10px] font-bold text-slate-400 mb-1">Kawasan Masjid</p>
-                <div class="h-28 rounded-xl overflow-hidden border border-slate-800">
+                <div class="h-24 rounded-xl overflow-hidden border border-slate-800">
                     <img src="masjid_baitul_quddus.jpeg" alt="Masjid" class="w-full h-full object-cover">
                 </div>
             </div>
@@ -248,7 +249,7 @@
                 <h4 class="text-[10px] font-bold text-amber-500 uppercase flex items-center gap-1 mb-1">
                     <i data-lucide="map" class="w-3 h-3"></i> Lokasi Masjid
                 </h4>
-                <div class="w-full h-[70px] rounded-xl overflow-hidden border border-slate-800 relative shadow-inner">
+                <div class="w-full h-[65px] rounded-xl overflow-hidden border border-slate-800 relative shadow-inner">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.430034603332!2d114.3669145!3d-8.2192!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOMKwMTMnM-QuMSJTIDExNDKwMjI0LjgiRQ!5e0!3m2!1sid!2sid!4v1600000000000!5m2!1sid!2sid" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" class="filter dark:invert dark:hue-rotate-180"></iframe>
                 </div>
                 <p class="text-[8px] text-slate-400 text-center mt-1">Cungking, Mojopanggung, Banyuwangi</p>
