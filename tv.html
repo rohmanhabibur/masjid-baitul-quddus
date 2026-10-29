@@ -35,7 +35,6 @@
             white-space: nowrap;
             animation: marquee 35s linear infinite;
         }
-        /* Animasi Vertikal Berjalan (Ticker Mutasi Kas) */
         @keyframes verticalTicker {
             0% { transform: translateY(0); }
             100% { transform: translateY(-50%); }
@@ -82,23 +81,23 @@
     <!-- PRAYER TIMES BAR -->
     <section class="px-6 py-2 bg-white/80 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-800/80 backdrop-blur">
         <div class="grid grid-cols-6 gap-2.5" id="prayer-grid">
-            <div class="bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl p-2 text-center">
+            <div id="box-Subuh" class="prayer-box bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl p-2 text-center transition-all">
                 <p class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase">Subuh</p>
                 <p id="time-subuh" class="text-base font-extrabold font-mono-custom">--:--</p>
             </div>
-            <div class="bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl p-2 text-center">
+            <div id="box-Dzuhur" class="prayer-box bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl p-2 text-center transition-all">
                 <p class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase">Dzuhur</p>
                 <p id="time-dzuhur" class="text-base font-extrabold font-mono-custom">--:--</p>
             </div>
-            <div class="bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl p-2 text-center">
+            <div id="box-Ashar" class="prayer-box bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl p-2 text-center transition-all">
                 <p class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase">Ashar</p>
                 <p id="time-ashar" class="text-base font-extrabold font-mono-custom">--:--</p>
             </div>
-            <div class="bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl p-2 text-center">
+            <div id="box-Maghrib" class="prayer-box bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl p-2 text-center transition-all">
                 <p class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase">Maghrib</p>
                 <p id="time-maghrib" class="text-base font-extrabold font-mono-custom">--:--</p>
             </div>
-            <div class="bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl p-2 text-center">
+            <div id="box-Isya" class="prayer-box bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl p-2 text-center transition-all">
                 <p class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase">Isya</p>
                 <p id="time-isya" class="text-base font-extrabold font-mono-custom">--:--</p>
             </div>
@@ -110,10 +109,10 @@
         </div>
     </section>
 
-    <!-- MAIN BODY SECTION (3 KOLOM UTAMA) -->
+    <!-- MAIN BODY SECTION -->
     <main class="flex-1 px-6 py-3 grid grid-cols-12 gap-3 items-stretch overflow-hidden">
         
-        <!-- KOLOM KIRI (Lebar: 3 Kolom) -> Saldo, Grafik, Mutasi -->
+        <!-- KOLOM KIRI (3 Kolom) -->
         <div class="col-span-3 flex flex-col gap-2.5 justify-between">
             <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-emerald-500/30 rounded-2xl p-3 shadow glow-emerald">
                 <span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 tracking-wider uppercase flex items-center gap-1">
@@ -122,12 +121,11 @@
                 <h2 id="saldoTotal" class="text-xl font-extrabold font-mono-custom mt-0.5 text-slate-900 dark:text-white">Rp 0</h2>
             </div>
 
-            <!-- Mini Grafik Simulasi Keuangan -->
             <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 shadow">
                 <p class="text-[10px] font-bold text-slate-500 mb-1 flex items-center gap-1">
                     <i data-lucide="trending-up" class="w-3 h-3 text-emerald-500"></i> Grafik Mutasi Kas
                 </p>
-                <div class="h-24 flex items-end gap-1 px-1 bg-slate-50 dark:bg-slate-950 rounded-xl pt-2">
+                <div class="h-20 flex items-end gap-1 px-1 bg-slate-50 dark:bg-slate-950 rounded-xl pt-2">
                     <div class="w-1/6 bg-emerald-500 h-[40%] rounded-t"></div>
                     <div class="w-1/6 bg-rose-500 h-[25%] rounded-t"></div>
                     <div class="w-1/6 bg-emerald-500 h-[70%] rounded-t"></div>
@@ -137,39 +135,35 @@
                 </div>
             </div>
 
-            <!-- Mutasi Kas Terbaru -->
-            <div class="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 shadow flex-1 flex flex-col justify-between">
+            <div class="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 shadow flex-1 flex flex-col justify-between overflow-hidden">
                 <div>
                     <h3 class="text-xs font-bold flex items-center gap-1.5 border-b border-slate-100 dark:border-slate-800 pb-1.5 mb-1.5">
                         <i data-lucide="history" class="w-3.5 h-3.5 text-amber-500"></i> Mutasi Kas Terbaru
                     </h3>
-                    <div class="overflow-hidden">
-                        <table class="w-full text-left border-collapse">
-                            <tbody id="txTable" class="divide-y divide-slate-100 dark:divide-slate-800/60 text-[10px]">
-                                <tr><td class="py-2 text-center text-slate-400">Memuat mutasi...</td></tr>
-                            </tbody>
-                        </table>
+                    <div id="txContainer" class="overflow-hidden relative h-[140px]">
+                        <div id="txTable" class="divide-y divide-slate-100 dark:divide-slate-800/60 text-[10px]">
+                            <tr><td class="py-2 text-center text-slate-400">Memuat mutasi...</td></tr>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- KOLOM TENGAH (Lebar: 6 Kolom) -> Pamflet & QRIS Berdampingan + Petugas & Kajian -->
+        <!-- KOLOM TENGAH (6 Kolom) -->
         <div class="col-span-6 flex flex-col gap-2.5 justify-between">
-            <!-- Grid Pamflet & QRIS Berdampingan -->
             <div class="grid grid-cols-2 gap-3 h-[245px]">
-                <!-- KOTAK AGENDA / PAMFLET -->
+                
+                <!-- KOTAK AGENDA / PAMFLET (RESPONSIF PORTRAIT / LANDSCAPE OTOMATIS) -->
                 <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 flex flex-col justify-between shadow">
                     <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-1 mb-1">
                         <h3 class="text-[11px] font-bold text-amber-500 flex items-center gap-1">
                             <i data-lucide="image" class="w-3.5 h-3.5"></i> Agenda Kegiatan
                         </h3>
                     </div>
-                    <!-- Ubah h-[185px] atau gunakan object-cover/object-contain sesuai proporsi poster Anda -->
                     <div class="w-full h-[185px] bg-slate-100 dark:bg-slate-950 rounded-xl overflow-hidden relative shadow-inner flex items-center justify-center">
-                        <img id="pamfletImage" src="pamflet_jumat_301026.jpeg" alt="Pamflet" class="w-full h-full object-cover">
+                        <img id="pamfletImage" src="" alt="Pamflet" onload="adjustImageOrientation(this)" class="w-full h-full object-contain transition-all duration-500">
                         <div class="absolute bottom-0 inset-x-0 bg-slate-950/80 backdrop-blur px-2 py-1 text-center">
-                            <p id="pamfletTitle" class="text-[10px] font-bold text-amber-300 truncate">Kajian Rutin & Santunan</p>
+                            <p id="pamfletTitle" class="text-[10px] font-bold text-amber-300 truncate">Memuat agenda...</p>
                         </div>
                     </div>
                 </div>
@@ -181,10 +175,9 @@
                             <i data-lucide="qr-code" class="w-3.5 h-3.5"></i> QRIS Donasi Digital
                         </h3>
                     </div>
-                    <!-- Menggunakan object-contain agar kotak QRIS tidak terpotong garis tepinya -->
                     <div class="w-full h-[185px] bg-slate-950 rounded-xl overflow-hidden relative flex flex-col items-center justify-center p-2 text-center shadow-inner border border-slate-800">
                         <div class="w-full h-32 flex items-center justify-center bg-white rounded-lg p-1">
-                            <img id="qrisImage" src="qris_bq.jpeg" alt="QRIS" class="max-h-full max-w-full object-contain">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=INFAQ_MASJID_BAITUL_QUDDUS" alt="QRIS" class="max-h-full max-w-full object-contain">
                         </div>
                         <p class="text-[10px] font-bold text-amber-300 leading-tight mt-1">Satu QRIS untuk Semua</p>
                         <p class="text-[8px] text-slate-400">Masjid Baitul Quddus Cungking</p>
@@ -231,7 +224,7 @@
             </div>
         </div>
 
-        <!-- KOLOM KANAN (3 Kolom) -> Peta Diperkecil & Ringkas -->
+        <!-- KOLOM KANAN (3 Kolom) -->
         <div class="col-span-3 flex flex-col gap-2.5 justify-between">
             <div class="bg-gradient-to-br from-emerald-900 to-slate-900 border border-emerald-500/40 rounded-2xl p-3 shadow text-white">
                 <h4 class="text-xs font-bold text-amber-300 uppercase flex items-center gap-1.5 mb-2 border-b border-white/10 pb-1">
@@ -244,16 +237,13 @@
                 </div>
             </div>
 
-            <!-- KOTAK FOTO MASJID (Dari Root Lokal) -->
             <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 shadow">
                 <p class="text-[10px] font-bold text-slate-400 mb-1">Kawasan Masjid</p>
                 <div class="h-28 rounded-xl overflow-hidden border border-slate-800">
-                    <!-- Memanggil foto langsung dari folder root yang sama -->
-                    <img src="masjid_baitul_quddus.jpeg" alt="Masjid Baitul Quddus" class="w-full h-full object-cover">
+                    <img src="logo_masjid_baitul_quddus.jpeg" alt="Masjid" class="w-full h-full object-cover">
                 </div>
             </div>
 
-            <!-- Peta Lokasi (Ukuran Diperkecil / Ringkas) -->
             <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 shadow flex-1 flex flex-col justify-between">
                 <h4 class="text-[10px] font-bold text-amber-500 uppercase flex items-center gap-1 mb-1">
                     <i data-lucide="map" class="w-3 h-3"></i> Lokasi Masjid
@@ -293,6 +283,17 @@
             { imam: "Kiai H. Abdullah", muadzin: "Ust. Bilal", bilal: "Bpk. Hasan", khotib: "-" }
         ];
 
+        // Fungsi Otomatis Sesuaikan Tampilan Gambar Portrait/Landscape
+        function adjustImageOrientation(imgElement) {
+            if (imgElement.naturalHeight > imgElement.naturalWidth) {
+                // Gambar Portrait (Tegak)
+                imgElement.className = "max-h-full w-auto object-contain transition-all duration-500 rounded-lg shadow";
+            } else {
+                // Gambar Landscape (Mendatar)
+                imgElement.className = "w-full h-full object-cover transition-all duration-500 rounded-lg";
+            }
+        }
+
         function updateClock() {
             const now = new Date();
             document.getElementById('clock').innerText = now.toLocaleTimeString('id-ID', { hour12: false });
@@ -304,6 +305,9 @@
             document.getElementById('namaMuadzin').innerText = p.muadzin;
             document.getElementById('namaBilal').innerText = p.bilal;
             document.getElementById('namaKhotib').innerText = p.khotib;
+
+            // Logika Hitung Mundur "Menuju Sholat"
+            updateCountdown(now);
         }
         setInterval(updateClock, 1000);
         updateClock();
@@ -315,7 +319,13 @@
                 const json = await res.json();
                 if (json.code === 200) {
                     const t = json.data.timings;
-                    prayerSchedule = { Subuh: t.Fajr, Dzuhur: t.Dhuhr, Ashar: t.Asr, Maghrib: t.Maghrib, Isya: t.Isha };
+                    prayerSchedule = { 
+                        Subuh: t.Fajr, 
+                        Dzuhur: t.Dhuhr, 
+                        Ashar: t.Asr, 
+                        Maghrib: t.Maghrib, 
+                        Isya: t.Isha 
+                    };
                     document.getElementById('time-subuh').innerText = prayerSchedule.Subuh;
                     document.getElementById('time-dzuhur').innerText = prayerSchedule.Dzuhur;
                     document.getElementById('time-ashar').innerText = prayerSchedule.Ashar;
@@ -331,6 +341,58 @@
         }
         fetchPrayerTimes();
 
+        function updateCountdown(now) {
+            if (!prayerSchedule.Subuh) return;
+
+            const currentTimeMinutes = now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60;
+            const prayers = [
+                { name: 'Subuh', time: prayerSchedule.Subuh },
+                { name: 'Dzuhur', time: prayerSchedule.Dzuhur },
+                { name: 'Ashar', time: prayerSchedule.Ashar },
+                { name: 'Maghrib', time: prayerSchedule.Maghrib },
+                { name: 'Isya', time: prayerSchedule.Isya }
+            ];
+
+            let nextPrayer = prayers[0];
+            let found = false;
+
+            for (let p of prayers) {
+                const [pHour, pMin] = p.time.split(':').map(Number);
+                const pTimeMinutes = pHour * 60 + pMin;
+                if (pTimeMinutes > currentTimeMinutes) {
+                    nextPrayer = p;
+                    found = true;
+                    break;
+                }
+            }
+
+            // Jika sudah lewat Isya, target sholat berikutnya adalah Subuh hari esok
+            let targetDate = new Date(now);
+            const [nHour, nMin] = nextPrayer.time.split(':').map(Number);
+            targetDate.setHours(nHour, nMin, 0, 0);
+
+            if (!found) {
+                targetDate.setDate(targetDate.getDate() + 1);
+            }
+
+            const diff = targetDate - now;
+            if (diff > 0) {
+                const hours = String(Math.floor((diff / (1000 * 60 * 60)) % 24)).padStart(2, '0');
+                const minutes = String(Math.floor((diff / 1000 / 60) % 60)).padStart(2, '0');
+                const seconds = String(Math.floor((diff / 1000) % 60)).padStart(2, '0');
+
+                document.getElementById('next-prayer-name').innerText = nextPrayer.name;
+                document.getElementById('countdown-timer').innerText = `-${hours}:${minutes}:${seconds}`;
+
+                // Berikan efek highlight pada kotak sholat yang sedang dituju
+                document.querySelectorAll('.prayer-box').forEach(el => el.classList.remove('border-amber-500', 'bg-amber-500/10'));
+                const activeBox = document.getElementById(`box-${nextPrayer.name}`);
+                if (activeBox) {
+                    activeBox.classList.add('border-amber-500', 'bg-amber-500/10');
+                }
+            }
+        }
+
         async function loadSheetData() {
             try {
                 const res = await fetch(GOOGLE_SCRIPT_URL);
@@ -343,7 +405,8 @@
                 }
 
                 if (data.agendaList && data.agendaList.length > 0) {
-                    document.getElementById('pamfletImage').src = data.agendaList[0].gambar;
+                    const imgEl = document.getElementById('pamfletImage');
+                    imgEl.src = data.agendaList[0].gambar;
                     document.getElementById('pamfletTitle').innerText = data.agendaList[0].judul + (data.agendaList[0].waktu ? ' — ' + data.agendaList[0].waktu : '');
                 }
 
@@ -352,7 +415,7 @@
 
                 if (data.riwayat && data.riwayat.length > 0) {
                     let rowsHTML = '';
-                    const recentItems = data.riwayat.slice(-5).reverse(); // Ambil 5 transaksi terakhir
+                    const recentItems = data.riwayat.slice(-5).reverse();
 
                     recentItems.forEach(item => {
                         const isMasuk = String(item.jenis).toUpperCase() === 'MASUK';
@@ -371,12 +434,10 @@
                         `;
                     });
 
-                    // Cek jika data sedikit (kurang dari 4), tampilkan biasa tanpa animasi gerak
                     if (recentItems.length <= 3) {
-                        txTable.className = ""; // Tanpa animasi ticker
+                        txTable.className = "";
                         txTable.innerHTML = rowsHTML;
                     } else {
-                        // Jika data banyak, duplikat HTML-nya agar animasi pergerakan vertikal berputar mulus tanpa jeda kosong
                         txTable.className = "animate-ticker";
                         txTable.innerHTML = rowsHTML + rowsHTML; 
                     }
