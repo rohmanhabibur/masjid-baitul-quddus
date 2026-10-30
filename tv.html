@@ -27,9 +27,9 @@
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .font-mono-custom { font-family: 'JetBrains Mono', monospace; }
         
-        /* Background Kawasan Masjid dengan Overlay Gelap */
+        /* Background Kawasan Masjid Diterangkan Sedikit (Overlay Gelap dikurangi) */
         .bg-masjid-overlay {
-            background-image: linear-gradient(to bottom, rgba(5, 11, 20, 0.92), rgba(5, 11, 20, 0.95)), url('masjid_baitul_quddus.jpeg');
+            background-image: linear-gradient(to bottom, rgba(5, 11, 20, 0.78), rgba(5, 11, 20, 0.85)), url('masjid_baitul_quddus.jpeg');
             background-size: cover;
             background-position: center;
         }
@@ -79,7 +79,7 @@
 <body class="bg-masjid-overlay text-slate-800 dark:text-slate-100 min-h-screen flex flex-col justify-between select-none transition-colors duration-500">
 
     <!-- HEADER / NAVBAR SECTION -->
-    <header class="bg-gradient-to-r from-emerald-950/90 via-slate-900/90 to-emerald-950/90 backdrop-blur px-4 md:px-6 py-2.5 border-b-2 border-amber-500/50 flex flex-col md:flex-row justify-between items-center gap-3 shadow-xl text-white shrink-0">
+    <header class="bg-gradient-to-r from-emerald-950/85 via-slate-900/85 to-emerald-950/85 backdrop-blur px-4 md:px-6 py-2.5 border-b-2 border-amber-500/50 flex flex-col md:flex-row justify-between items-center gap-3 shadow-xl text-white shrink-0">
         <div class="flex items-center gap-3 text-center md:text-left">
             <div class="w-11 h-11 rounded-xl overflow-hidden border-2 border-amber-400 shrink-0 shadow bg-white">
                 <img src="logo_masjid_baitul_quddus.jpeg" alt="Masjid Baitul Quddus" class="w-full h-full object-cover">
@@ -93,7 +93,7 @@
         </div>
 
         <!-- Total Saldo di Navbar -->
-        <div class="bg-slate-900/90 px-4 py-1.5 rounded-xl border border-emerald-500/40 shadow-inner flex items-center gap-3">
+        <div class="bg-slate-900/85 px-4 py-1.5 rounded-xl border border-emerald-500/40 shadow-inner flex items-center gap-3">
             <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
                 <i data-lucide="wallet" class="w-4 h-4"></i>
             </div>
@@ -118,32 +118,32 @@
     <!-- MAIN BODY SECTION -->
     <main class="flex-1 px-4 md:px-6 py-3 grid grid-cols-1 lg:grid-cols-12 gap-3 items-stretch">
         
-        <!-- SIDEBAR KIRI: Waktu Sholat, Grafik, QRIS, Rekening, & Lokasi Masjid -->
+        <!-- SIDEBAR KIRI: Waktu Sholat, Grafik, Rekening, & Lokasi Masjid -->
         <div class="lg:col-span-3 flex flex-col gap-2.5 justify-between">
             
             <!-- Panel Waktu Sholat Vertikal -->
-            <div class="bg-slate-900/80 backdrop-blur border border-slate-800 rounded-2xl p-2.5 shadow shrink-0">
+            <div class="bg-slate-900/75 backdrop-blur border border-slate-800 rounded-2xl p-2.5 shadow shrink-0">
                 <h3 class="text-[10px] font-bold text-amber-500 uppercase flex items-center gap-1 mb-2 border-b border-slate-800 pb-1">
                     <i data-lucide="clock" class="w-3.5 h-3.5"></i> Jadwal Sholat
                 </h3>
                 <div class="grid grid-cols-1 gap-1.5" id="prayer-grid">
-                    <div id="box-Subuh" class="prayer-box bg-slate-950/80 border border-slate-800 rounded-xl px-3 py-1.5 flex justify-between items-center transition-all">
+                    <div id="box-Subuh" class="prayer-box bg-slate-950/70 border border-slate-800 rounded-xl px-3 py-1.5 flex justify-between items-center transition-all">
                         <span class="text-[10px] text-slate-400 font-semibold uppercase">Subuh</span>
                         <span id="time-subuh" class="text-xs font-extrabold font-mono-custom">--:--</span>
                     </div>
-                    <div id="box-Dzuhur" class="prayer-box bg-slate-950/80 border border-slate-800 rounded-xl px-3 py-1.5 flex justify-between items-center transition-all">
+                    <div id="box-Dzuhur" class="prayer-box bg-slate-950/70 border border-slate-800 rounded-xl px-3 py-1.5 flex justify-between items-center transition-all">
                         <span class="text-[10px] text-slate-400 font-semibold uppercase">Dzuhur</span>
                         <span id="time-dzuhur" class="text-xs font-extrabold font-mono-custom">--:--</span>
                     </div>
-                    <div id="box-Ashar" class="prayer-box bg-slate-950/80 border border-slate-800 rounded-xl px-3 py-1.5 flex justify-between items-center transition-all">
+                    <div id="box-Ashar" class="prayer-box bg-slate-950/70 border border-slate-800 rounded-xl px-3 py-1.5 flex justify-between items-center transition-all">
                         <span class="text-[10px] text-slate-400 font-semibold uppercase">Ashar</span>
                         <span id="time-ashar" class="text-xs font-extrabold font-mono-custom">--:--</span>
                     </div>
-                    <div id="box-Maghrib" class="prayer-box bg-slate-950/80 border border-slate-800 rounded-xl px-3 py-1.5 flex justify-between items-center transition-all">
+                    <div id="box-Maghrib" class="prayer-box bg-slate-950/70 border border-slate-800 rounded-xl px-3 py-1.5 flex justify-between items-center transition-all">
                         <span class="text-[10px] text-slate-400 font-semibold uppercase">Maghrib</span>
                         <span id="time-maghrib" class="text-xs font-extrabold font-mono-custom">--:--</span>
                     </div>
-                    <div id="box-Isya" class="prayer-box bg-slate-950/80 border border-slate-800 rounded-xl px-3 py-1.5 flex justify-between items-center transition-all">
+                    <div id="box-Isya" class="prayer-box bg-slate-950/70 border border-slate-800 rounded-xl px-3 py-1.5 flex justify-between items-center transition-all">
                         <span class="text-[10px] text-slate-400 font-semibold uppercase">Isya</span>
                         <span id="time-isya" class="text-xs font-extrabold font-mono-custom">--:--</span>
                     </div>
@@ -159,11 +159,11 @@
             </div>
 
             <!-- Grafik Animasi Dinamis -->
-            <div class="bg-slate-900/80 backdrop-blur border border-slate-800 rounded-2xl p-2.5 shadow shrink-0">
+            <div class="bg-slate-900/75 backdrop-blur border border-slate-800 rounded-2xl p-2.5 shadow shrink-0">
                 <p class="text-[9px] font-bold text-slate-400 mb-1 flex items-center gap-1">
                     <i data-lucide="activity" class="w-3 h-3 text-emerald-500"></i> Grafik Mutasi Kas
                 </p>
-                <div class="h-16 flex items-end gap-1 px-2 bg-slate-950 rounded-xl pt-1.5 border border-slate-800/50">
+                <div class="h-16 flex items-end gap-1 px-2 bg-slate-950/70 rounded-xl pt-1.5 border border-slate-800/50">
                     <div class="w-1/6 bg-emerald-500 rounded-t bar-1"></div>
                     <div class="w-1/6 bg-rose-500 rounded-t bar-2"></div>
                     <div class="w-1/6 bg-emerald-500 rounded-t bar-3"></div>
@@ -173,22 +173,8 @@
                 </div>
             </div>
 
-            <!-- QRIS Donasi Compact Sidebar -->
-            <div class="bg-slate-900/80 backdrop-blur border border-slate-800 rounded-2xl p-2 shadow flex items-center gap-2.5 shrink-0">
-                <div class="w-14 h-14 bg-white rounded-xl p-1 shrink-0 flex items-center justify-center overflow-hidden border border-slate-700">
-                    <img src="qris_bq.jpeg" alt="QRIS" class="max-h-full max-w-full object-contain">
-                </div>
-                <div class="flex-1 overflow-hidden">
-                    <h3 class="text-[10px] font-bold text-emerald-500 flex items-center gap-1 mb-0.5">
-                        <i data-lucide="qr-code" class="w-3 h-3"></i> QRIS Donasi
-                    </h3>
-                    <p class="text-[10px] font-bold text-amber-300 leading-tight truncate">Satu QRIS Untuk Semua</p>
-                    <p class="text-[8px] text-slate-400 truncate">Masjid Baitul Quddus</p>
-                </div>
-            </div>
-
             <!-- Rekening Donasi Compact Sidebar -->
-            <div class="bg-gradient-to-br from-emerald-950/90 to-slate-900/90 backdrop-blur border border-emerald-500/40 rounded-2xl p-2 shadow text-white shrink-0">
+            <div class="bg-gradient-to-br from-emerald-950/85 to-slate-900/85 backdrop-blur border border-emerald-500/40 rounded-2xl p-2 shadow text-white shrink-0">
                 <h4 class="text-[9px] font-bold text-amber-300 uppercase flex items-center gap-1 mb-1 border-b border-white/10 pb-0.5">
                     <i data-lucide="credit-card" class="w-3 h-3"></i> Rekening Donasi
                 </h4>
@@ -198,8 +184,8 @@
                 </div>
             </div>
 
-            <!-- Lokasi Masjid (Peta) Pindah ke Sidebar Kiri -->
-            <div class="bg-slate-900/80 backdrop-blur border border-slate-800 rounded-2xl p-2.5 shadow flex flex-col justify-between shrink-0">
+            <!-- Lokasi Masjid (Peta) di Sidebar Kiri -->
+            <div class="bg-slate-900/75 backdrop-blur border border-slate-800 rounded-2xl p-2.5 shadow flex flex-col justify-between shrink-0">
                 <h4 class="text-[10px] font-bold text-amber-500 uppercase flex items-center gap-1 mb-1 shrink-0">
                     <i data-lucide="map" class="w-3 h-3"></i> Lokasi Masjid
                 </h4>
@@ -210,16 +196,16 @@
             </div>
         </div>
 
-        <!-- KOLOM TENGAH: Mutasi Kas Berjalan (Ticker) -->
+        <!-- KOLOM TENGAH: Mutasi Kas Berjalan (Ticker) & QRIS Minimalis di Bawahnya -->
         <div class="lg:col-span-6 flex flex-col gap-3 justify-between">
             
-            <!-- Mutasi Kas Terbaru (Pindah ke Tengah atas) -->
-            <div class="bg-slate-900/85 backdrop-blur border border-slate-800 rounded-2xl p-3 shadow shrink-0">
+            <!-- Mutasi Kas Terbaru -->
+            <div class="bg-slate-900/80 backdrop-blur border border-slate-800 rounded-2xl p-3 shadow shrink-0">
                 <div class="flex flex-col">
                     <h3 class="text-xs font-bold flex items-center gap-1.5 border-b border-slate-800 pb-1.5 mb-2 shrink-0 text-amber-400">
                         <i data-lucide="history" class="w-4 h-4 text-amber-500"></i> Mutasi Kas Terbaru
                     </h3>
-                    <!-- Kontainer Pembatas Tinggi (Overflow Hidden) agar Efek Berjalan Terlihat Rapi -->
+                    <!-- Kontainer Pembatas Tinggi (Overflow Hidden) -->
                     <div class="h-[120px] overflow-hidden relative">
                         <div id="txTable" class="divide-y divide-slate-800/60 text-[11px]">
                             <div><div class="py-2 text-center text-slate-400">Memuat mutasi...</div></div>
@@ -228,51 +214,65 @@
                 </div>
             </div>
 
-            <!-- Ruang Kosong Fleksibel di Tengah -->
-            <div class="flex-1 flex items-center justify-center p-4">
+            <!-- QRIS Donasi Minimalis (Pindah ke Tengah di Bawah Mutasi) -->
+            <div class="bg-slate-900/80 backdrop-blur border border-slate-800 rounded-2xl p-2.5 shadow flex items-center gap-3 shrink-0 max-w-md mx-auto w-full">
+                <div class="w-16 h-16 bg-white rounded-xl p-1 shrink-0 flex items-center justify-center overflow-hidden border border-slate-700">
+                    <img src="qris_bq.jpeg" alt="QRIS" class="max-h-full max-w-full object-contain">
+                </div>
+                <div class="flex-1 overflow-hidden text-left">
+                    <h3 class="text-[10px] font-bold text-emerald-400 flex items-center gap-1 mb-0.5">
+                        <i data-lucide="qr-code" class="w-3 h-3"></i> QRIS Donasi Digital
+                    </h3>
+                    <p class="text-[10px] font-bold text-amber-300 leading-tight truncate">Satu QRIS Untuk Semua</p>
+                    <p class="text-[8px] text-slate-300 truncate">Masjid Baitul Quddus Cungking</p>
+                </div>
+            </div>
+
+            <!-- Ruang Fleksibel -->
+            <div class="flex-1 flex items-center justify-center p-2">
                 <div class="text-center opacity-40">
-                    <i data-lucide="moon" class="w-12 h-12 mx-auto mb-2 text-amber-400"></i>
-                    <p class="text-xs font-semibold tracking-wider text-slate-300">Masjid Baitul Quddus Cungking</p>
+                    <i data-lucide="moon" class="w-8 h-8 mx-auto mb-1 text-amber-400"></i>
+                    <p class="text-[10px] font-semibold tracking-wider text-slate-300">Masjid Baitul Quddus Cungking</p>
                 </div>
             </div>
         </div>
 
-        <!-- KOLOM KANAN: Pamflet Agenda (Penuh di Kanan) & Petugas -->
+        <!-- KOLOM KANAN: Petugas & Agenda / Pamflet -->
         <div class="lg:col-span-3 flex flex-col gap-3 justify-between">
             
             <!-- Panel Petugas -->
-            <div class="bg-slate-900/80 backdrop-blur border border-slate-800 rounded-2xl p-3 shadow shrink-0">
+            <div class="bg-slate-900/75 backdrop-blur border border-slate-800 rounded-2xl p-3 shadow shrink-0">
                 <h4 class="text-[10px] font-bold text-amber-400 uppercase flex items-center gap-1 mb-2">
                     <i data-lucide="users" class="w-3.5 h-3.5"></i> Petugas Hari Ini
                 </h4>
                 <div class="grid grid-cols-2 gap-2 text-center">
-                    <div class="bg-slate-950 p-2 rounded-xl border border-slate-800">
+                    <div class="bg-slate-950/70 p-2 rounded-xl border border-slate-800">
                         <span class="text-[8px] text-slate-400 uppercase font-bold block">Imam</span>
                         <span id="namaImam" class="text-[10px] font-bold text-amber-500 block truncate mt-0.5">-</span>
                     </div>
-                    <div class="bg-slate-950 p-2 rounded-xl border border-slate-800">
+                    <div class="bg-slate-950/70 p-2 rounded-xl border border-slate-800">
                         <span class="text-[8px] text-slate-400 uppercase font-bold block">Muadzin</span>
                         <span id="namaMuadzin" class="text-[10px] font-bold text-emerald-500 block truncate mt-0.5">-</span>
                     </div>
-                    <div class="bg-slate-950 p-2 rounded-xl border border-slate-800">
+                    <div class="bg-slate-950/70 p-2 rounded-xl border border-slate-800">
                         <span class="text-[8px] text-slate-400 uppercase font-bold block">Bilal</span>
                         <span id="namaBilal" class="text-[10px] font-bold text-blue-500 block truncate mt-0.5">-</span>
                     </div>
-                    <div class="bg-slate-950 p-2 rounded-xl border border-slate-800">
+                    <div class="bg-slate-950/70 p-2 rounded-xl border border-slate-800">
                         <span class="text-[8px] text-slate-400 uppercase font-bold block">Khotib</span>
                         <span id="namaKhotib" class="text-[10px] font-bold text-sky-500 block truncate mt-0.5">-</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Agenda / Pamflet Pindah ke Kanan (Porsi Luas) -->
-            <div class="bg-slate-900/85 backdrop-blur border border-slate-800 rounded-2xl p-3 flex flex-col justify-between shadow flex-1 min-h-[380px]">
+            <!-- Agenda / Pamflet Penuh di Kanan -->
+            <div class="bg-slate-900/80 backdrop-blur border border-slate-800 rounded-2xl p-3 flex flex-col justify-between shadow flex-1 min-h-[380px]">
                 <div class="flex items-center justify-between border-b border-slate-800 pb-1.5 mb-2 shrink-0">
                     <h3 class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
                         <i data-lucide="image" class="w-4 h-4"></i> Agenda Kegiatan
                     </h3>
                 </div>
-                <div class="w-full flex-1 bg-slate-950/90 rounded-xl overflow-hidden relative shadow-inner flex items-center justify-center p-1">
+                <div class="w-full flex-1 bg-slate-950/80 rounded-xl overflow-hidden relative shadow-inner flex items-center justify-center p-1">
                     <img id="pamfletImage" src="" alt="Pamflet" onload="adjustImageOrientation(this)" class="max-h-full max-w-full object-contain transition-all duration-500 rounded-lg">
                     <div class="absolute bottom-0 inset-x-0 bg-slate-950/90 backdrop-blur px-3 py-2 text-center z-10">
                         <p id="pamfletTitle" class="text-xs font-bold text-amber-300 truncate">Memuat agenda...</p>
