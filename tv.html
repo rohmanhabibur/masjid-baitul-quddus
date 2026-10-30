@@ -127,7 +127,7 @@
     <!-- MAIN BODY SECTION (RESPONSIVE GRID) -->
     <main class="flex-1 px-4 md:px-6 py-3 grid grid-cols-1 lg:grid-cols-12 gap-3 items-stretch">
         
-        <!-- KOLOM KIRI: Saldo, Grafik Animasi, Mutasi Kas, & Jadwal Kajian -->
+        <!-- KOLOM KIRI: Saldo, Grafik Animasi, & Mutasi Kas (Lebih Luas & Minimalis) -->
         <div class="lg:col-span-3 flex flex-col gap-3 justify-between">
             <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-emerald-500/30 rounded-2xl p-3 shadow glow-emerald">
                 <span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 tracking-wider uppercase flex items-center gap-1">
@@ -151,27 +151,17 @@
                 </div>
             </div>
 
-            <div class="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 shadow flex flex-col justify-between">
-                <div class="flex flex-col">
+            <!-- Mutasi Kas Terbaru (Kini Lebih Luas Tanpa Kotak Kajian) -->
+            <div class="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 shadow flex-1 flex flex-col justify-between">
+                <div class="flex flex-col h-full">
                     <h3 class="text-xs font-bold flex items-center gap-1.5 border-b border-slate-100 dark:border-slate-800 pb-1.5 mb-1.5 shrink-0">
                         <i data-lucide="history" class="w-3.5 h-3.5 text-amber-500"></i> Mutasi Kas Terbaru
                     </h3>
-                    <div id="txContainer" class="relative">
+                    <div id="txContainer" class="relative flex-1 flex flex-col justify-center">
                         <div id="txTable" class="divide-y divide-slate-100 dark:divide-slate-800/60 text-[11px]">
                             <div><div class="py-2 text-center text-slate-400">Memuat mutasi...</div></div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 shadow">
-                <h4 class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase flex items-center gap-1 mb-1.5">
-                    <i data-lucide="calendar-check" class="w-3.5 h-3.5"></i> Jadwal Kajian Subuh
-                </h4>
-                <div class="bg-slate-50 dark:bg-slate-950 p-2.5 rounded-xl border border-slate-100 dark:border-slate-800 text-[11px] space-y-1">
-                    <p class="font-bold text-amber-300 truncate">Kajian Ba'da Subuh</p>
-                    <p class="text-slate-300">Bersama: <span class="text-white font-medium">Ustadz Ghifary Waldi</span></p>
-                    <p class="text-[10px] text-slate-400">Setiap Ahad Pagi (Pekan Pertama)</p>
                 </div>
             </div>
         </div>
@@ -299,11 +289,9 @@
             document.getElementById('clock').innerText = now.toLocaleTimeString('id-ID', { hour12: false });
             document.getElementById('date-gregorian').innerText = now.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
-            // Ambil nama hari ini secara akurat sesuai sistem (misal: "Jumat")
             const namaHariIni = now.toLocaleDateString('id-ID', { weekday: 'long' });
 
             if (serverPetugasList && serverPetugasList.length > 0) {
-                // Pencocokan data hari secara presisi (Case-insensitive & Trim spasi)
                 const petugasHariIni = serverPetugasList.find(p => 
                     String(p.hari).trim().toLowerCase() === namaHariIni.trim().toLowerCase()
                 ) || serverPetugasList[0];
