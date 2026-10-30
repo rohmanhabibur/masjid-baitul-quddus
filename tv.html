@@ -104,43 +104,49 @@
         </div>
     </header>
 
-    <!-- PRAYER TIMES BAR -->
-    <section class="px-4 md:px-6 py-2 bg-white/80 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-800/80 backdrop-blur shrink-0">
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2" id="prayer-grid">
-            <div id="box-Subuh" class="prayer-box bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl p-2 text-center transition-all">
-                <p class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase">Subuh</p>
-                <p id="time-subuh" class="text-sm md:text-base font-extrabold font-mono-custom">--:--</p>
-            </div>
-            <div id="box-Dzuhur" class="prayer-box bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl p-2 text-center transition-all">
-                <p class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase">Dzuhur</p>
-                <p id="time-dzuhur" class="text-sm md:text-base font-extrabold font-mono-custom">--:--</p>
-            </div>
-            <div id="box-Ashar" class="prayer-box bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl p-2 text-center transition-all">
-                <p class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase">Ashar</p>
-                <p id="time-ashar" class="text-sm md:text-base font-extrabold font-mono-custom">--:--</p>
-            </div>
-            <div id="box-Maghrib" class="prayer-box bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl p-2 text-center transition-all">
-                <p class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase">Maghrib</p>
-                <p id="time-maghrib" class="text-sm md:text-base font-extrabold font-mono-custom">--:--</p>
-            </div>
-            <div id="box-Isya" class="prayer-box bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl p-2 text-center transition-all">
-                <p class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase">Isya</p>
-                <p id="time-isya" class="text-sm md:text-base font-extrabold font-mono-custom">--:--</p>
-            </div>
-            <div class="bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl p-2 text-slate-950 flex flex-col justify-center items-center shadow-lg col-span-2 sm:col-span-3 lg:col-span-1">
-                <p class="text-[9px] font-bold uppercase tracking-wider text-slate-900">Menuju Sholat</p>
-                <p id="next-prayer-name" class="text-xs font-black uppercase text-slate-950">--</p>
-                <p id="countdown-timer" class="text-xs md:text-sm font-extrabold font-mono-custom text-slate-950">-00:00:00</p>
-            </div>
-        </div>
-    </section>
-
     <!-- MAIN BODY SECTION -->
     <main class="flex-1 px-4 md:px-6 py-3 grid grid-cols-1 lg:grid-cols-12 gap-3 items-stretch">
         
-        <!-- SIDEBAR KIRI: Minimalis (Grafik Dinamis, QRIS Compact, Rekening Compact) -->
+        <!-- SIDEBAR KIRI: Waktu Sholat, Grafik, QRIS, & Rekening (Tersusun Vertikal) -->
         <div class="lg:col-span-3 flex flex-col gap-2.5 justify-between">
             
+            <!-- Panel Waktu Sholat Vertikal -->
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 shadow shrink-0">
+                <h3 class="text-[10px] font-bold text-amber-500 uppercase flex items-center gap-1 mb-2 border-b border-slate-100 dark:border-slate-800 pb-1">
+                    <i data-lucide="clock" class="w-3.5 h-3.5"></i> Jadwal Sholat
+                </h3>
+                <div class="grid grid-cols-1 gap-1.5" id="prayer-grid">
+                    <div id="box-Subuh" class="prayer-box bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-1.5 flex justify-between items-center transition-all">
+                        <span class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase">Subuh</span>
+                        <span id="time-subuh" class="text-xs font-extrabold font-mono-custom">--:--</span>
+                    </div>
+                    <div id="box-Dzuhur" class="prayer-box bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-1.5 flex justify-between items-center transition-all">
+                        <span class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase">Dzuhur</span>
+                        <span id="time-dzuhur" class="text-xs font-extrabold font-mono-custom">--:--</span>
+                    </div>
+                    <div id="box-Ashar" class="prayer-box bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-1.5 flex justify-between items-center transition-all">
+                        <span class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase">Ashar</span>
+                        <span id="time-ashar" class="text-xs font-extrabold font-mono-custom">--:--</span>
+                    </div>
+                    <div id="box-Maghrib" class="prayer-box bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-1.5 flex justify-between items-center transition-all">
+                        <span class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase">Maghrib</span>
+                        <span id="time-maghrib" class="text-xs font-extrabold font-mono-custom">--:--</span>
+                    </div>
+                    <div id="box-Isya" class="prayer-box bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-1.5 flex justify-between items-center transition-all">
+                        <span class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold uppercase">Isya</span>
+                        <span id="time-isya" class="text-xs font-extrabold font-mono-custom">--:--</span>
+                    </div>
+                    <!-- Countdown Card -->
+                    <div class="bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl p-2 text-slate-950 flex justify-between items-center shadow-lg mt-0.5">
+                        <div>
+                            <p class="text-[8px] font-bold uppercase tracking-wider text-slate-900">Menuju Sholat</p>
+                            <p id="next-prayer-name" class="text-xs font-black uppercase text-slate-950">--</p>
+                        </div>
+                        <p id="countdown-timer" class="text-xs font-extrabold font-mono-custom text-slate-950">-00:00:00</p>
+                    </div>
+                </div>
+            </div>
+
             <!-- Grafik Animasi Dinamis -->
             <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 shadow shrink-0">
                 <p class="text-[9px] font-bold text-slate-400 mb-1 flex items-center gap-1">
@@ -156,9 +162,9 @@
                 </div>
             </div>
 
-            <!-- QRIS Donasi Minimalis Sidebar -->
-            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 shadow flex items-center gap-3 shrink-0">
-                <div class="w-20 h-20 bg-white rounded-xl p-1 shrink-0 flex items-center justify-center overflow-hidden border border-slate-200">
+            <!-- QRIS Donasi Compact Sidebar -->
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2 shadow flex items-center gap-2.5 shrink-0">
+                <div class="w-16 h-16 bg-white rounded-xl p-1 shrink-0 flex items-center justify-center overflow-hidden border border-slate-200">
                     <img src="qris_bq.jpeg" alt="QRIS" class="max-h-full max-w-full object-contain">
                 </div>
                 <div class="flex-1 overflow-hidden">
@@ -170,15 +176,14 @@
                 </div>
             </div>
 
-            <!-- Rekening Donasi Minimalis Sidebar -->
-            <div class="bg-gradient-to-br from-emerald-900 to-slate-900 border border-emerald-500/40 rounded-2xl p-2.5 shadow text-white shrink-0">
-                <h4 class="text-[10px] font-bold text-amber-300 uppercase flex items-center gap-1 mb-1 border-b border-white/10 pb-0.5">
+            <!-- Rekening Donasi Compact Sidebar -->
+            <div class="bg-gradient-to-br from-emerald-900 to-slate-900 border border-emerald-500/40 rounded-2xl p-2 shadow text-white shrink-0">
+                <h4 class="text-[9px] font-bold text-amber-300 uppercase flex items-center gap-1 mb-1 border-b border-white/10 pb-0.5">
                     <i data-lucide="credit-card" class="w-3 h-3"></i> Rekening Donasi
                 </h4>
-                <div class="bg-black/30 p-2 rounded-xl border border-white/10">
-                    <span class="text-[9px] text-emerald-300 block font-semibold">BCA Syariah</span>
+                <div class="bg-black/30 px-2 py-1.5 rounded-xl border border-white/10">
+                    <span class="text-[8px] text-emerald-300 block font-semibold">BCA Syariah</span>
                     <span class="font-mono font-bold text-amber-400 text-xs">076-001-7616</span>
-                    <span class="text-[8px] text-slate-300 block truncate">a.n. Masjid Baitul Quddus</span>
                 </div>
             </div>
         </div>
@@ -187,7 +192,7 @@
         <div class="lg:col-span-6 flex flex-col gap-3 justify-between">
             
             <!-- Agenda / Pamflet -->
-            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 flex flex-col justify-between shadow flex-1 min-h-[400px]">
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 flex flex-col justify-between shadow flex-1 min-h-[420px]">
                 <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-1.5 mb-2 shrink-0">
                     <h3 class="text-xs font-bold text-amber-500 flex items-center gap-1.5">
                         <i data-lucide="image" class="w-4 h-4"></i> Agenda Kegiatan
