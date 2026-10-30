@@ -299,9 +299,15 @@
             document.getElementById('clock').innerText = now.toLocaleTimeString('id-ID', { hour12: false });
             document.getElementById('date-gregorian').innerText = now.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
-            const dayIndex = now.getDay();
+            // Ambil nama hari ini dalam Bahasa Indonesia secara akurat
+            const namaHariIni = now.toLocaleDateString('id-ID', { weekday: 'long' }); // Contoh: "Jumat"
+
             if (serverPetugasList && serverPetugasList.length > 0) {
-                const petugasHariIni = serverPetugasList.find(p => Number(p.hari) === dayIndex) || serverPetugasList[0];
+                // Cari data petugas berdasarkan kecocokan nama hari (Case-insensitive)
+                const petugasHariIni = serverPetugasList.find(p => 
+                    String(p.hari).trim().toLowerCase() === namaHariIni.toLowerCase()
+                ) || serverPetugasList[0];
+
                 document.getElementById('namaImam').innerText = petugasHariIni.imam || '-';
                 document.getElementById('namaMuadzin').innerText = petugasHariIni.muadzin || '-';
                 document.getElementById('namaBilal').innerText = petugasHariIni.bilal || '-';
