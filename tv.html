@@ -35,18 +35,21 @@
             white-space: nowrap;
             animation: marquee 35s linear infinite;
         }
+
+        /* Animasi Mutasi Kas Berjalan Vertikal secara Mulus */
         @keyframes verticalTicker {
             0% { transform: translateY(0); }
             100% { transform: translateY(-50%); }
         }
-        .animate-ticker {
+        .animate-ticker-kas {
             display: flex;
             flex-direction: column;
-            animation: verticalTicker 12s linear infinite;
+            animation: verticalTicker 15s linear infinite;
         }
-        .animate-ticker:hover {
+        .animate-ticker-kas:hover {
             animation-play-state: paused;
         }
+
         .glow-emerald { box-shadow: 0 0 25px rgba(16, 185, 129, 0.2); }
 
         /* Animasi Pergerakan Grafik Dinamis */
@@ -107,7 +110,7 @@
     <!-- MAIN BODY SECTION -->
     <main class="flex-1 px-4 md:px-6 py-3 grid grid-cols-1 lg:grid-cols-12 gap-3 items-stretch">
         
-        <!-- SIDEBAR KIRI: Waktu Sholat, Grafik, QRIS, & Rekening (Tersusun Vertikal) -->
+        <!-- SIDEBAR KIRI: Waktu Sholat, Grafik, QRIS, & Rekening -->
         <div class="lg:col-span-3 flex flex-col gap-2.5 justify-between">
             
             <!-- Panel Waktu Sholat Vertikal -->
@@ -188,7 +191,7 @@
             </div>
         </div>
 
-        <!-- KOLOM TENGAH: Pamflet Agenda & Mutasi Kas -->
+        <!-- KOLOM TENGAH: Pamflet Agenda & Mutasi Kas Berjalan (Ticker) -->
         <div class="lg:col-span-6 flex flex-col gap-3 justify-between">
             
             <!-- Agenda / Pamflet -->
@@ -206,13 +209,14 @@
                 </div>
             </div>
 
-            <!-- Mutasi Kas Terbaru -->
+            <!-- Mutasi Kas Terbaru (Bergerak Mulus seperti Pengumuman) -->
             <div class="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 shadow shrink-0">
                 <div class="flex flex-col">
-                    <h3 class="text-xs font-bold flex items-center gap-1.5 border-b border-slate-100 dark:border-slate-800 pb-1.5 mb-1.5 shrink-0">
+                    <h3 class="text-xs font-bold flex items-center gap-1.5 border-b border-slate-100 dark:border-slate-800 pb-1.5 mb-2 shrink-0">
                         <i data-lucide="history" class="w-3.5 h-3.5 text-amber-500"></i> Mutasi Kas Terbaru
                     </h3>
-                    <div id="txContainer" class="relative">
+                    <!-- Kontainer Pembatas Tinggi (Overflow Hidden) agar Efek Berjalan Terlihat Rapi -->
+                    <div class="h-[100px] overflow-hidden relative">
                         <div id="txTable" class="divide-y divide-slate-100 dark:divide-slate-800/60 text-[11px]">
                             <div><div class="py-2 text-center text-slate-400">Memuat mutasi...</div></div>
                         </div>
@@ -416,7 +420,7 @@
 
                 if (data.riwayat && data.riwayat.length > 0) {
                     let rowsHTML = '';
-                    const recentItems = data.riwayat.slice(-5).reverse();
+                    const recentItems = data.riwayat.slice(-10).reverse(); // Ambil hingga 10 riwayat terbaru untuk ticker
 
                     recentItems.forEach(item => {
                         const isMasuk = String(item.jenis).toUpperCase() === 'MASUK';
@@ -426,7 +430,7 @@
                             <div class="py-1.5 px-1 flex justify-between items-center border-b border-slate-100 dark:border-slate-800/40">
                                 <div>
                                     <span class="text-slate-400 font-mono text-[9px] block">${item.tanggal}</span>
-                                    <span class="font-medium truncate max-w-[120px] block">${item.keterangan}</span>
+                                    <span class="font-medium truncate max-w-[200px] block">${item.keterangan}</span>
                                 </div>
                                 <span class="font-mono-custom font-bold ${amountClass}">
                                     ${isMasuk ? '+' : '-'}Rp ${Number(item.jumlah).toLocaleString('id-ID')}
@@ -435,13 +439,10 @@
                         `;
                     });
 
-                    if (recentItems.length <= 3) {
-                        txTable.className = "";
-                        txTable.innerHTML = rowsHTML;
-                    } else {
-                        txTable.className = "animate-ticker";
-                        txTable.innerHTML = rowsHTML + rowsHTML; 
-                    }
+                    // Duplikasi HTML agar pergerakan ticker berjalan tanpa terputus (infinite loop mulus)
+                    txTable.className = "animate-ticker-kas";
+                    txTable.innerHTML = rowsHTML + rowsHTML;
+
                 } else {
                     txTable.innerHTML = `<div class="py-2 text-center text-slate-400 text-[10px]">Belum ada mutasi.</div>`;
                 }
